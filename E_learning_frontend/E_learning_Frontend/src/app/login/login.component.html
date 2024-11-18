@@ -1,0 +1,41 @@
+<br><br><br><br><br><br><br><br>
+<div class="form-body form-left">
+	<div class="iofrm-layout">
+		<div class="img-holder text-start">
+			<div class="bg"></div>
+			<div class="info-holder">
+				<img src="assets/img1.svg" alt="">
+			</div>
+		</div>
+		<div class="form-holder">
+			<div class="form-content justify-content-end">
+				<div class="form-items">
+					<div class="website-logo-inside logo-normal">
+						<a href="index.html">
+							<div class="logo">
+								<img class="logo-size" src="/logo.jpg" alt="">
+							</div>
+						</a>
+					</div>
+					<h3 class="font-md">Get more things done with Loggin platform.</h3>
+					<p>Access to the most powerfull tool in the entire design and web industry.</p>
+					<form (ngSubmit)="onSubmit()">
+						<input class="form-control" type="text" name="email" [(ngModel)]="email" placeholder="E-mail Address" required>
+						<input class="form-control" type="password" name="password"  [(ngModel)]="password" placeholder="Password" required>
+						<div class="form-button d-flex">
+							<button id="submit" type="submit" class="btn btn-primary">Login</button>
+							<a [routerLink]="'/register'" class="btn btn-outline-primary">Create account</a>
+						</div>
+					</form>
+					<div class="other-links">
+						<span>Or login with</span><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-google"></i></a><a href="#"><i class="fab fa-linkedin-in"></i></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/popper.min.js"></script>
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/main.js"></script>
