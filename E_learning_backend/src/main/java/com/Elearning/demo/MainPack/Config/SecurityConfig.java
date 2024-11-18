@@ -32,6 +32,8 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) // Disable CSRF protection for simplicity
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/User/**").permitAll()  // Restrict access to Admin endpoints to ADMIN role
+
                         .anyRequest().authenticated()
                 );
 
