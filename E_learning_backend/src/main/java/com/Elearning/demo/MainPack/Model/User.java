@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
+
 @Document(collection = "User")
 
 public class User {
@@ -12,6 +14,43 @@ public class User {
     private String name;
     private String email;
     private String password;
+    private String resetToken;
+    private LocalDateTime tokenExpiryDate;
+    private int  failedAttempts;
+    private boolean isBlocked;
+
+
+
+
+    public int getFailedAttempts() {
+        return failedAttempts;
+    }
+
+    public void setFailedAttempts(int failedAttempts) {
+        this.failedAttempts = failedAttempts;
+    }
+
+    public boolean isBlocked() {
+        return isBlocked;
+    }
+
+    public void setBlocked(boolean isBlocked) {
+        this.isBlocked = isBlocked;
+    }
+    public String getResetToken() {
+        return resetToken;
+    }
+
+    public void setResetToken(String resetToken) {
+        this.resetToken = resetToken;
+    }
+    public LocalDateTime getTokenExpiration() {
+        return tokenExpiryDate;
+    }
+
+    public void setTokenExpiration(LocalDateTime tokenExpiration) {
+        this.tokenExpiryDate = tokenExpiration;
+    }
 
     public User() {
 
