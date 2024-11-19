@@ -45,6 +45,7 @@ html, body {
 
 .website-logo img {
   width: 100px;
+  
 }
 
 .website-logo a {
@@ -479,6 +480,7 @@ html, body {
 
 .form-content h3.font-md {
   font-weight: 700;
+  
 }
 
 .form-content p {
@@ -2255,6 +2257,7 @@ body {
 
 .website-logo img {
   width: 100px;
+  
 }
 
 .website-logo .logo {
@@ -2274,7 +2277,7 @@ body {
 }
 
 .website-logo-inside .logo img {
-  width: 100px;
+  width: 200px;
 }
 
 .img-holder {
