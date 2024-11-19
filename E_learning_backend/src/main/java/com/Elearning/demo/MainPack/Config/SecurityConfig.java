@@ -14,6 +14,7 @@ import org.springframework.security.web.firewall.StrictHttpFirewall;
 
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig {
 
 
@@ -29,12 +30,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // Disable CSRF protection for simplicity
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/User/**").permitAll()  // Restrict access to Admin endpoints to ADMIN role
-
-                        .anyRequest().authenticated()
+                .csrf(csrf -> csrf.disable())  // Disable CSRF (cross-site request forgery)
+                .authorizeRequests(auth -> auth
+                        .requestMatchers("/User/**","/auth/forgot-password","/auth/**").permitAll()  // Allow access to product API without authentication
+                        .anyRequest().authenticated()  // All other requests require authentication
                 );
 
         return http.build();

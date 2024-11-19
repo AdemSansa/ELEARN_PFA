@@ -55,12 +55,29 @@ public class  Authservice {
 
     }
     public User loginUser(String Email, String password) {
+
+
+
+
+
         User user = userRepository.findByEmail(Email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
+        if(user.isBlocked())
+        {
+            throw new RuntimeException("User is blocked due to multiple failed attempts");
+        }
 
         if (!this.matchesPassword(password, user.getPassword())) {
+            user.setFailedAttempts(user.getFailedAttempts() + 1);
+            if (user.getFailedAttempts() >= 3) {
+                user.setBlocked(true);
+            }
+            userRepository.save(user);
             throw new RuntimeException("Invalid password");
-        }   
+        }
+        // Reset failed attempts if login is successful
+        user.setFailedAttempts(0);
+        userRepository.save(user);
 
         return user;
     }
