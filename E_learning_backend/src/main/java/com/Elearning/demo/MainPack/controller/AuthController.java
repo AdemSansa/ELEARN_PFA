@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.token.TokenService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
@@ -27,7 +30,8 @@ public class AuthController {
     @Autowired
     private PasswordResetService passwordResetService;
 
-
+    @Autowired
+    private RestTemplate restTemplate;
 
 
     @PostMapping("/forgot-password")
@@ -65,6 +69,23 @@ public class AuthController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    @PostMapping("/auth/google")
+    public ResponseEntity<?> authenticateWithGoogle(@RequestBody Map<String, String> payload) {
+        String token = payload.get("token");
 
+        // Verify the Google token with Google's OAuth2 API
+        String url = "https://oauth2.googleapis.com/tokeninfo?id_token=" + token;
+        ResponseEntity<Map> response = restTemplate.getForEntity(url, Map.class);
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            Map<String, Object> userInfo = response.getBody();
+            String userEmail = (String) userInfo.get("email");
+
+            // You can create a user in your database or just return a response
+            return ResponseEntity.ok(userInfo); // or return a JWT token or user info
+        } else {
+            return ResponseEntity.status(400).body("Invalid Google Token");
+        }
+    }
 
 }
