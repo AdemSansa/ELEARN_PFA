@@ -18,4 +18,7 @@ export class AuthService {
   register(name: string, email: string, password: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/register`, { name, email, password });
   }
+  googleLogin(token: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/google`, { token });
+  }
 }
