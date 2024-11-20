@@ -27,14 +27,14 @@
 							<a [routerLink]="'/register'" class="btn btn-outline-primary">Create account</a>
 						</div>
 					</form>
-					<div class="other-links">
-						<span>Or login with</span><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-google"></i></a><a href="#"><i class="fab fa-linkedin-in"></i></a>
+					<button (click)="loginWithGithub()">Login with GitHub</button>
+					<button (click)="loginWithGoogle()">Login with Google</button>
+					<span>Or login with</span><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-google"></i></a><a href="#"><i class="fab fa-linkedin-in"></i></a>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/popper.min.js"></script>
 <script src="assets/js/bootstrap.bundle.min.js"></script>
