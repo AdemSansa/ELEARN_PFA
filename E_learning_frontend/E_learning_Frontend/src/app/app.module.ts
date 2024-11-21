@@ -9,13 +9,15 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { CallbackComponent } from './callback/callback.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SignupComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    CallbackComponent
   ],
   imports: [
     BrowserModule,

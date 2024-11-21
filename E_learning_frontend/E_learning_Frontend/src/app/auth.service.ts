@@ -21,4 +21,7 @@ export class AuthService {
   googleLogin(token: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/google`, { token });
   }
+  githubLogin(code: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/github`, { code });
+  }
 }
