@@ -4,10 +4,10 @@ package com.Elearning.demo.MainPack.Config;
 import com.Elearning.demo.MainPack.Model.User;
 import com.Elearning.demo.MainPack.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class  Authservice {
@@ -50,11 +50,12 @@ public class  Authservice {
         User newUser = new User();
         newUser.setName(username);
         newUser.setEmail(email);
+        newUser.set_ROLE("ROLE_USER");
         newUser.setPassword(SecurityConfig.passwordEncoder().encode(password));
         return userRepository.save(newUser);
 
     }
-    public User loginUser(String Email, String password) {
+    public User loginUser(String Email, String password, List<String> roles) {
 
 
 

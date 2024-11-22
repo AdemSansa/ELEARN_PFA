@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CallbackComponent } from './callback.component';
+import { UserListComponent } from './user-list.component';
 
-describe('CallbackComponent', () => {
-  let component: CallbackComponent;
-  let fixture: ComponentFixture<CallbackComponent>;
+describe('UserListComponent', () => {
+  let component: UserListComponent;
+  let fixture: ComponentFixture<UserListComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CallbackComponent]
+      declarations: [UserListComponent]
     });
-    fixture = TestBed.createComponent(CallbackComponent);
+    fixture = TestBed.createComponent(UserListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

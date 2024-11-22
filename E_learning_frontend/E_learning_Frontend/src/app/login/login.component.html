@@ -22,6 +22,7 @@
 					<form (ngSubmit)="onSubmit()">
 						<input class="form-control" type="text" name="email" [(ngModel)]="email" placeholder="E-mail Address" required>
 						<input class="form-control" type="password" name="password"  [(ngModel)]="password" placeholder="Password" required>
+			
 						<div class="form-button d-flex">
 							<button id="submit" type="submit" class="btn btn-primary">Login</button>
 							<a [routerLink]="'/register'" class="btn btn-outline-primary">Create account</a>
@@ -30,7 +31,8 @@
 					<div class="other-links">
 				
 						<span style="font-size:large;
-						font-weight: bold;">Or login with</span><a  id ="google-btn"><i class="fab fa-google"></i></a>
+						font-weight: bold;
+					">Or login with</span><a  id ="google-btn"><i class="fab fa-google"></i></a>
 					</div>
 					
 					  <div style="margin: 5px;;" class="w-full md:w-3/12 absolute right-0 left-0 p-12 bg-black my-36 mx-auto text-white rounded-lg bg-opacity-80">

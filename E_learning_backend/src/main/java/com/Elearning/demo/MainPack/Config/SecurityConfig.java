@@ -38,10 +38,11 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/forgot-password", "/auth/reset-password", "/auth/**").permitAll()
+                        
+                        .requestMatchers("/auth/forgot-password", "/auth/reset-password", "/auth/**","/Admin/**").permitAll()
                         .anyRequest().authenticated()
-                )
-                .oauth2Login(withDefaults());
+                );
+
 
         return http.build();
     }
