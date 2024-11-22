@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
-
+import { Router, ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
-
 import { JsonPipe } from '@angular/common';
-import { Router } from '@angular/router';
 import { Validators,FormGroup, FormBuilder} from '@angular/forms';
 
 declare var google: any;
@@ -72,8 +70,9 @@ StrongPass(Pass : string)
   email: string = '';
   password: string = '';
 
-  constructor(private authService: AuthService,private router: Router, private fb: FormBuilder) {}
-
+  constructor(private authService: AuthService,private router: Router,    private route: ActivatedRoute,
+    private fb: FormBuilder) {}
+ 
 
   ngOnInit(): void {
     
@@ -143,12 +142,12 @@ private decode(token:string){
           this.showAlert();
         } else {
           console.error('Unknown role:', role);
-           this.showAlertError(error.error.message || 'Unknown role');
+           this.showAlertError('Unknown role');
         }
       },
       error: (err) => {
         console.error('Login failed:', err);
-    this.showAlertError(error.error.message || 'Login failed');
+    this.showAlertError(err.error.message || 'Login failed');
       },
     });
   }
