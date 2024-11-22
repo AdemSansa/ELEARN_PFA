@@ -5,6 +5,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Document(collection = "User")
 
@@ -18,9 +20,19 @@ public class User {
     private LocalDateTime tokenExpiryDate;
     private int  failedAttempts;
     private boolean isBlocked;
+    private List <String> _ROLE = new ArrayList<>();
 
 
+    public List<String> getRoles() {
+        return _ROLE;
+    }
 
+    public void setRoles(List<String> roles) {
+        this._ROLE = roles;
+    }
+    public void set_ROLE(String role) {
+        this._ROLE.add(role);
+    }
 
     public int getFailedAttempts() {
         return failedAttempts;

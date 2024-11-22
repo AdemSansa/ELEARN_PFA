@@ -1,21 +1,18 @@
 package com.Elearning.demo.MainPack.controller;
 
-import com.Elearning.demo.MainPack.Config.Authservice;
 import com.Elearning.demo.MainPack.Config.UserService;
 import com.Elearning.demo.MainPack.Model.User;
 import com.Elearning.demo.MainPack.Repository.UserRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/User")
-
+@RequestMapping("/Admin")
 public class UserController {
 
     @Autowired
@@ -44,15 +41,26 @@ public class UserController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-    @PostMapping("/deleteUser")
-    public ResponseEntity<?> deleteUser(@RequestBody User user) {
+    @DeleteMapping("/deleteUser/{ID}")
+    public ResponseEntity<?> deleteUser(@PathVariable String ID) {
         try {
-            userService.deleteUser(user);
-            return ResponseEntity.ok("User deleted");
+            Optional<User> user  = userRepository.getUsersById(ID);
+            userService.deleteUser(user.orElse(null));
+            return ResponseEntity.ok(user);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    @GetMapping("/getUserById/{id}")    //get user by id
+    public ResponseEntity<?> getUserById(@PathVariable String id) {
+        return userService.getUserById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+
+
+
 
 
 }
