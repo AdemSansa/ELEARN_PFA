@@ -31,7 +31,7 @@
             "node_modules/owl.carousel/dist/assets/owl.theme.default.min.css"
             ],
             "scripts": [ "node_modules/ionicons/dist/ionicons/ionicons.esm.js","node_modules/jquery/dist/jquery.min.js",
-            "node_modules/owl.carousel/dist/owl.carousel.min.js"]
+            "node_modules/owl.carousel/dist/owl.carousel.min.js", "src/assets/script1.js"]
           },
           "configurations": {
             "production": {
