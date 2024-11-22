@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
   authForm! :FormGroup;
 
 
-  credentials = { email: '' // Email validation
+  credentials = { email: ''
 , password:''}  
 
 StrongPass(Pass : string)
@@ -55,16 +55,13 @@ StrongPass(Pass : string)
 
 
 }
-    
-   // Custom Validator for Password
-   strongPasswordValidator(control: any) {
+       strongPasswordValidator(control: any) {
     const value = control.value || '';
     const hasUpperCase = /[A-Z]/.test(value);
     const hasLowerCase = /[a-z]/.test(value);
     const hasNumeric = /[0-9]/.test(value);
     const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value);
     const isValid = hasUpperCase && hasLowerCase && hasNumeric && hasSpecialChar;
-
     return !isValid ? { strongPassword: true } : null;
   }
 
@@ -113,11 +110,11 @@ private decode(token:string){
           console.log('Backend response:', res);
           sessionStorage.setItem('loggedInUser', JSON.stringify(payload));
           this.router.navigate(['home']);
-          this.showAlert(); // Show success alert
+          this.showAlert();
         },
         (err) => {
           console.error('Error backend auth', err);
-          this.showAlertError(err.message || 'Unknown error'); // Show error alert with the error message
+          this.showAlertError(err.message || 'Unknown error'); 
         }
       );
     }
@@ -129,12 +126,8 @@ private decode(token:string){
     this.authService.login(this.email,this.password).subscribe({
       next: (response) => {
         const { role } = response;
-
-        // Store user data if needed
         localStorage.setItem('Role', role);
         console.log(role);
-        
-        // Redirect based on role
         if (role[0] === 'ROLE_ADMIN') {
           this.router.navigate(['/Admin']);
         } else if (role[0] === 'ROLE_USER') {
