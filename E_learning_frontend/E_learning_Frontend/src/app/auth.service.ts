@@ -8,10 +8,12 @@ import { HttpClient } from '@angular/common/http';
 export class AuthService {
 
   private apiUrl = 'http://localhost:8081/auth';
+  private user: any = null; // Mock user
 
   constructor(private http: HttpClient) {}
 
-  login(email: string, password: string): Observable<any> {
+  login(email: string , password: string ): Observable<any> {
+    
     return this.http.post(`${this.apiUrl}/login`, { email, password });
   }
 
