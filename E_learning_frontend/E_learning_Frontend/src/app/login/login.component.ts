@@ -13,7 +13,8 @@ declare var google: any;
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
+  constructor(private authService: AuthService,private router: Router,    private route: ActivatedRoute,
+    private fb: FormBuilder) {}
   authForm! :FormGroup;
 
 
@@ -70,8 +71,7 @@ StrongPass(Pass : string)
   email: string = '';
   password: string = '';
 
-  constructor(private authService: AuthService,private router: Router,    private route: ActivatedRoute,
-    private fb: FormBuilder) {}
+
  
 
   ngOnInit(): void {
