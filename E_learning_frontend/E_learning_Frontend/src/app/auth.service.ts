@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -8,9 +9,9 @@ import { HttpClient } from '@angular/common/http';
 export class AuthService {
 
   private apiUrl = 'http://localhost:8081/auth';
-  private user: any = null; // Mock user
+  private user: any = null; 
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private router:Router) {}
 
   login(email: string , password: string ): Observable<any> {
     
@@ -23,7 +24,9 @@ export class AuthService {
   googleLogin(token: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/google`, { token });
   }
-  githubLogin(code: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/github`, { code });
+  logout(): void {
+    localStorage.removeItem('jwt');
+    this.router.navigate(['/acceuil']);
   }
+
 }
