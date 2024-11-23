@@ -1,18 +1,25 @@
 package com.Elearning.demo.MainPack.controller;
 
+
 import com.Elearning.demo.MainPack.Config.Authservice;
 import com.Elearning.demo.MainPack.Model.User;
 import com.Elearning.demo.MainPack.Repository.UserRepository;
 import com.Elearning.demo.MainPack.Services.EmailService;
 import com.Elearning.demo.MainPack.Services.PasswordResetService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
+import org.springframework.security.core.token.TokenService;
+import org.springframework.security.oauth2.jwt.JwtException;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -34,16 +41,14 @@ public class AuthController {
 
 
     @PostMapping("/forgot-password")
-    public String forgotPassword(@RequestParam String email) {
+    public ResponseEntity<?> forgotPassword(@RequestBody Map<String, String> requestBody) {
+        String email = requestBody.get("email");
         String token = passwordResetService.generateResetToken(email);
         emailService.sendPasswordResetEmail(email, token);
-        return "Password reset link sent to email.";
-    }
-    @PostMapping("/reset-password")
-    public String resetPassword(@RequestParam String token, @RequestParam String newPassword) {
-        passwordResetService.resetPassword(token, newPassword);
-        return "Password has been reset successfully.";
-    }
+        return ResponseEntity.ok(new HashMap<String, String>() {{
+            put("message", "Password reset link sent to your email.");
+        }});                }
+
 
     @PostMapping("/register")
     public ResponseEntity <?>  register(@RequestBody User user) {
@@ -97,7 +102,6 @@ public class AuthController {
                 user.setTokenExpiration(null);
                 user.setBlocked(false);
                 user.setFailedAttempts(0);
-                user.set_ROLE("ROLE_USER");
                 userRepository.save(user);
             }
             return ResponseEntity.ok(user);
@@ -107,5 +111,15 @@ public class AuthController {
     }
 
 
+    @GetMapping("/isLoggedIn")
+    public ResponseEntity<Boolean> isLoggedIn(@RequestHeader("Authorization") String authHeader) {
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
+        }
+
+        String token = authHeader.substring(7);
+        boolean isValid = authservice.validateToken(token);
+        return ResponseEntity.ok(isValid);
+    }
 
 }
