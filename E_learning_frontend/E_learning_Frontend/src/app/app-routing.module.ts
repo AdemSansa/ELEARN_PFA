@@ -5,12 +5,14 @@ import { SignupComponent } from './signup/signup.component';
 import { HomeComponent } from './home/home.component';
 
 import { UserListComponent } from './components/user-list/user-list.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' }, 
 { path: 'login', component: LoginComponent },
 { path: 'register', component: SignupComponent },
 { path: 'home', component: HomeComponent }, 
+{ path: 'reset-password', component: ResetPasswordComponent }, 
 { path : 'Admin', component :UserListComponent} ]
 
 

@@ -9,8 +9,17 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'E_learning_Frontend';
-  constructor(public auth:AuthService,private router:Router){}
+  ismenuVisble!:boolean;
 
+  constructor(public auth:AuthService,private router:Router){}
+  ngDoCheck(): void {
+    let currentroute=this.router.url;
+    if(currentroute=='/login' || currentroute=='/register'){
+      this.ismenuVisble=false;
+    }else{
+      this.ismenuVisble=true;
+    }
+    }
   logout(){
     localStorage.removeItem('jwt');
     this.router.navigate(['/login']);

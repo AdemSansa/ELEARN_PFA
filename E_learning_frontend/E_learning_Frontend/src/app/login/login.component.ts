@@ -17,7 +17,9 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder) {}
   authForm! :FormGroup;
 
-
+  forgotPasswordForm!: FormGroup;
+  resetPasswordForm!: FormGroup;
+  token: string = ''
   credentials = { email: ''
 , password:''}  
 
@@ -88,12 +90,57 @@ StrongPass(Pass : string)
         width: 350,
       }
     );
+   
   }
 
 
 
 
 
+  ForgotPassword(): void {
+    Swal.fire({
+      title: 'Enter your email address',
+      input: 'email',
+      inputPlaceholder: 'exemple@gmail.com',
+      showCancelButton: true,
+      confirmButtonText: 'Submit',
+      cancelButtonText: 'Cancel',
+      inputValidator: (email) => {
+        if (!email) {
+          return 'You need to enter a valid email address!';
+        }
+        return null;
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const email = result.value.trim();
+        console.log(email);
+        this.forgotPassword2(email);
+      }
+    });
+  }
+  forgotPassword2(email: string): void {
+    console.log('Email:', email); 
+    this.authService.forgotPassword(email).subscribe(
+      (response) => {
+        Swal.fire({
+          title: 'Success!',
+          text: 'Password reset link sent to your email.',
+          icon: 'success',
+          confirmButtonText: 'Ok'
+        });
+      },
+      (error) => {
+        console.error(error);
+        Swal.fire({
+          title: 'Error!',
+          text: 'Failed to send reset link',
+          icon: 'error',
+          confirmButtonText: 'Ok'
+        });
+      }
+    );
+  }
 
 private decode(token:string){
   return JSON.parse(atob(token.split(".")[1]));
@@ -110,6 +157,8 @@ private decode(token:string){
           console.log('Backend response:', res);
           sessionStorage.setItem('loggedInUser', JSON.stringify(payload));
           this.router.navigate(['home']);
+          localStorage.setItem('jwt', response.token);
+
           this.showAlert();
         },
         (err) => {
@@ -130,8 +179,11 @@ private decode(token:string){
         console.log(role);
         if (role[0] === 'ROLE_ADMIN') {
           this.router.navigate(['/Admin']);
+          localStorage.setItem('jwt', response.token);
+
         } else if (role[0] === 'ROLE_USER') {
           this.router.navigate(['/home']);
+          localStorage.setItem('jwt', response.token); 
           this.showAlert();
         } else {
           console.error('Unknown role:', role);
@@ -164,4 +216,55 @@ private decode(token:string){
       timer: 1500,
     });
   }
+
+
+  onForgotPasswordSubmit(): void {
+    if (this.forgotPasswordForm.valid) {
+      const { email } = this.forgotPasswordForm.value;
+      this.authService.forgotPassword(email).subscribe(
+        response => {
+          Swal.fire({
+            title: 'Success',
+            text: 'Password reset link sent to your email.',
+            icon: 'success',
+            confirmButtonText: 'Ok'
+          });
+        },
+        error => {
+          Swal.fire({ 
+            title: 'Error',
+            text: 'Failed to send reset link. Please try again.',
+            icon: 'error',
+            confirmButtonText: 'Ok'
+          });
+        }
+      );
+    }
+  }
+
+  onResetPasswordSubmit(): void {
+    if (this.resetPasswordForm.valid) {
+      const { newPassword } = this.resetPasswordForm.value;
+      this.authService.resetPassword(this.token, newPassword).subscribe(
+        response => {
+          Swal.fire({
+            title: 'Success',
+            text: 'Your password has been reset successfully.',
+            icon: 'success',
+            confirmButtonText: 'Ok'
+          });
+          this.router.navigate(['/login']);
+        },
+        error => {
+          Swal.fire({
+            title: 'Error',
+            text: 'Failed to reset password. Please try again.',
+            icon: 'error',
+            confirmButtonText: 'Ok'
+          });
+        }
+      );
+    }
+  }
+  
 }
