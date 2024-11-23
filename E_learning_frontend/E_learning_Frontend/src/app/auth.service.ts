@@ -26,7 +26,20 @@ export class AuthService {
   }
   logout(): void {
     localStorage.removeItem('jwt');
-    this.router.navigate(['/acceuil']);
+    this.router.navigate(['/login']);
   }
 
+  isLoggedIn(): boolean {
+    const token = localStorage.getItem('jwt');
+    return !!token;
+  }
+  forgotPassword(email: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/forgot-password`, { email });
+  }
+
+  resetPassword(token: string, newPassword: string): Observable<any> {
+    const params = { token, newPassword };
+    return this.http.post(`${this.apiUrl}/reset-password`, null, { params: params });
+  }
 }
+

@@ -7,11 +7,18 @@
   text-rendering: optimizeLegibility;
   -moz-osx-font-smoothing: grayscale;
 }
-
 html, body {
-  height: 100%;
+  overflow: hidden;
+  height: 100%;  /* Ensure the body and html fill the viewport */
+  margin: 0;     /* Remove any default margin */
 }
-
+.form-body.form-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Align children to the top or space them evenly */
+  overflow: hidden;  /* Prevent scrolling */
+  height: 100vh;     /* Set the height to the full viewport height */
+}
 .form-body {
   background-color: #0093FF;
   height: 100%;
@@ -1287,7 +1294,9 @@ input.sm-content {
 .form-body.on-top .website-logo {
   position: absolute;
 }
-
+.form-holder {
+  overflow: hidden;  /* Prevent scrolling inside the form */
+}
 .form-body.on-top .img-holder {
   display: block;
   position: relative;

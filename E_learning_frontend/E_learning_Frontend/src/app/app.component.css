@@ -2,3 +2,6 @@
     width: 100px; /* Adjust this value as needed */
     height: auto; /* Maintains aspect ratio */
   }
+  a {
+    text-decoration: none;
+  }

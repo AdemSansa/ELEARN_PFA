@@ -49,6 +49,8 @@ export class SignupComponent {
           console.log('Backend response:', res);
           sessionStorage.setItem('loggedInUser', JSON.stringify(payload));
           this.router.navigate(['home']);
+          localStorage.setItem('jwt', response.token);
+
           this.showAlert(); 
         },
         (err) => {
@@ -68,8 +70,8 @@ export class SignupComponent {
       },
       (error) => {
         console.error('Registration failed', error);
-        if (error.status === 400 && error.error === "User already exists") {
-          this.showAlertError('Username or email already exists. Please try again with a different one.');
+        if (error.status === 400) {
+          this.showAlertError(error.error);
         } else {
           this.showAlertError(error.error.message || 'Unknown error');
         }

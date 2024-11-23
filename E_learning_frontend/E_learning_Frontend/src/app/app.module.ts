@@ -12,6 +12,7 @@ import { HomeComponent } from './home/home.component';
 
 import { UserListComponent } from './components/user-list/user-list.component';
 import { UserFormComponent } from './components/user-form/user-form.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { UserFormComponent } from './components/user-form/user-form.component';
     HomeComponent,
     UserListComponent,
     UserFormComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     ReactiveFormsModule,
