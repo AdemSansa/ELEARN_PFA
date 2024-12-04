@@ -342,7 +342,3 @@
     right: 0;
     width: 0;
    }
-   .disabled {
-    pointer-events: none; /* Prevents clicking */
-    opacity: 0.5; /* Makes the button look disabled */
-  }

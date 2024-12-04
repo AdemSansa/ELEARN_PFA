@@ -1,5 +1,6 @@
 package com.Elearning.demo.MainPack.Components;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -14,10 +15,14 @@ public class JwtUtil {
     private Set<String> blacklistedTokens = new HashSet<>();
 
     // Generate Token
-    public String generateToken(String email, List role) {
+    public String generateToken(String email,String name,String userId, List role) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("id", userId);   // Add user ID
+        claims.put("name", name);  // Add user name
+        claims.put("email", email); // Optional: Add email
         return Jwts.builder()
                 .setSubject(email)
-                .claim("role", role)
+                .setClaims(claims)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
@@ -41,7 +46,7 @@ public class JwtUtil {
     }
 
     // Extract Email from Token
-    public String extractEmail(String token) {
+    public String extractUser(String token) {
         return Jwts.parser()
                 .setSigningKey(SECRET_KEY)
                 .parseClaimsJws(token)
@@ -56,5 +61,9 @@ public class JwtUtil {
     // Check if a token is blacklisted
     public boolean isBlacklisted(String token) {
         return blacklistedTokens.contains(token);
+    }
+    public String extractUserEmail(String token) {
+        Claims claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+        return claims.get("email", String.class); // Extract user ID
     }
 }

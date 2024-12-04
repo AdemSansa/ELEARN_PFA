@@ -1,5 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,5 +19,8 @@ export class CourseService {
   getCourseByAuthor(author: string){
     return this.http.get<any>(`${this.apiUrl}/author/${author}`);
   }
+
+   
+
 
 }

@@ -10,6 +10,7 @@ import com.Elearning.demo.MainPack.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -43,6 +44,14 @@ public class EnrollmentService {
     }
     public List<Enrollment> getEnrollmentsByUser(User user) {
         return enrollmentRepository.findByUser(user);
+    }
+    public List<String> getCoursesIdsByUser(User user) {
+        List<Enrollment> enrollments = enrollmentRepository.findByUser(user);
+        List<String> courseIds = new ArrayList<>();
+        for (Enrollment enrollment : enrollments) {
+            courseIds.add(enrollment.getCourse().getId());
+        }
+        return courseIds;
     }
 
     public List<Enrollment> getEnrollmentsByCourse(Course course) {

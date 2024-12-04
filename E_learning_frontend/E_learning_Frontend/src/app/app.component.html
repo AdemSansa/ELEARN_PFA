@@ -10,16 +10,21 @@
         
          <nav id="navbar"   class="navbar order-last order-lg-0" >
            <ul>             
-            <li><a class="nav-link scrollto">Home {{this.auth.userName}} </a></li>
+            <li><a class="nav-link scrollto" [routerLink]="['home']">Home </a></li>
 
              <li><a class="nav-link scrollto active" [routerLink]="['/acceuil']">My Courses</a></li>
              <li><a class="nav-link scrollto">About</a></li>
              <li><a class="nav-link scrollto">Contact</a></li>
+             <li><a class="nav-link scrollto" [routerLink]="['courses']"  >Available Courses</a></li>
+             <li><a class="nav-link scrollto" [routerLink]="['MyCourses']"  >My Learning</a></li>
 
            </ul>
            <i class="bi bi-list mobile-nav-toggle"></i>
           </nav><ng-container *ngIf="this.auth.isLoggedIn()">
-            <a (click)="this.auth.logout()"  [routerLink]="['/login']" class="book-a-table-btn scrollto d-none d-lg-flex">Log out</a></ng-container>
+            <a    class="book-a-table-btn scrollto d-none d-lg-flex">{{this.auth.userName}} Profile</a>
+            <a (click)="this.auth.logout()"  [routerLink]="['/login']" class="book-a-table-btn scrollto d-none d-lg-flex">Log out</a>
+           
+          </ng-container>
             <ng-container *ngIf="!this.auth.isLoggedIn()">
             <a  [routerLink]="['/login']" class="book-a-table-btn scrollto d-none d-lg-flex">Log In</a>
             <a  [routerLink]="['/register']" class="book-a-table-btn scrollto d-none d-lg-flex">Sign Up</a></ng-container>
@@ -47,7 +52,9 @@
              </ul>
              <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><ng-container *ngIf="this.auth.isLoggedIn()">
-              <a (click)="this.auth.logout()"  [routerLink]="['/login']" class="book-a-table-btn scrollto d-none d-lg-flex">Log out</a></ng-container>
+              <a (click)="this.auth.logout()"  [routerLink]="['/login']" class="book-a-table-btn scrollto d-none d-lg-flex">Log out</a>
+            
+            </ng-container>
               <ng-container *ngIf="!this.auth.isLoggedIn()">
               <a  [routerLink]="['/login']" class="book-a-table-btn scrollto d-none d-lg-flex">Log In</a>
               <a  [routerLink]="['/register']" class="book-a-table-btn scrollto d-none d-lg-flex">Sign Up</a></ng-container>
