@@ -9,15 +9,19 @@ export class EnrollmentService {
 
   private apiUrl = 'http://localhost:8081/api/enrollments';
   constructor(private http:HttpClient) { }
+  
 
-
-   // Enroll user in a course
+   // Enroll user in a course 
    enrollInCourse(userId: string, courseId: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/enrollments/enroll?userId=${userId}&courseId=${courseId}`, {});
+    return this.http.post<any>(`${this.apiUrl}/enroll?userId=${userId}&courseId=${courseId}`, {});
   }
   // Get enrolled courses by user ID
   getEnrolledCourses(userId: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/enrollments/user/${userId}`);
+    return this.http.get<any>(`${this.apiUrl}/user/${userId}`);
+  }
+  //getEnrolledCOursesiD of Users 
+  getIDSOfcoursesEnrolled(userId:string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/courseid/${userId}`);
   }
 
 }

@@ -42,5 +42,11 @@ public class EnrollmentController {
         course.setId(courseId); // Set courseId for now, you can load it from a DB
         return enrollmentService.getEnrollmentsByCourse(course);
     }
+    @GetMapping("/courseid/{userId}")
+    public ResponseEntity<?> getUserCoursesIDS(@PathVariable String userId) {
+        User user = new User(); // Load the user by userId
+        user.setId(userId);  // Set the userId for now, you can load the user from a DB or Auth context
+        return ResponseEntity.ok(enrollmentService.getCoursesIdsByUser(user));
+    }
 
 }

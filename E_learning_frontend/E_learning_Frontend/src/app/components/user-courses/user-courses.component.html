@@ -1,0 +1,30 @@
+
+
+
+
+
+  <br><br><br><br><br><br>
+<div class="wrapper">
+    <h1>My Learning  </h1>
+    <div class="cols" *ngIf="courses">
+        <div class="col" *ngFor="let course of courses" ontouchstart="this.classList.toggle('hover');">
+            <div class="container">
+                <div class="front" style="background-image: url('https://unsplash.it/500/500/')">
+                    <div class="inner">
+                        <p>{{ course.course.title}}</p>
+                        <span>{{course.course.author}}</span>
+                    </div>
+                </div>
+                <div class="back">
+                    <div class="inner">
+                        <p>{{ course.course.description }}</p>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="courses.length === 0">
+        <p>No courses found. Enroll in a course to see it here!</p>
+      </div>
+</div>

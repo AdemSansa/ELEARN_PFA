@@ -54,9 +54,7 @@ export class AuthService {
     );
   }
 
-  get currentUserValue() {
-    return this.currentUserSubject.value;
-  }
+
 
   isLoggedIn(): boolean {
     const token = this.getToken();
@@ -110,7 +108,8 @@ export class AuthService {
     return this.http.get(`${this.apiUrl}/user-info`, { headers }).pipe(
       tap((response: any) => {
         // Assuming 'response' contains the user info, and it has a 'name' field.
-        this.userName = response?.name;  // Extract and store the name
+        this.userName = response?.name;
+         // Extract and store the name
       })
     );
   }
@@ -119,4 +118,9 @@ export class AuthService {
   get userNameValue(): string | null {
     return this.userName;
   }
+  getUserId(): string | null {
+    const decodedToken = this.decodeToken();
+    return decodedToken ? decodedToken.id : null;
+  }
+ 
 }

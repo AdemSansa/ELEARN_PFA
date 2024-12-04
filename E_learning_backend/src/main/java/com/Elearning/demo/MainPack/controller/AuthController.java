@@ -160,7 +160,10 @@ public class AuthController {
         }
 
         String token = authHeader.substring(7); // Extract token
-        String email = jwtUtil.extractEmail(token); // Assuming you have a method to extract email from the token
+
+        //Extract User from token
+        String email = jwtUtil.extractUserEmail(token);
+
 
         Optional<User> user = userRepository.findByEmail(email);
         if (user.isPresent()) {

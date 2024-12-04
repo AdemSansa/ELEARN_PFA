@@ -88,8 +88,7 @@ public class  Authservice {
         // Reset failed attempts if login is successful
         user.setFailedAttempts(0);
         userRepository.save(user);
-        String token = jwtUtil.generateToken(user.getEmail(),roles);
-        return jwtUtil.generateToken(user.getEmail(),roles);
+        return jwtUtil.generateToken(user.getEmail(),user.getName(),user.getId(),roles);
     }
 
     public boolean validateToken(String token) {
