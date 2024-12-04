@@ -20,7 +20,7 @@ public class PasswordResetService {
 
     public void resetPassword(String token, String newPassword) {
         Optional<User> userOptional = userRepository.findByResetToken(token);
-
+        System.out.println(userOptional);
         if (userOptional.isEmpty()) {
             throw new RuntimeException("Invalid or expired token.");
         }

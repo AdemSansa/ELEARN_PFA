@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { AuthService } from './auth.service';
+import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,6 @@ import { Router } from '@angular/router';
 export class AppComponent {
   title = 'E_learning_Frontend';
   ismenuVisble!:boolean;
-
   constructor(public auth:AuthService,private router:Router){}
   ngDoCheck(): void {
     let currentroute=this.router.url;
@@ -21,7 +21,9 @@ export class AppComponent {
     }
     }
   logout(){
-    localStorage.removeItem('jwt');
+    this.auth.logout();
+    var tokencheck = localStorage.getItem('jwtToken');
+    console.log(tokencheck);
     this.router.navigate(['/login']);
   }
 }
