@@ -155,9 +155,13 @@ private decode(token:string){
       this.authService.googleLogin(response.credential).subscribe(
         (res) => {
           console.log('Backend response:', res);
+          var googlename = payload.name;
+          console.log(googlename);
+          this.authService.userName=googlename;
           sessionStorage.setItem('loggedInUser', JSON.stringify(payload));
           this.router.navigate(['home']);
-          localStorage.setItem('jwt', response.token);
+          localStorage.setItem('jwtToken', response.token); 
+          this.authService.storeToken(response.token);
 
           this.showAlert();
         },

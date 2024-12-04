@@ -7,6 +7,7 @@ import com.Elearning.demo.MainPack.Model.User;
 import com.Elearning.demo.MainPack.Repository.UserRepository;
 import com.Elearning.demo.MainPack.Services.EmailService;
 import com.Elearning.demo.MainPack.Services.PasswordResetService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -20,6 +21,8 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/auth")
@@ -149,5 +152,29 @@ public class AuthController {
 
         return  ResponseEntity.ok(Collections.singletonMap("message", "Logout successful"));
     }
+    @GetMapping("/user-info")
+    public ResponseEntity<?> getUserInfo(HttpServletRequest request) {
+        String authHeader = request.getHeader("Authorization");
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+        }
+
+        String token = authHeader.substring(7); // Extract token
+        String email = jwtUtil.extractEmail(token); // Assuming you have a method to extract email from the token
+
+        Optional<User> user = userRepository.findByEmail(email);
+        if (user.isPresent()) {
+            // Customize the response as per your requirements
+            Map<String, Object> userInfo = new HashMap<>();
+            userInfo.put("id", user.get().getId());
+            userInfo.put("email", user.get().getEmail());
+            userInfo.put("name", user.get().getName());
+            userInfo.put("role", user.get().getRoles());
+            return ResponseEntity.ok(userInfo);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+    }
+
 
 }

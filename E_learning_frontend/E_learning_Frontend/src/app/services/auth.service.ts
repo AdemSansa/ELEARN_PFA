@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -10,38 +11,51 @@ export class AuthService {
 
   private apiUrl = 'http://localhost:8081/auth';
   private user: any = null; 
+  userName: string | null = null;
 
-  constructor(private http: HttpClient,private router:Router) {}
+  private currentUserSubject: BehaviorSubject<any>;
 
-  login(email: string , password: string ): Observable<any> {
-    
+  constructor(private http: HttpClient, private router: Router) {
+    this.currentUserSubject = new BehaviorSubject<any>(this.decodeToken());
+    this.userName = this.decodeToken()?.name || null;
+  }
+
+  login(email: string, password: string): Observable<any> {
+    this.currentUserSubject.next(this.decodeToken());
+    localStorage.setItem('currentUser', JSON.stringify(this.currentUserSubject.value));
     return this.http.post(`${this.apiUrl}/login`, { email, password });
   }
 
   register(name: string, email: string, password: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/register`, { name, email, password });
   }
+
   googleLogin(token: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/google`, { token });
   }
+
   logout(): void {
     const token = localStorage.getItem('jwtToken');
-  if (!token) {
-    console.error('No token found for logout');
-    return;
+    if (!token) {
+      console.error('No token found for logout');
+      return;
+    }
+
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.post(`${this.apiUrl}/logout`, {}, { headers }).subscribe(
+      () => {
+        console.log('Logout successful');
+        localStorage.removeItem('jwtToken');
+        this.router.navigate(['/login']);
+      },
+      (error) => {
+        console.error('Logout failed:', error);
+      }
+    );
   }
 
-  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-  this.http.post(`${this.apiUrl}/logout`, {}, { headers }).subscribe(
-    () => {
-      console.log('Logout successful');
-      localStorage.removeItem('jwtToken');
-      this.router.navigate(['/login']);
-    },
-    (error) => {
-      console.error('Logout failed:', error);
-    }
-  );
+  get currentUserValue() {
+    return this.currentUserSubject.value;
   }
 
   isLoggedIn(): boolean {
@@ -55,25 +69,54 @@ export class AuthService {
 
   resetPassword(token: string, newPassword: string): Observable<any> {
     const params = { token, newPassword };
-    console.log('Params:', params);
-    console.log(this.http.post(`${this.apiUrl}/reset-password`,null, { params: params }));
-    return this.http.post(`${this.apiUrl}/reset-password`, {
-      token:token,
-      newPassword:newPassword,
-     });
+    return this.http.post(`${this.apiUrl}/reset-password`, { token, newPassword });
   }
+
+  decodeToken(): any {
+    const token = localStorage.getItem('jwtToken');
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token);  // Decoding the JWT token
+        return decodedToken;  // Return decoded token (user info)
+      } catch (error) {
+        console.error('Error decoding token', error);
+        return null;
+      }
+    }
+    return null;
+  }
+
   getToken(): string | null {
     return localStorage.getItem('jwtToken');
   }
-    // Store token in localStorage
-    storeToken(token: string): void {
-      localStorage.setItem('jwtToken', token);
-    }
 
-     // Add Authorization header to requests
+  // Store token in localStorage
+  storeToken(token: string): void {
+    localStorage.setItem('jwtToken', token);
+  }
+
   getAuthHeaders(): HttpHeaders {
     const token = this.getToken();
     return new HttpHeaders().set('Authorization', `Bearer ${token}`);
   }
-}
 
+  // Updated method to fetch and extract user info including username
+  getUserInfo(): Observable<any> {
+    const token = localStorage.getItem('jwtToken');
+    if (!token) {
+      throw new Error('User not logged in');
+    }
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get(`${this.apiUrl}/user-info`, { headers }).pipe(
+      tap((response: any) => {
+        // Assuming 'response' contains the user info, and it has a 'name' field.
+        this.userName = response?.name;  // Extract and store the name
+      })
+    );
+  }
+
+  // Get the current userName
+  get userNameValue(): string | null {
+    return this.userName;
+  }
+}

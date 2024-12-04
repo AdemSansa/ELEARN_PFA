@@ -9,7 +9,6 @@ export class UserService {
   private baseUrl = 'http://localhost:8081/Admin';
 
   constructor(private http: HttpClient) {}
-
   getAllUsers(): Observable<any> {
 
     return this.http.get(`${this.baseUrl}/getAllUsers`);
