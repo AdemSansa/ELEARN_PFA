@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -9,9 +10,14 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  user:any;
   title = 'E_learning_Frontend';
   ismenuVisble!:boolean;
   constructor(public auth:AuthService,private router:Router){}
+  
+ 
+   
+  
   ngDoCheck(): void {
     let currentroute=this.router.url;
     if(currentroute=='/login' || currentroute=='/register'){
@@ -26,4 +32,6 @@ export class AppComponent {
     console.log(tokencheck);
     this.router.navigate(['/login']);
   }
+ 
+
 }
