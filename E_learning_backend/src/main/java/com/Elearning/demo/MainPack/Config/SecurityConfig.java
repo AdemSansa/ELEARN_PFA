@@ -1,5 +1,6 @@
 package com.Elearning.demo.MainPack.Config;
 
+import com.Elearning.demo.MainPack.Components.JwtUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -40,8 +41,8 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        
-                        .requestMatchers("/auth/forgot-password", "/auth/reset-password", "/auth/**","/Admin/**").permitAll()
+
+                        .requestMatchers("/auth/forgot-password", "/auth/reset-password", "/auth/**","/Admin/**","/api/**","/api/enrollments/**").permitAll()
                         .anyRequest().authenticated()
                 );
 
@@ -64,6 +65,11 @@ public class SecurityConfig {
     @Bean
     public static PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public JwtUtil jwtUtil() {
+        return new JwtUtil();
     }
 
 }

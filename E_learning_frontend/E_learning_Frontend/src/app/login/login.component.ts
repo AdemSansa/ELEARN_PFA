@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../services/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { JsonPipe } from '@angular/common';
@@ -174,21 +174,11 @@ private decode(token:string){
   onSubmit() {
     this.authService.login(this.email,this.password).subscribe({
       next: (response) => {
-        const { role } = response;
-        localStorage.setItem('Role', role);
-        console.log(role);
-        if (role[0] === 'ROLE_ADMIN') {
-          this.router.navigate(['/Admin']);
-          localStorage.setItem('jwt', response.token);
+        const token = response.token; 
+        this.authService.storeToken(token);
+        console.log('Login successful:', token);
+        this.router.navigate(['/home']);
 
-        } else if (role[0] === 'ROLE_USER') {
-          this.router.navigate(['/home']);
-          localStorage.setItem('jwt', response.token); 
-          this.showAlert();
-        } else {
-          console.error('Unknown role:', role);
-           this.showAlertError('Unknown role');
-        }
       },
       error: (err) => {
         console.error('Login failed:', err);

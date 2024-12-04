@@ -1,6 +1,7 @@
 package com.Elearning.demo.MainPack.Config;
 
 
+import com.Elearning.demo.MainPack.Components.JwtUtil;
 import com.Elearning.demo.MainPack.Model.User;
 import com.Elearning.demo.MainPack.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

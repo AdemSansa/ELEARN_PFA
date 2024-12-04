@@ -8,11 +8,11 @@ import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-
+import { HomeComponent } from './components/home/home.component';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { UserFormComponent } from './components/user-form/user-form.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { CoursesComponent } from './components/courses/courses.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +24,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     UserListComponent,
     UserFormComponent,
     ResetPasswordComponent,
+    CoursesComponent,
   ],
   imports: [
     ReactiveFormsModule,

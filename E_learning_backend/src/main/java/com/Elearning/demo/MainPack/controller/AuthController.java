@@ -1,6 +1,7 @@
 package com.Elearning.demo.MainPack.controller;
 
 
+import com.Elearning.demo.MainPack.Components.JwtUtil;
 import com.Elearning.demo.MainPack.Config.Authservice;
 import com.Elearning.demo.MainPack.Model.User;
 import com.Elearning.demo.MainPack.Repository.UserRepository;
@@ -29,6 +30,8 @@ public class AuthController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @Autowired
     private EmailService emailService;
@@ -48,6 +51,17 @@ public class AuthController {
         return ResponseEntity.ok(new HashMap<String, String>() {{
             put("message", "Password reset link sent to your email.");
         }});                }
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestBody Map<String, String> requestBody) {
+        String token = requestBody.get("token");
+        String newPassword = requestBody.get("newPassword");
+        System.out.println(newPassword);
+        System.out.println(token);
+        passwordResetService.resetPassword(token, newPassword);
+        return ResponseEntity.ok(new HashMap<String, String>() {{
+            put("message", "Password reset successful.");
+        }});
+    }
 
 
     @PostMapping("/register")
@@ -64,15 +78,16 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User user) {
         try {
-            User loggedInUser = authservice.loginUser(user.getEmail(), user.getPassword(), user.getRoles());
+            String loggedInUser = authservice.loginUser(user.getEmail(), user.getPassword(), user.getRoles());
             Map<String, Object> response = new HashMap<>();
-            response.put("id", loggedInUser.getId());
-            response.put("email", loggedInUser.getEmail());
-            response.put("role", loggedInUser.getRoles());
+
+            String token = loggedInUser;
+            response.put("token", token);
             response.put("message", "Login successful");
 
-
             return ResponseEntity.ok(response);
+
+
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -120,6 +135,19 @@ public class AuthController {
         String token = authHeader.substring(7);
         boolean isValid = authservice.validateToken(token);
         return ResponseEntity.ok(isValid);
+    }
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(@RequestHeader("Authorization") String authHeader) {
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Missing or invalid Authorization header.");
+        }
+
+        String token = authHeader.substring(7);
+
+        // Add token to a blacklist (e.g., in a database or cache)
+        jwtUtil.addToBlacklist(token);
+
+        return  ResponseEntity.ok(Collections.singletonMap("message", "Logout successful"));
     }
 
 }

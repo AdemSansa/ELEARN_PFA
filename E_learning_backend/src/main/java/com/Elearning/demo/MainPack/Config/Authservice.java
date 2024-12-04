@@ -1,6 +1,7 @@
 package com.Elearning.demo.MainPack.Config;
 
 
+import com.Elearning.demo.MainPack.Components.JwtUtil;
 import com.Elearning.demo.MainPack.Model.User;
 import com.Elearning.demo.MainPack.Repository.UserRepository;
 import io.jsonwebtoken.Jwts;
@@ -14,17 +15,20 @@ import java.util.List;
 
 @Service
 public class  Authservice {
+    @Autowired
     private final UserRepository userRepository;
-
-
+    @Autowired
+    private JwtUtil jwtUtil;
+    @Autowired
     private final PasswordEncoder passwordEncoder;
 
 
 
     @Autowired
-    public Authservice(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public Authservice(UserRepository userRepository, PasswordEncoder passwordEncoder ) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+
     }
 
 
@@ -55,14 +59,16 @@ public class  Authservice {
         newUser.setEmail(email);
         newUser.set_ROLE("ROLE_USER");
         newUser.setPassword(SecurityConfig.passwordEncoder().encode(password));
+        newUser.setBlocked(false);
+        newUser.setFailedAttempts(0);
+        newUser.setResetToken("");
+        newUser.setTokenExpiration(null);
+
         return userRepository.save(newUser);
 
+
     }
-    public User loginUser(String Email, String password, List<String> roles) {
-
-
-
-
+    public String loginUser(String Email, String password, List<String> roles) throws Exception{
 
         User user = userRepository.findByEmail(Email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -82,16 +88,13 @@ public class  Authservice {
         // Reset failed attempts if login is successful
         user.setFailedAttempts(0);
         userRepository.save(user);
-
-        return user;
+        String token = jwtUtil.generateToken(user.getEmail(),roles);
+        return jwtUtil.generateToken(user.getEmail(),roles);
     }
-    @Value("${jwt.secret}")
-    private String secretKey;
 
     public boolean validateToken(String token) {
         try {
-            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-            return true;
+            return jwtUtil.validateToken(token);
         } catch (JwtException e) {
             return false;
         }
