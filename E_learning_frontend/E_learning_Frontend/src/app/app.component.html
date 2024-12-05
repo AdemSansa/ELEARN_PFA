@@ -21,7 +21,7 @@
            </ul>
            <i class="bi bi-list mobile-nav-toggle"></i>
           </nav><ng-container *ngIf="this.auth.isLoggedIn()">
-            <a    class="book-a-table-btn scrollto d-none d-lg-flex">{{this.auth.userName}} Profile</a>
+            <a   [routerLink]="['profile']" class="book-a-table-btn scrollto d-none d-lg-flex">{{this.auth.userName}} Profile</a>
             <a (click)="this.auth.logout()"  [routerLink]="['/login']" class="book-a-table-btn scrollto d-none d-lg-flex">Log out</a>
            
           </ng-container>
