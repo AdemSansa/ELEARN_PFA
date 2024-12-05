@@ -2,9 +2,13 @@ package com.Elearning.demo.MainPack.Model;
 
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Document(collection = "Courses")
 public class Course {
@@ -15,6 +19,10 @@ public class Course {
     private String author; // Teacher ID or name
     private Date createdDate;
     private Date updatedDate;
+
+    @Field
+    private List<Lesson> lessons = new ArrayList<>();
+
 
     // Getters and Setters
     public String getId() {
@@ -63,6 +71,13 @@ public class Course {
 
     public void setUpdatedDate(Date updatedDate) {
         this.updatedDate = updatedDate;
+    }
+    public List<Lesson> getLessons() {
+        return lessons;
+    }
+
+    public void setLessons(List<Lesson> lessons) {
+        this.lessons = lessons;
     }
 
 }
