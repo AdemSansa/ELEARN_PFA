@@ -15,6 +15,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { CoursesComponent } from './components/courses/courses.component';
 import { UserCoursesComponent } from './components/user-courses/user-courses.component';
 import { LessonsComponent } from './components/lessons/lessons.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { LessonsComponent } from './components/lessons/lessons.component';
     CoursesComponent,
     UserCoursesComponent,
     LessonsComponent,
+    ProfileComponent,
   ],
   imports: [
     ReactiveFormsModule,
