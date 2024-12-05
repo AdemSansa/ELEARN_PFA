@@ -12,16 +12,9 @@ import { AuthService } from 'src/app/services/auth.service';
 
    
       ngOnInit(): void {
-        this.auth.getUserInfo().subscribe(
-          (userInfo) => {
-            console.log('User Info:', userInfo);
-            // You can store the user info in a service or a state management library for reuse
-            this.user = userInfo;
-          },
-          (error) => {
-            console.error('Failed to fetch user info:', error);
-          }
-        );
+        const user = this.auth.decodeToken();
+        this.user = user;
+        
     
    
   }
