@@ -1,0 +1,40 @@
+.profile-form {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .profile-form div {
+    margin-bottom: 1rem;
+  }
+  
+  .profile-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  
+  .profile-form input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+  }
+  
+  .profile-form button {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+  }
+  
+  .profile-form button:hover {
+    background-color: #0056b3;
+  }
+  

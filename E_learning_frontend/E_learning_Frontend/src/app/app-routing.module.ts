@@ -9,6 +9,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { UserCoursesComponent } from './components/user-courses/user-courses.component';
 import { LessonsComponent } from './components/lessons/lessons.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { CompleteProfileComponent } from './components/complete-profile/complete-profile.component';
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' }, 
 { path: 'login', component: LoginComponent },
@@ -20,6 +21,7 @@ const routes: Routes = [
 {path :"MyCourses",component: UserCoursesComponent},
 { path: 'lessons/:courseId', component: LessonsComponent },
 { path: 'profile',component:ProfileComponent },
+{path: 'Complete-profile', component: CompleteProfileComponent }
 
  // Route for lessons
 

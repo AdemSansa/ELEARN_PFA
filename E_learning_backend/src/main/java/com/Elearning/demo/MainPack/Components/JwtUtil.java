@@ -1,9 +1,6 @@
 package com.Elearning.demo.MainPack.Components;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 
 import javax.crypto.SecretKey;
@@ -64,6 +61,25 @@ public class JwtUtil {
     }
     public String extractUserEmail(String token) {
         Claims claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+
         return claims.get("email", String.class); // Extract user ID
     }
+
+    // Extract User ID from Token
+    public String extractUserId(String token) {
+        try {
+            Claims claims = Jwts.parser()
+                    .setSigningKey(SECRET_KEY)
+                    .parseClaimsJws(token)
+                    .getBody();
+            return claims.get("id", String.class); // Extract user ID
+        } catch (ExpiredJwtException e) {
+            // Handle token expiration
+            throw new RuntimeException("Token has expired", e);
+        } catch (JwtException e) {
+            // Handle other token parsing issues
+            throw new RuntimeException("Invalid token", e);
+        }
+    }
+
 }

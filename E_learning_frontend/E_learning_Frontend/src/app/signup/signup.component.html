@@ -21,6 +21,7 @@
 					<form (ngSubmit)="onRegister()">
             <input class="form-control" type="text" name="name"  [(ngModel)]="name" placeholder="Full Name" required>
             <input class="form-control" type="email" name="email" [(ngModel)]="email" placeholder="E-mail Address" required>
+			
             <input class="form-control" type="password" name="password" [(ngModel)]="password" placeholder="Password" required>
             <div class="form-button d-flex">
                 <button id="submit" type="submit" class="btn btn-primary">Register</button>
