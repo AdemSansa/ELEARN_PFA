@@ -5,11 +5,11 @@ import { EnrollmentService } from 'src/app/services/Enrollment_service/enrollmen
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 @Component({
-  selector: 'app-courses',
-  templateUrl: './courses.component.html',
-  styleUrls: ['./courses.component.css']
+  selector: 'app-teacher-courses',
+  templateUrl: './teacher-courses.component.html',
+  styleUrls: ['./teacher-courses.component.css']
 })
-export class CoursesComponent implements OnInit {
+export class TeacherCoursesComponent  implements OnInit {
   
   courses: any[] = [];
   userId: string = '';
@@ -30,52 +30,12 @@ export class CoursesComponent implements OnInit {
       console.log(this.auth.getIsTeacher());
       
   
-      // Fetch the courses the user is enrolled in
-      if (this.otherUser) {
-        this.enrollmentService.getIDSOfcoursesEnrolled(this.otherUser).subscribe((enrolledCourses) => {
-          
-      
-          
-          this.enrolledCourses = enrolledCourses;
-        });
-      }
-    this.loadCourses();
+    this.getCoursesByAuthor(this.TeacherName);
 
-    
-  }
-  IsEnrolled(courseId: string): boolean 
-  {
-    return this.enrolledCourses.includes(courseId);
   }
 
   
-   // Load all courses
-   loadCourses(): void {
-    this.courseService.getAllCourses().subscribe((data) => {
-      
-      this.courses = data;
-    });
-  }
-   // Enroll user in a course
-   enroll(courseId: string): void {
  
-    var user = this.auth.decodeToken();
-    this.userId = user.id
-    
-    this.enrollmentService.enrollInCourse(this.userId, courseId).subscribe(
-      (response) => {
-        console.log('Enrollment successful:', response);
-        alert('Enrollment successful!');
-      },
-      (error) => {
-        console.error('Error enrolling:', error);
-        alert('Already Enrolled In this Course .');
-      }
-    );
-  }
-
-
-  // Fetch courses by author
   getCoursesByAuthor(author: string): void {
     this.courseService.getCourseByAuthor(author).subscribe((data) => {
       this.courses = data;
@@ -113,11 +73,34 @@ export class CoursesComponent implements OnInit {
         this.courseService.createCourse(newCourse).subscribe(
           (response) => {
             Swal.fire('Success', 'Course added successfully!', 'success');
-            this.loadCourses(); 
+            this.getCoursesByAuthor(this.TeacherName);
           },
           (error) => {
             Swal.fire('Error', 'Failed to add course.', 'error');
             console.error('Error adding course:', error);
+          }
+        );
+      }
+    });
+  }
+  deleteCourse(courseId: string): void {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this course!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.courseService.deleteCourse(courseId).subscribe(
+          () => {
+            Swal.fire('Deleted!', 'The course has been deleted.', 'success');
+            this.getCoursesByAuthor(this.TeacherName); 
+          },
+          (error) => {
+            Swal.fire('Error!', 'There was an issue deleting the course.', 'error');
+            console.error('Error deleting course:', error);
           }
         );
       }

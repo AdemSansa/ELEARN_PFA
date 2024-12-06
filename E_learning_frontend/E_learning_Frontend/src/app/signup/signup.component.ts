@@ -14,10 +14,11 @@ export class SignupComponent {
   name: string = '';
   email: string = '';
   password: string = '';
-
-  constructor(private authService: AuthService, private router: Router) {}
-
+  secretKey: string = '';  
+  isTeacher: boolean = true;
+  constructor(public authService: AuthService, private router: Router) {}
   ngOnInit(): void {
+    this.isTeacher = this.authService.regTeach;
     google.accounts.id.initialize({
       client_id: '564318137355-aa2ut1tinklepfman8n40uma9ud4vnca.apps.googleusercontent.com',
       callback: (response: any) => this.handleGoogleLogin(response),
@@ -61,23 +62,38 @@ export class SignupComponent {
     }
   }
 
+ 
   onRegister(): void {
-    this.authService.register(this.name, this.email, this.password).subscribe(
-      (response) => {
-        console.log('Registration successful', response);
-        this.router.navigate(['/login']);
-        this.showAlertSig(); 
-      },
-      (error) => {
-        console.error('Registration failed', error);
-        if (error.status === 400) {
-          this.showAlertError(error.error);
-        } else {
-          this.showAlertError(error.error.message || 'Unknown error');
+    if (this.isTeacher) {
+      this.authService.registerTeacher(this.name, this.email, this.password, this.secretKey).subscribe(
+        (response) => {
+          console.log('Teacher registration successful', response);
+          this.router.navigate(['/login']);
+          this.showAlertSig();
+        },
+        (error) => {
+          console.error('Teacher registration failed', error);
+          this.showAlertError(error.error);        }
+      );
+    } else {
+      this.authService.register(this.name, this.email, this.password).subscribe(
+        (response) => {
+          console.log('Registration successful', response);
+          this.showAlertSig();
+          this.router.navigate(['/login']);
+        },
+        (error) => {
+          console.error('Registration failed', error);
+          if (error.status === 400) {
+            this.showAlertError(error.error);
+          } else {
+            this.showAlertError(error.error.message || 'Unknown error');
+          }
         }
-      }
-    );
+      );
+    }
   }
+
 
   async showAlert() {
     await Swal.fire({

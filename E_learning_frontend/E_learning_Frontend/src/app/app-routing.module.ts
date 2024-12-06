@@ -7,6 +7,7 @@ import { CoursesComponent } from './components/courses/courses.component';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { UserCoursesComponent } from './components/user-courses/user-courses.component';
+import { TeacherCoursesComponent } from './components/courses/teacher-courses/teacher-courses.component';
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' }, 
 { path: 'login', component: LoginComponent },
@@ -15,6 +16,7 @@ const routes: Routes = [
 { path: 'reset-password', component: ResetPasswordComponent }, 
 { path : 'Admin', component :UserListComponent} ,
 {path :"courses",component: CoursesComponent},
+{path :"Teachercourses",component: TeacherCoursesComponent},
 {path :"MyCourses",component: UserCoursesComponent},
 ]
 

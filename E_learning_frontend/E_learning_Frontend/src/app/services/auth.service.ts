@@ -1,3 +1,6 @@
+
+
+
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -12,12 +15,31 @@ export class AuthService {
   private apiUrl = 'http://localhost:8081/auth';
   private user: any = null; 
   userName: string | null = null;
-
+  private isTeacher: boolean = false;
   private currentUserSubject: BehaviorSubject<any>;
+  userRole: any;
+  regTeach: boolean =false;
 
   constructor(private http: HttpClient, private router: Router) {
-    this.currentUserSubject = new BehaviorSubject<any>(this.decodeToken());
-    this.userName = this.decodeToken()?.name || null;
+    const decodedToken = this.decodeToken();
+    this.currentUserSubject = new BehaviorSubject<any>(decodedToken);
+    this.userName = decodedToken?.name || null;
+    this.userRole = decodedToken?.role?.[0] || null;
+    this.setIsTeacher(); // Ensure role is set correctly at the start
+  }
+
+  setIsTeacher(): void {
+    this.isTeacher = this.userRole === "Teacher"; 
+    localStorage.setItem('isTeacher', JSON.stringify(this.isTeacher));
+  }
+  
+
+  getIsTeacher(): boolean {
+    const storedIsTeacher = localStorage.getItem('isTeacher');
+    if (storedIsTeacher !== null) {
+      return JSON.parse(storedIsTeacher);
+    }
+    return this.isTeacher;  
   }
 
   login(email: string, password: string): Observable<any> {
@@ -25,9 +47,15 @@ export class AuthService {
     localStorage.setItem('currentUser', JSON.stringify(this.currentUserSubject.value));
     return this.http.post(`${this.apiUrl}/login`, { email, password });
   }
+ 
 
   register(name: string, email: string, password: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/register`, { name, email, password });
+  }
+
+  registerTeacher(name: string, email: string, password: string, secretKey: string): Observable<any> {
+    const body = { name, email, password, secretKey };
+    return this.http.post(`${this.apiUrl}/teacher-register`, body);
   }
 
   googleLogin(token: string): Observable<any> {
@@ -54,8 +82,6 @@ export class AuthService {
     );
   }
 
-
-
   isLoggedIn(): boolean {
     const token = this.getToken();
     return token !== null && token.length > 0;
@@ -74,8 +100,7 @@ export class AuthService {
     const token = localStorage.getItem('jwtToken');
     if (token) {
       try {
-        const decodedToken = jwtDecode(token);  // Decoding the JWT token
-        return decodedToken;  // Return decoded token (user info)
+        return jwtDecode(token);
       } catch (error) {
         console.error('Error decoding token', error);
         return null;
@@ -109,7 +134,8 @@ export class AuthService {
       tap((response: any) => {
         // Assuming 'response' contains the user info, and it has a 'name' field.
         this.userName = response?.name;
-         // Extract and store the name
+        this.userRole = response?.role?.[0];
+        this.setIsTeacher();  // Set teacher flag based on the role
       })
     );
   }
@@ -118,9 +144,10 @@ export class AuthService {
   get userNameValue(): string | null {
     return this.userName;
   }
+
   getUserId(): string | null {
     const decodedToken = this.decodeToken();
     return decodedToken ? decodedToken.id : null;
   }
- 
 }
+

@@ -3,6 +3,7 @@ package com.Elearning.demo.MainPack.controller;
 
 import com.Elearning.demo.MainPack.Components.JwtUtil;
 import com.Elearning.demo.MainPack.Config.Authservice;
+import com.Elearning.demo.MainPack.Config.SecurityConfig;
 import com.Elearning.demo.MainPack.Model.User;
 import com.Elearning.demo.MainPack.Repository.UserRepository;
 import com.Elearning.demo.MainPack.Services.EmailService;
@@ -18,10 +19,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -44,8 +42,41 @@ public class AuthController {
 
     @Autowired
     private RestTemplate restTemplate;
+    private List<String> teacherKeys = new ArrayList<>();
+
+    public AuthController() {
+        teacherKeys.add("aabbccdd");
+        teacherKeys.add("123456789");
+        teacherKeys.add("00000000");
+        teacherKeys.add("190603");
+        teacherKeys.add("23462378");
+        teacherKeys.add("20242025");
+    }
 
 
+    @PostMapping("/teacher-register")
+    public ResponseEntity<?> registerTeacher(@RequestBody Map<String, String> requestBody) {
+        String email = requestBody.get("email");
+        String name = requestBody.get("name");
+        String password = requestBody.get("password");
+        String secretKey = requestBody.get("secretKey");
+        if (teacherKeys.contains(secretKey)) {
+            teacherKeys.remove(secretKey);
+            User user = new User();
+            user.setName(name);
+            user.setEmail(email);
+            user.setPassword(SecurityConfig.passwordEncoder().encode(password));
+            user.setRoles(List.of("Teacher"));
+            user.setBlocked(false);
+            user.setFailedAttempts(0);
+            userRepository.save(user);
+            return ResponseEntity.ok(new HashMap<String, String>() {{
+                put("message", "Teacher registration successful");
+            }});
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid secret key.");
+        }
+    }
     @PostMapping("/forgot-password")
     public ResponseEntity<?> forgotPassword(@RequestBody Map<String, String> requestBody) {
         String email = requestBody.get("email");
