@@ -16,6 +16,7 @@ import { CoursesComponent } from './components/courses/courses.component';
 import { UserCoursesComponent } from './components/user-courses/user-courses.component';
 import { LessonsComponent } from './components/lessons/lessons.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { CompleteProfileComponent } from './components/complete-profile/complete-profile.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ProfileComponent } from './components/profile/profile.component';
     UserCoursesComponent,
     LessonsComponent,
     ProfileComponent,
+    CompleteProfileComponent,
   ],
   imports: [
     ReactiveFormsModule,

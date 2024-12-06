@@ -105,13 +105,8 @@ export class AuthService {
       throw new Error('User not logged in');
     }
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get(`${this.apiUrl}/user-info`, { headers }).pipe(
-      tap((response: any) => {
-        // Assuming 'response' contains the user info, and it has a 'name' field.
-        this.userName = response?.name;
-         // Extract and store the name
-      })
-    );
+    console.log('Headers:', headers);
+    return this.http.get(`${this.apiUrl}/user-info`, { headers });
   }
 
   // Get the current userName
@@ -122,5 +117,12 @@ export class AuthService {
     const decodedToken = this.decodeToken();
     return decodedToken ? decodedToken.id : null;
   }
+  completeProfile(user: any): Observable<any> {
+
+    const url = `${this.apiUrl}/Complete_Profile`;
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post(url, user, { headers });
+  }
+
  
 }
