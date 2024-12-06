@@ -1,0 +1,12 @@
+<br><br><br><br><br><br><h1>Lessons for Course {{ courseId }}</h1>
+
+<div *ngIf="lessons.length > 0">
+  <ul>
+    <li *ngFor="let lesson of lessons">
+      <h3>{{ lesson.title }}</h3>
+      <p>{{ lesson.content }}</p>
+    </li>
+  </ul>
+</div>
+
+<p *ngIf="lessons.length === 0">No lessons available for this course.</p>

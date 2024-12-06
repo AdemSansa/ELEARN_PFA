@@ -102,7 +102,7 @@ public class AuthController {
     public ResponseEntity <?>  register(@RequestBody User user) {
 
         try {
-            User registeredUser = authservice.registerUser(user.getName(), user.getEmail(), user.getPassword());
+            User registeredUser = authservice.registerUser(user);
             return ResponseEntity.ok(registeredUser);
 
         } catch (Exception e) {
@@ -191,12 +191,13 @@ public class AuthController {
         }
 
         String token = authHeader.substring(7); // Extract token
-
+        System.out.println("this token is h  : "+token);
         //Extract User from token
-        String email = jwtUtil.extractUserEmail(token);
+        String id = jwtUtil.extractUserId(token);
+        System.out.println(id);
 
 
-        Optional<User> user = userRepository.findByEmail(email);
+        Optional<User> user = userRepository.findById(id);
         if (user.isPresent()) {
             // Customize the response as per your requirements
             Map<String, Object> userInfo = new HashMap<>();
@@ -204,9 +205,29 @@ public class AuthController {
             userInfo.put("email", user.get().getEmail());
             userInfo.put("name", user.get().getName());
             userInfo.put("role", user.get().getRoles());
+            userInfo.put("address", user.get().getAdress());
+            userInfo.put("city", user.get().getCity());
+            userInfo.put("country", user.get().getCountry());
+            userInfo.put("birthDate", user.get().getBirthDate());
+            userInfo.put("phoneNumber", user.get().getPhoneNumber());
+            userInfo.put("facebookURL", user.get().getFacebookURL());
+            userInfo.put("githubURL", user.get().getGithubURL());
+            userInfo.put("linkedinURL", user.get().getLinkedinURL());
+
             return ResponseEntity.ok(userInfo);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+
+    }
+    @PostMapping("/Complete_Profile")
+    public ResponseEntity<?> completeProfile(@RequestBody User user) {
+        try {
+            User updatedUser = authservice.CompleteProfile(user);
+            System.out.println(updatedUser);
+            return ResponseEntity.ok(updatedUser);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 

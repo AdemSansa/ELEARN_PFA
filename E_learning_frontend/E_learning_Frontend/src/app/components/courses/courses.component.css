@@ -1,3 +1,5 @@
+
+
 *{
     margin: 0;
     padding: 0;
@@ -15,41 +17,48 @@
   }
   
   .wrapper{
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
     max-width: 80rem;
+
+   
+    
   }
   
   .cols {
     display: flex;
-    flex-wrap: wrap; /* Allows wrapping of cards when space is insufficient */
-    justify-content: center; /* Centers cards in the row */
-    gap: 1rem; /* Adds space between cards (optional) */
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 1rem;
+    overflow: hidden; /* Prevent overflow issues */
 }
-
 .col {
-    width: calc(25% - 1rem); /* Adjusts width for 4 cards per row */
+    flex: 1 1 auto;
+    min-width: 200px; /* Set a minimum width for cards */
+    margin: 0.5rem;
+    width: calc(20% - 1rem); /* 5 cards per row (20% width) */
     margin: 0.5rem; /* Optional: Adds spacing between cards */
     box-sizing: border-box; /* Ensures padding/margin are included in the width */
 }
 
 @media screen and (max-width: 64rem) {
     .col {
-        width: calc(33.33% - 1rem); /* 3 cards per row */
+        width: calc(33.33% - 1rem); /* 3 cards per row for medium screens */
     }
 }
 
 @media screen and (max-width: 48rem) {
     .col {
-        width: calc(50% - 1rem); /* 2 cards per row */
+        width: calc(50% - 1rem); /* 2 cards per row for smaller screens */
     }
 }
 
 @media screen and (max-width: 32rem) {
     .col {
-        width: 100%; /* 1 card per row */
+        width: 100%; /* 1 card per row for mobile screens */
     }
 }
+
 
   
   .container{
@@ -496,3 +505,4 @@
     fill: #fffdef;
   }
   
+

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { CourseService } from 'src/app/services/Course_Service/course.service';
 import { EnrollmentService } from 'src/app/services/Enrollment_service/enrollment.service';
@@ -13,7 +14,7 @@ export class UserCoursesComponent {
   courses: any[] = [];
   userId: string | null = null;
 
-  constructor(private EnrollmentService: EnrollmentService,private auth:AuthService) {}
+  constructor(private EnrollmentService: EnrollmentService,private auth:AuthService ,private   router: Router){};
 
   ngOnInit(): void {
     // Get user ID (assume you store it in local storage or decoded token)
@@ -33,4 +34,10 @@ export class UserCoursesComponent {
       );
     }
   }
+  StartCourse(courseId: string): void {
+    // Redirect user to Lessons Page
+    this.router.navigate(['/lessons', courseId]);
+  
+  }
+
 }

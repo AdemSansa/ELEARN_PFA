@@ -57,4 +57,6 @@ public class CourseController {
         List<Course> courses = courseService.getCoursesByAuthor(author);
         return ResponseEntity.ok(courses);
     }
+
+
 }

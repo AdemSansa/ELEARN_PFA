@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Route, Router, RouterFeature } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { CourseService } from 'src/app/services/Course_Service/course.service';
 import { EnrollmentService } from 'src/app/services/Enrollment_service/enrollment.service';
@@ -19,7 +20,9 @@ export class CoursesComponent implements OnInit {
   TeacherName: any = this.auth.userName;
   
   
-  constructor(private courseService : CourseService ,private enrollmentService:EnrollmentService ,public auth:AuthService) { }
+
+  constructor(private courseService : CourseService ,private enrollmentService:EnrollmentService ,public auth:AuthService,private router:Router) { }
+
 
 
 
@@ -57,23 +60,40 @@ export class CoursesComponent implements OnInit {
     });
   }
    // Enroll user in a course
+   
    enroll(courseId: string): void {
- 
-    var user = this.auth.decodeToken();
-    this.userId = user.id
-    
-    this.enrollmentService.enrollInCourse(this.userId, courseId).subscribe(
-      (response) => {
-        console.log('Enrollment successful:', response);
-        alert('Enrollment successful!');
-      },
-      (error) => {
-        console.error('Error enrolling:', error);
-        alert('Already Enrolled In this Course .');
-      }
-    );
-  }
+    const user = this.auth.decodeToken();
+    this.userId = user.id;
+  
+    // SweetAlert confirmation dialog
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Do you want to enroll in this course?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, enroll me!',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Proceed with enrollment if confirmed
+        this.enrollmentService.enrollInCourse(this.userId, courseId).subscribe(
+          (response) => {
+            console.log('Enrollment successful:', response);
+            Swal.fire('Success', 'Enrollment successful!', 'success');
+            this.router.navigate([this.router.url]);
 
+          },
+          (error) => {
+            console.error('Error enrolling:', error);
+            Swal.fire('Error', 'Already Enrolled In this Course.', 'error');
+          }
+        );
+      } else {
+        // Optional: Handle cancellation
+        console.log('Enrollment cancelled by the user.');
+      }
+    });
+  }
 
   // Fetch courses by author
   getCoursesByAuthor(author: string): void {

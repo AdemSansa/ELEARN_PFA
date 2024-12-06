@@ -138,6 +138,7 @@ export class AuthService {
         this.setIsTeacher();  // Set teacher flag based on the role
       })
     );
+
   }
 
   // Get the current userName
@@ -149,5 +150,14 @@ export class AuthService {
     const decodedToken = this.decodeToken();
     return decodedToken ? decodedToken.id : null;
   }
+
+  completeProfile(user: any): Observable<any> {
+
+    const url = `${this.apiUrl}/Complete_Profile`;
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post(url, user, { headers });
+  }
+
+ 
 }
 

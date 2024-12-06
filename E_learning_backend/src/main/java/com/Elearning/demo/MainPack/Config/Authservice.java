@@ -40,25 +40,47 @@ public class  Authservice {
         return passwordEncoder.matches(Rawpassword, EncodedPassword);
     }
 
+    public User CompleteProfile(User user)
+    {
+        User newUser = userRepository.findById(user.getId()).orElseThrow(() -> new RuntimeException("User not found"));
+        newUser.setAdress(user.getAdress());
+        newUser.setCity(user.getCity());
+        newUser.setCountry(user.getCountry());
+        newUser.setBirthDate(user.getBirthDate());
+        newUser.setPhoneNumber(user.getPhoneNumber());
+        newUser.setFacebookURL(user.getFacebookURL());
+        newUser.setGithubURL(user.getGithubURL());
+        newUser.setLinkedinURL(user.getLinkedinURL());
+        newUser.setTwitterURL(user.getTwitterURL());
+        newUser.setInstagramURL(user.getInstagramURL());
+        System.out.println(newUser.toString());
+        return userRepository.save(newUser);
+    }
 
 
-
-    public User registerUser(String username , String email , String password)
+    public User registerUser(User user)
     {
 
-        if(userRepository.findByName((username)).isPresent())
+        if(userRepository.findByName(user.getName()).isPresent())
         {
             throw new RuntimeException("User already exists");
         }
-        if(userRepository.findByEmail(email).isPresent())
+        if(userRepository.findByEmail(user.getEmail()).isPresent())
         {
             throw new RuntimeException("Email already exists");
         }
         User newUser = new User();
-        newUser.setName(username);
-        newUser.setEmail(email);
+        newUser.setName(user.getName());
+        newUser.setEmail(user.getEmail());
         newUser.set_ROLE("ROLE_USER");
-        newUser.setPassword(SecurityConfig.passwordEncoder().encode(password));
+        newUser.setPassword(SecurityConfig.passwordEncoder().encode(user.getPassword()));
+        newUser.setAdress(user.getAdress());
+        newUser.setCity(user.getCity());
+        newUser.setCountry(user.getCountry());
+        newUser.setBirthDate(user.getBirthDate());
+        newUser.setPhoneNumber(user.getPhoneNumber());
+        newUser.setFacebookURL(user.getFacebookURL());
+        newUser.setGithubURL(user.getGithubURL());
         newUser.setBlocked(false);
         newUser.setFailedAttempts(0);
         newUser.setResetToken("");

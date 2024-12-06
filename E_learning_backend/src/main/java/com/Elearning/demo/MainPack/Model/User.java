@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Document(collection = "User")
@@ -22,10 +23,106 @@ public class User {
     private String name;
     private String email;
     private String password;
+
+    //Added Fields For profile
+    private int PhoneNumber;
+    private String Adress;
+    private String City;
+    private String Country;
+    private Date BirthDate;
+    private String FacebookURL;
+    private String GithubURL;
+    private String LinkedinURL;
+    private String TwitterURL;
+    private String InstagramURL;
+
+
     private String resetToken;
     private LocalDateTime tokenExpiryDate;
     private int  failedAttempts;
     private boolean isBlocked;
+
+    public int getPhoneNumber() {
+        return PhoneNumber;
+    }
+
+    public void setPhoneNumber(int phoneNumber) {
+        PhoneNumber = phoneNumber;
+    }
+
+    public String getAdress() {
+        return Adress;
+    }
+
+    public void setAdress(String adress) {
+        Adress = adress;
+    }
+
+    public String getCity() {
+        return City;
+    }
+
+    public void setCity(String city) {
+        City = city;
+    }
+
+    public String getCountry() {
+        return Country;
+    }
+
+    public void setCountry(String country) {
+        Country = country;
+    }
+
+    public Date getBirthDate() {
+        return BirthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        BirthDate = birthDate;
+    }
+
+    public String getFacebookURL() {
+        return FacebookURL;
+    }
+
+    public void setFacebookURL(String facebookURL) {
+        FacebookURL = facebookURL;
+    }
+
+    public String getGithubURL() {
+        return GithubURL;
+    }
+
+    public void setGithubURL(String githubURL) {
+        GithubURL = githubURL;
+    }
+
+    public String getLinkedinURL() {
+        return LinkedinURL;
+    }
+
+    public void setLinkedinURL(String linkedinURL) {
+        LinkedinURL = linkedinURL;
+    }
+
+    public String getTwitterURL() {
+        return TwitterURL;
+    }
+
+    public void setTwitterURL(String twitterURL) {
+        TwitterURL = twitterURL;
+    }
+
+    public String getInstagramURL() {
+        return InstagramURL;
+    }
+
+    public void setInstagramURL(String instagramURL) {
+        InstagramURL = instagramURL;
+    }
+
+
     private List <String> _ROLE = new ArrayList<>();
 
     public void set_ROLE(String role) {
@@ -111,6 +208,31 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", PhoneNumber=" + PhoneNumber +
+                ", Adress='" + Adress + '\'' +
+                ", City='" + City + '\'' +
+                ", Country='" + Country + '\'' +
+                ", BirthDate=" + BirthDate +
+                ", FacebookURL='" + FacebookURL + '\'' +
+                ", GithubURL='" + GithubURL + '\'' +
+                ", LinkedinURL='" + LinkedinURL + '\'' +
+                ", TwitterURL='" + TwitterURL + '\'' +
+                ", InstagramURL='" + InstagramURL + '\'' +
+                ", resetToken='" + resetToken + '\'' +
+                ", tokenExpiryDate=" + tokenExpiryDate +
+                ", failedAttempts=" + failedAttempts +
+                ", isBlocked=" + isBlocked +
+                ", _ROLE=" + _ROLE +
+                '}';
     }
 }
 

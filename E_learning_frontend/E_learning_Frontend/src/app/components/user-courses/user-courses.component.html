@@ -18,9 +18,16 @@
                 <div class="back">
                     <div class="inner">
                         <p>{{ course.course.description }}</p>
-                        
+                        <a class="fancy"  (click)="StartCourse(course.course.id)">
+                            <span class="top-key"></span>
+                            <span class="text"  >Start Course  </span>
+                            <span class="bottom-key-1"></span>
+                            <span class="bottom-key-2"></span>
+                          </a>
                     </div>
+                    
                 </div>
+               
             </div>
         </div>
     </div>
