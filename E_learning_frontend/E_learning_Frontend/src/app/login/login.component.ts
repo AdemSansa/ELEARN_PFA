@@ -172,7 +172,25 @@ private decode(token:string){
       );
     }
   }
-
+  onCreateAccount() {
+    Swal.fire({
+      title: 'Choose Your Role',
+      text: 'Please select your role:',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Teacher',
+      cancelButtonText: 'Student',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.router.navigate(['/register']);
+        this.authService.regTeach=true;
+      } else if (result.isDismissed) {
+        this.router.navigate(['register']);
+        this.authService.regTeach=false;
+      }
+    });
+  }
 
 
   onSubmit() {
@@ -182,6 +200,7 @@ private decode(token:string){
         this.authService.storeToken(token);
         console.log('Login successful:', token);
         this.router.navigate(['/home']);
+console.log(this.authService.userRole);
 
       },
       error: (err) => {
@@ -190,6 +209,7 @@ private decode(token:string){
       },
     });
   }
+
 
   async showAlert() {
     await Swal.fire({

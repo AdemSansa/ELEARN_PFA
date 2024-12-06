@@ -1,5 +1,6 @@
 <div *ngIf="ismenuVisble">
 <div *ngIf="this.auth.isLoggedIn()" >
+  <ng-container *ngIf="!this.auth.getIsTeacher()">
   <header id="header" class="fixed-top d-flex align-items-cente" >
    
      <img src="assets/logo1.png" alt="Logo" class="logo-img" >
@@ -11,13 +12,16 @@
          <nav id="navbar"   class="navbar order-last order-lg-0" >
            <ul>             
             <li><a class="nav-link scrollto" [routerLink]="['home']">Home </a></li>
+            <li><a class="nav-link scrollto" [routerLink]="['courses']"  >Available Courses</a></li>
+            <li><a class="nav-link scrollto" [routerLink]="['MyCourses']"  >My Learning</a></li>
+                          <li><a class="nav-link scrollto" [routerLink]="['Complete-profile']"  >Complete profile testing </a></li>
 
-             <li><a class="nav-link scrollto active" [routerLink]="['/acceuil']">My Courses</a></li>
              <li><a class="nav-link scrollto">About</a></li>
              <li><a class="nav-link scrollto">Contact</a></li>
-             <li><a class="nav-link scrollto" [routerLink]="['courses']"  >Available Courses</a></li>
-             <li><a class="nav-link scrollto" [routerLink]="['MyCourses']"  >My Learning</a></li>
-             <li><a class="nav-link scrollto" [routerLink]="['Complete-profile']"  >Complete profile testing </a></li>
+
+
+  
+
 
 
            </ul>
@@ -33,6 +37,38 @@
          
        </div>
      </header >
+    </ng-container>
+    <ng-container *ngIf="this.auth.getIsTeacher()">
+      <header id="header" class="fixed-top d-flex align-items-cente" >
+       
+         <img src="assets/logo1.png" alt="Logo" class="logo-img" >
+         <div class="container-fluid container-xl d-flex align-items-center justify-content-lg-between">
+       
+             <h1 class="logo me-auto me-lg-0"><a href="index.html">Learnify</a></h1>
+             
+            
+             <nav id="navbar"   class="navbar order-last order-lg-0" >
+               <ul>             
+                <li><a class="nav-link scrollto" [routerLink]="['home']">Home </a></li>
+    
+                 <li><a class="nav-link scrollto active" [routerLink]="['/Teachercourses']">My Courses</a></li>
+                 <li><a class="nav-link scrollto">About</a></li>
+                 <li><a class="nav-link scrollto">Contact</a></li>
+                 <li><a class="nav-link scrollto" [routerLink]="['courses']"  >Available Courses</a></li>    
+               </ul>
+               <i class="bi bi-list mobile-nav-toggle"></i>
+              </nav><ng-container *ngIf="this.auth.isLoggedIn()">
+                <a    class="book-a-table-btn scrollto d-none d-lg-flex">{{this.auth.userName}} Profile</a>
+                <a (click)="this.auth.logout()"  [routerLink]="['/login']" class="book-a-table-btn scrollto d-none d-lg-flex">Log out</a>
+               
+              </ng-container>
+                <ng-container *ngIf="!this.auth.isLoggedIn()">
+                <a  [routerLink]="['/login']" class="book-a-table-btn scrollto d-none d-lg-flex">Log In</a>
+                <a  [routerLink]="['/register']" class="book-a-table-btn scrollto d-none d-lg-flex">Sign Up</a></ng-container>
+             
+           </div>
+         </header >
+        </ng-container>
    </div>
    <div *ngIf="!this.auth.isLoggedIn()">
     <header id="header" class="fixed-top d-flex align-items-cente" >
@@ -46,9 +82,7 @@
            <nav id="navbar"  class="navbar order-last order-lg-0" >
              <ul>             
               <li><a class="nav-link scrollto">Home {{this.auth.userName}} </a></li>
-  
-               <li><a class="nav-link scrollto active" [routerLink]="['/acceuil']">My Courses</a></li>
-               <li><a class="nav-link scrollto">About</a></li>
+                 <li><a class="nav-link scrollto">About</a></li>
                <li><a class="nav-link scrollto">Contact</a></li>
   
              </ul>

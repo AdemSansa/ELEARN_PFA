@@ -10,17 +10,20 @@ export class CourseService {
 
   constructor(private http :HttpClient) { }
 
-  //Get All Courses
   getAllCourses(){
     return this.http.get<any>(`${this.apiUrl}`);
   }
 
-  //Get Course By Author
   getCourseByAuthor(author: string){
     return this.http.get<any>(`${this.apiUrl}/author/${author}`);
   }
 
    
-
+  createCourse(course: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}`, course);
+  }
+  deleteCourse(id: string): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/${id}`);
+  }
 
 }

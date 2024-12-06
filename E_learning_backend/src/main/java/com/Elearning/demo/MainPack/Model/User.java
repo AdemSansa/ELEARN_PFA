@@ -1,3 +1,10 @@
+
+
+
+
+
+
+
 package com.Elearning.demo.MainPack.Model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -118,15 +125,17 @@ public class User {
 
     private List <String> _ROLE = new ArrayList<>();
 
+    public void set_ROLE(String role) {
+        this._ROLE.add(role);
+    }
 
     public List<String> getRoles() {
         return _ROLE;
     }
-
     public void setRoles(List<String> roles) {
         this._ROLE = roles;
     }
-    public void set_ROLE(String role) {
+    public void addRole(String role) {
         this._ROLE.add(role);
     }
 
@@ -226,3 +235,4 @@ public class User {
                 '}';
     }
 }
+

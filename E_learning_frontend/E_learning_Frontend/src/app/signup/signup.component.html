@@ -1,4 +1,5 @@
 <div class="form-body form-left">
+
 	<div class="iofrm-layout">
 		<div class="img-holder text-start">
 			<div class="bg"></div>
@@ -27,19 +28,44 @@
                 <button id="submit" type="submit" class="btn btn-primary">Register</button>
                 <a [routerLink]="'/login'" class="btn btn-outline-primary">Login</a>
             </div>
-        </form>
-		<div class="other-links">
-				
-			<span style="font-size:large;
-			font-weight: bold;">Or login with</span><a  id ="google-btn"><i class="fab fa-google"></i></a>
-		</div>
-		
-				</div>
-			</div>
-		</div>
-	</div>
+        </div>
+        <div class="form-holder">
+            <div class="form-content justify-content-end">
+                <div class="form-items">
+                    <div class="website-logo-inside logo-normal">
+                        <a href="index.html">
+                            <div class="logo">
+                                <img class="logo-size" src="assets/logo.jpg" alt="">
+                            </div>
+                        </a>
+                    </div>
+                    <h3 class="font-md">Sign-up</h3>
+                    <p>Access to the most powerful tool in the entire design and web industry.</p>
+                    <form (ngSubmit)="onRegister()">
+                        <input class="form-control" type="text" name="name" [(ngModel)]="name" placeholder="Full Name" required>
+                        <input class="form-control" type="email" name="email" [(ngModel)]="email" placeholder="E-mail Address" required>
+                        <input class="form-control" type="password" name="password" [(ngModel)]="password" placeholder="Password" required>
+                        
+                        <!-- Teacher registration option -->
+                        <div>
+                            <input type="checkbox" id="teacherCheckbox" [(ngModel)]="isTeacher">
+                        </div>
+
+                        <!-- Teacher Secret Key input field -->
+                        <div *ngIf="this.authService.regTeach==true" class="teacher-fields">
+                            <input class="form-control" type="text" name="teacherSecretKey" [(ngModel)]="secretKey" placeholder="Teacher Secret Key" required>
+                        </div>
+
+                        <div class="form-button d-flex">
+                            <button id="submit" type="submit" class="btn btn-primary">Register</button>
+                            <a [routerLink]="'/login'" class="btn btn-outline-primary">Login</a>
+                        </div>
+                    </form>
+                    <div class="other-links">
+                        <span style="font-size:large; font-weight: bold;">Or login with</span><a id="google-btn"><i class="fab fa-google"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/popper.min.js"></script>
-<script src="assets/js/bootstrap.bundle.min.js"></script>
-<script src="assets/js/main.js"></script>

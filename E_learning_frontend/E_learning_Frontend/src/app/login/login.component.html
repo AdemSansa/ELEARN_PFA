@@ -24,8 +24,7 @@
 			
 						<div class="form-button d-flex">
 							<button id="submit" type="submit" class="btn btn-primary">Login</button>
-							<a [routerLink]="'/register'" class="btn btn-outline-primary">Create account</a>
-						</div>
+							<a (click)="onCreateAccount()" class="btn btn-outline-primary">Create account</a>						</div>
 					</form>
 					<p>Password Forgotten ? <a (click)="ForgotPassword()">Reset password</a></p>
 
