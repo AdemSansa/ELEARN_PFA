@@ -90,7 +90,7 @@ export class CoursesComponent implements OnInit {
         );
       } else {
         // Optional: Handle cancellation
-        console.log('Enrollment cancelled by the user.');
+        console.log('Enrollment cancelled by the usera');
       }
     });
   }

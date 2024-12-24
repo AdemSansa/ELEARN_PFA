@@ -20,6 +20,11 @@ import { TeacherCoursesComponent } from './components/courses/teacher-courses/te
 import { LessonsComponent } from './components/lessons/lessons.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { CompleteProfileComponent } from './components/complete-profile/complete-profile.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ForumListComponent } from './components/forum-list/forum-list.component';
+import { ChatListComponent } from './components/chat-list/chat-list.component';
+import { AvatarSelectionComponent } from './components/avatar-selection/avatar-selection.component';
+
 
 
 @NgModule({
@@ -38,6 +43,11 @@ import { CompleteProfileComponent } from './components/complete-profile/complete
     LessonsComponent,
     ProfileComponent,
     CompleteProfileComponent,
+    ForumListComponent,
+    ChatListComponent,
+    AvatarSelectionComponent,
+   
+    
 
   ],
   imports: [
@@ -46,7 +56,8 @@ import { CompleteProfileComponent } from './components/complete-profile/complete
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
+    BrowserAnimationsModule
     
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],  

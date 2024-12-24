@@ -36,6 +36,17 @@ public class User {
     private String TwitterURL;
     private String InstagramURL;
 
+    private String avatarURL;
+
+    public String getAvatarURL() {
+        return avatarURL;
+    }
+
+    public void setAvatarURL(String avatarURL) {
+        this.avatarURL = avatarURL;
+    }
+
+    private List <String> _ROLE = new ArrayList<>();
 
     private String resetToken;
     private LocalDateTime tokenExpiryDate;
@@ -123,7 +134,6 @@ public class User {
     }
 
 
-    private List <String> _ROLE = new ArrayList<>();
 
     public void set_ROLE(String role) {
         this._ROLE.add(role);

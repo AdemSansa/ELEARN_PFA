@@ -7,28 +7,8 @@
 				<img src="assets/img1.svg" alt="">
 			</div>
 		</div>
-		<div class="form-holder">
-			<div class="form-content justify-content-end">
-				<div class="form-items">
-					<div class="website-logo-inside logo-normal">
-						<a href="index.html">
-							<div class="logo">
-								<img class="logo-size" src="assets/logo.jpg" alt="">
-							</div>
-						</a>
-					</div>
-					<h3 class="font-md">Sign-up</h3>
-					<p>Access to the most powerfull tool in the entire design and web industry.</p>
-					<form (ngSubmit)="onRegister()">
-            <input class="form-control" type="text" name="name"  [(ngModel)]="name" placeholder="Full Name" required>
-            <input class="form-control" type="email" name="email" [(ngModel)]="email" placeholder="E-mail Address" required>
-			
-            <input class="form-control" type="password" name="password" [(ngModel)]="password" placeholder="Password" required>
-            <div class="form-button d-flex">
-                <button id="submit" type="submit" class="btn btn-primary">Register</button>
-                <a [routerLink]="'/login'" class="btn btn-outline-primary">Login</a>
-            </div>
-        </div>
+		
+        
         <div class="form-holder">
             <div class="form-content justify-content-end">
                 <div class="form-items">
@@ -46,10 +26,7 @@
                         <input class="form-control" type="email" name="email" [(ngModel)]="email" placeholder="E-mail Address" required>
                         <input class="form-control" type="password" name="password" [(ngModel)]="password" placeholder="Password" required>
                         
-                        <!-- Teacher registration option -->
-                        <div>
-                            <input type="checkbox" id="teacherCheckbox" [(ngModel)]="isTeacher">
-                        </div>
+                  
 
                         <!-- Teacher Secret Key input field -->
                         <div *ngIf="this.authService.regTeach==true" class="teacher-fields">
@@ -67,5 +44,5 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    
+
