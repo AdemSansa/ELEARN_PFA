@@ -1,0 +1,16 @@
+<br><br><br><br><br><br><br><div class="container mt-4">
+    <h2 class="text-center mb-4">Forums</h2>
+    <div class="row">
+      <div *ngFor="let forum of forums" class="col-md-4 mb-3">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">{{ forum.title }}</h5>
+            <p class="card-text text-muted">{{ forum.description }}</p>
+          </div>
+          <div class="card-footer text-center">
+            <a [routerLink]="['/forum', forum.id]" class="btn btn-primary">View Forum</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -199,8 +199,21 @@ private decode(token:string){
         const token = response.token; 
         this.authService.storeToken(token);
         console.log('Login successful:', token);
+        this.authService.getUserInfo().subscribe({
+          next: (response) => {
+            if(response.AvatarURL!=null)
+              this.router.navigate(['/home']);
+            else  
+              this.router.navigate(['/avatar-selection']);
+          },
+          error: (err) => {
+            console.error('Failed to get user info:', err);
+          }
+        });
         this.router.navigate(['/home']);
-console.log(this.authService.userRole);
+        console.log(this.authService.decodeToken());
+        
+        console.log(this.authService.userRole);
 
       },
       error: (err) => {

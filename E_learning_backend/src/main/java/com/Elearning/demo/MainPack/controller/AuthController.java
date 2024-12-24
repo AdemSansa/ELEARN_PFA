@@ -213,6 +213,7 @@ public class AuthController {
             userInfo.put("facebookURL", user.get().getFacebookURL());
             userInfo.put("githubURL", user.get().getGithubURL());
             userInfo.put("linkedinURL", user.get().getLinkedinURL());
+            userInfo.put("AvatarURL", user.get().getAvatarURL());
 
             return ResponseEntity.ok(userInfo);
         } else {
@@ -229,6 +230,23 @@ public class AuthController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+
+    @PatchMapping("/{id}/avatar")
+    public ResponseEntity<?> updateAvatar(@PathVariable String id, @RequestBody Map<String, String> request) {
+        String avatarUrl = request.get("avatarUrl");
+        User user = userRepository.findById(id).orElse(null);
+
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+
+        user.setAvatarURL(avatarUrl);
+        ; // Mark the user as no longer on their first login
+        userRepository.save(user);
+
+        return ResponseEntity.ok("Avatar updated successfully");
     }
 
 

@@ -4,9 +4,7 @@ package com.Elearning.demo.MainPack.Config;
 import com.Elearning.demo.MainPack.Components.JwtUtil;
 import com.Elearning.demo.MainPack.Model.User;
 import com.Elearning.demo.MainPack.Repository.UserRepository;
-import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.stereotype.Service;
@@ -110,7 +108,7 @@ public class  Authservice {
         // Reset failed attempts if login is successful
         user.setFailedAttempts(0);
         userRepository.save(user);
-        return jwtUtil.generateToken(user.getEmail(),user.getName(),user.getId(),roles);
+        return jwtUtil.generateToken(user.getEmail(),user.getName(),user.getId(),user.getRoles());
     }
 
     public boolean validateToken(String token) {
@@ -120,4 +118,7 @@ public class  Authservice {
             return false;
         }
     }
+
+
+
 }

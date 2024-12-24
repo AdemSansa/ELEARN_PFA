@@ -16,7 +16,8 @@ public class JwtUtil {
         Map<String, Object> claims = new HashMap<>();
         claims.put("id", userId);   // Add user ID
         claims.put("name", name);  // Add user name
-        claims.put("email", email); // Optional: Add email
+        claims.put("email", email);
+        claims.put("roles",role);// Optional: Add email
         return Jwts.builder()
                 .setSubject(email)
                 .setClaims(claims)
@@ -50,6 +51,14 @@ public class JwtUtil {
                 .getBody()
                 .getSubject();
     }
+    // Extract Name from token
+    public String extractName(String token) {
+        return Jwts.parser()
+                .setSigningKey(SECRET_KEY)
+                .parseClaimsJws(token)
+                .getBody()
+                .get("name", String.class);
+    }
     // Add a token to the blacklist
     public void addToBlacklist(String token) {
         blacklistedTokens.add(token);
@@ -80,6 +89,11 @@ public class JwtUtil {
             // Handle other token parsing issues
             throw new RuntimeException("Invalid token", e);
         }
+
     }
+
+
+
+
 
 }

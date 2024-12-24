@@ -19,12 +19,15 @@ export class AuthService {
   private currentUserSubject: BehaviorSubject<any>;
   userRole: any;
   regTeach: boolean =false;
+  Avatar: string | null = null;
 
   constructor(private http: HttpClient, private router: Router) {
     const decodedToken = this.decodeToken();
     this.currentUserSubject = new BehaviorSubject<any>(decodedToken);
     this.userName = decodedToken?.name || null;
-    this.userRole = decodedToken?.role?.[0] || null;
+    this.userRole = decodedToken?.roles?.[0] || null;
+   
+    
     this.setIsTeacher(); // Ensure role is set correctly at the start
   }
 
@@ -126,6 +129,7 @@ export class AuthService {
   // Updated method to fetch and extract user info including username
   getUserInfo(): Observable<any> {
     const token = localStorage.getItem('jwtToken');
+    
     if (!token) {
       throw new Error('User not logged in');
     }
@@ -133,8 +137,10 @@ export class AuthService {
     return this.http.get(`${this.apiUrl}/user-info`, { headers }).pipe(
       tap((response: any) => {
         // Assuming 'response' contains the user info, and it has a 'name' field.
-        this.userName = response?.name;
+        this.userName = response?.name;        
         this.userRole = response?.role?.[0];
+        this.Avatar = response?.avatarURL;
+        
         this.setIsTeacher();  // Set teacher flag based on the role
       })
     );
@@ -156,6 +162,14 @@ export class AuthService {
     const url = `${this.apiUrl}/Complete_Profile`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post(url, user, { headers });
+  }
+
+
+  getLoggedInUser(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/current-user`);
+  }
+  updateAvatar(userId: string, avatarUrl: string): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/${userId}/avatar`, { avatarUrl }, { responseType: 'text' });
   }
 
  
