@@ -1,0 +1,9 @@
+mat-list-option {
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+mat-list-option:hover {
+  background-color: #f0f0f0;
+}

@@ -24,15 +24,30 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ForumListComponent } from './components/forum-list/forum-list.component';
 import { ChatListComponent } from './components/chat-list/chat-list.component';
 import { AvatarSelectionComponent } from './components/avatar-selection/avatar-selection.component';
+import { QuizListComponent } from './components/quiz-list/quiz-list.component';
+import { QuizDetailsComponent } from './components/quiz-details/quiz-details.component';
+import { QuizResultsComponent } from './components/quiz-results/quiz-results.component';
+import { TeacherQuizComponent } from './components/teacher-quiz/teacher-quiz.component';
+import { QuizComponentComponent } from './components/teacher-quiz/quiz-component/quiz-component.component';
+import { EditQuizComponent } from './components/teacher-quiz/edit-quiz/edit-quiz.component';
+import { MatDialogModule } from '@angular/material/dialog'; // Import MatDialogModule
 
-
+import { CommonModule } from '@angular/common';
+import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
+import { AdminUserManagementComponent } from './components/admin-user-management/admin-user-management.component';
+import { JoinRolesPipe } from './join-roles.pipe';
+import { FilterUsersPipe } from './filter-users.pipe';
+import { EditUserComponent } from './components/edit-user/edit-user.component';
+import { ViewUserComponent } from './components/view-user/view-user.component';
+import { RoleManagementDialogComponent } from './components/role-management/role-management.component';
+import { StatisticsComponent } from './components/statistics/statistics.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SignupComponent,
     LoginComponent,
-
+    
     HomeComponent,
     UserListComponent,
     UserFormComponent,
@@ -46,20 +61,37 @@ import { AvatarSelectionComponent } from './components/avatar-selection/avatar-s
     ForumListComponent,
     ChatListComponent,
     AvatarSelectionComponent,
-   
+    QuizListComponent,
+    QuizDetailsComponent,
+    QuizResultsComponent,
+    TeacherQuizComponent,
+    QuizComponentComponent,
+    EditQuizComponent,
+    AdminDashboardComponent,
+    AdminUserManagementComponent,
+    JoinRolesPipe,
+    FilterUsersPipe,
+    EditUserComponent,
+    ViewUserComponent,
+    RoleManagementDialogComponent,
+    RoleManagementDialogComponent,
+    StatisticsComponent,
+    
     
 
   ],
   imports: [
-    ReactiveFormsModule,
     BrowserModule,
-    AppRoutingModule,
+    BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule, // Place FormsModule and ReactiveFormsModule early
     HttpClientModule,
+    CommonModule,
+    AppRoutingModule,
     RouterModule,
-    BrowserAnimationsModule
-    
-  ],
+    MatDialogModule, // Include this after ensuring Material dependencies
+],
+  
   schemas: [CUSTOM_ELEMENTS_SCHEMA],  
   providers: [],
   bootstrap: [AppComponent]

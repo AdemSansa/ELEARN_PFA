@@ -165,4 +165,23 @@
           </div>
 
         </div>
-    </div>
+     
+        <div class="quiz-history-container">
+          <h3 class="quiz-history-title">Your Quiz History</h3>
+          <div *ngIf="quizzes?.length > 0; else noQuizzes">
+            <div *ngFor="let quiz of quizzes" class="quiz-history-card">
+              <h4 class="quiz-name">{{ quiz.quizTitle }}</h4>
+              <p class="quiz-details">Score: {{ quiz.score }} / {{ quiz.totalScore }}</p>
+              <p class="quiz-details">Percentage: {{ (quiz.score * 100) / quiz.totalScore }}%</p>
+              <p class="quiz-details">Status: {{ quiz.passed ? 'Passed' : 'Failed' }}</p>
+              <p class="quiz-details">Date Taken: {{ quiz.date | date: 'medium' }}</p>
+              <button class="details-button" (click)="showQuizdetails (quiz.quizId)">Show Details</button>
+            </div>
+          </div>
+          <ng-template #noQuizzes>
+            <p class="no-quizzes">No quizzes found. Take your first quiz today!</p>
+          </ng-template>
+        
+        
+      </div>
+    

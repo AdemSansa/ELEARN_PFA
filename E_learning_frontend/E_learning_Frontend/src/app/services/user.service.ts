@@ -21,6 +21,9 @@ export class UserService {
   getUserByID(id: String): Observable<any> {
     return this.http.get(`${this.baseUrl}/getUserById/${id}`);
   }
+  updateUserRoles(userId: string, roles: string[]): Observable<any> {
+    return this.http.put(`/api/users/${userId}/roles`, roles);
+  }
   
 
   

@@ -69,7 +69,7 @@ StrongPass(Pass : string)
 
   email: string = '';
   password: string = '';
-
+ 
 
  
 

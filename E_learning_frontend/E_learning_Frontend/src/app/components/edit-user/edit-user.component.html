@@ -1,0 +1,75 @@
+<h2 mat-dialog-title>Edit User</h2>
+<div mat-dialog-content>
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Username</mat-label>
+    <input matInput [(ngModel)]="user.name" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Email</mat-label>
+    <input matInput [(ngModel)]="user.email" type="email" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Phone Number</mat-label>
+    <input matInput [(ngModel)]="user.phoneNumber" type="tel" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Address</mat-label>
+    <input matInput [(ngModel)]="user.adress" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>City</mat-label>
+    <input matInput [(ngModel)]="user.city" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Country</mat-label>
+    <input matInput [(ngModel)]="user.country" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Birth Date</mat-label>
+    <input matInput [(ngModel)]="user.birthDate" type="date" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Roles</mat-label>
+    <mat-select [(ngModel)]="user.roles" multiple>
+      <mat-option value="ROLE_USER">User</mat-option>
+      <mat-option value="ROLE_ADMIN">Admin</mat-option>
+      <mat-option value="ROLE_TEACHER">Teacher</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Facebook URL</mat-label>
+    <input matInput [(ngModel)]="user.facebookURL" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Twitter URL</mat-label>
+    <input matInput [(ngModel)]="user.twitterURL" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Instagram URL</mat-label>
+    <input matInput [(ngModel)]="user.instagramURL" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>LinkedIn URL</mat-label>
+    <input matInput [(ngModel)]="user.linkedinURL" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>GitHub URL</mat-label>
+    <input matInput [(ngModel)]="user.githubURL" />
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="saveChanges()" color="primary">Save</button>
+  <button mat-button mat-dialog-close color="warn">Cancel</button>
+</div>

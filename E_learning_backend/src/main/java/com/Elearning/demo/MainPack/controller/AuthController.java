@@ -66,7 +66,8 @@ public class AuthController {
             user.setName(name);
             user.setEmail(email);
             user.setPassword(SecurityConfig.passwordEncoder().encode(password));
-            user.setRoles(List.of("Teacher"));
+            user.setRoles(List.of("ROLE_TEACHER"));
+            user.setActiveRole("ROLE_TEACHER");
             user.setBlocked(false);
             user.setFailedAttempts(0);
             userRepository.save(user);
@@ -151,6 +152,8 @@ public class AuthController {
                 user.setTokenExpiration(null);
                 user.setBlocked(false);
                 user.setFailedAttempts(0);
+                user.setAvatarURL(pictureUrl);
+
                 userRepository.save(user);
             }
             return ResponseEntity.ok(user);
@@ -202,6 +205,7 @@ public class AuthController {
             // Customize the response as per your requirements
             Map<String, Object> userInfo = new HashMap<>();
             userInfo.put("id", user.get().getId());
+            userInfo.put("activeROle",user.get().getActiveRole());
             userInfo.put("email", user.get().getEmail());
             userInfo.put("name", user.get().getName());
             userInfo.put("role", user.get().getRoles());

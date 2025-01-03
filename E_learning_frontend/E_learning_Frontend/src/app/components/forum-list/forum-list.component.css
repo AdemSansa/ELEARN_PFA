@@ -1,5 +1,7 @@
 .card {
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    ;
+    padding: 5px;
   }
   
   .card:hover {
@@ -11,4 +13,22 @@
     text-transform: uppercase;
     letter-spacing: 1px;
     color: #333;
+  }
+  .custom-create-forum-btn {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
+  }
+
+  .btn-close.text-danger {
+    font-size: 1.2rem;
+    opacity: 0.8;
+  }
+  .btn-close.text-danger:hover {
+    opacity: 1;
+    color: red;
+  }
+ .btn-close {
+    font-size: 1.2rem;
+    opacity: 0.8;
+    color: red;
   }

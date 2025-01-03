@@ -1,0 +1,10 @@
+<br><br><br><br><br><br><br><br><div>
+  <div class="quiz-list-container">
+    <h2 class="quiz-list-title">Available Quizzes</h2>
+    <div class="quiz-card" *ngFor="let quiz of quizzes">
+      <h3 class="quiz-title">{{ quiz.title }}</h3>
+      <p class="quiz-duration">Duration: {{ quiz.duration }} minutes</p>
+      <button class="quiz-start-button" (click)="startQuiz(quiz.id)">Start Quiz</button>
+    </div>
+  </div>
+  

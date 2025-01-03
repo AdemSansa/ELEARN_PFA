@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 export class EnrollmentService {
 
   private apiUrl = 'http://localhost:8081/api/enrollments';
+  private AdminURL = 'http://localhost:8081/Admin'
   constructor(private http:HttpClient) { }
   
 
@@ -23,5 +24,8 @@ export class EnrollmentService {
   getIDSOfcoursesEnrolled(userId:string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/courseid/${userId}`);
   }
-
+  // get enrollments per courses
+  getMostEnrolledCourses(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.AdminURL}/courses`);
+  }
 }
