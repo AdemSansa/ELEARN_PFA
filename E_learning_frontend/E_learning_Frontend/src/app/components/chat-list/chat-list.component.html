@@ -1,27 +1,31 @@
-<div class="container mt-4">
-    <h2 class="text-center mb-4">Chats</h2>
-    
-    <!-- Chat messages -->
-    <div class="chat-container mb-4">
-      <div *ngFor="let chat of chats" class="chat-message">
-        <div class="chat-header">
-          <span class="chat-user">{{ chat.createdBy }}</span>
-          <span class="chat-time">{{ chat.createdAt | date: 'short' }}</span>
+<br><br><br><br><br><br><div class="container mt-4">
+  <h2 class="text-center mb-4">Chats</h2>
+
+  <!-- Chat messages -->
+  <div class="chat-container mb-4">
+    <div *ngFor="let chat of chats" class="card mb-3 shadow-sm">
+      <div class="card-body">
+        <div class="chat-header d-flex align-items-center mb-2">
+          <img [src]="chat.AvatarURL" alt="User Image" class="chat-image me-3" />
+          <div>
+            <span class="chat-user d-block fw-bold">{{ chat.UserName }}</span>
+            <span class="chat-time text-muted">{{ chat.createdAt | date: 'short' }}</span>
+          </div>
         </div>
         <p class="chat-text">{{ chat.text }}</p>
       </div>
     </div>
-  
-    <!-- Add chat -->
-    <div class="add-chat">
-      <h4>Add a New Chat</h4>
-      <textarea
-        class="form-control mb-2"
-        rows="3"
-        [(ngModel)]="newChatText"
-        placeholder="Type your message here"
-      ></textarea>
-      <button class="btn btn-success" (click)="addChat()">Post Chat</button>
-    </div>
   </div>
-  
+
+  <!-- Add chat -->
+  <div class="add-chat card p-3 shadow-sm">
+    <h4 class="mb-3">Add a New Chat</h4>
+    <textarea
+      class="form-control mb-3"
+      rows="3"
+      [(ngModel)]="newChatText"
+      placeholder="Type your message here"
+    ></textarea>
+    <button class="btn btn-success w-100" (click)="addChat()">Post Chat</button>
+  </div>
+</div>

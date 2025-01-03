@@ -1,0 +1,53 @@
+ <br><br><br><br><br><br><br><br><div class="container py-4">
+    <h2 class="text-center mb-4">Your Quizzes</h2>
+    <div class="mt-3">
+        <button class="btn btn-success btn-lg" (click)="onCreateQuiz()">Create a Quiz</button>
+      </div>
+      <br><br>
+  
+    <!-- Display message when no quizzes are available -->
+    <div *ngIf="quizzes.length === 0" class="alert alert-warning text-center">
+      <strong>You have no quizzes.</strong>
+      <br />
+      Click the button below to create your first quiz.
+      
+    </div>
+  
+  
+    <!-- Quizzes List -->
+    <div *ngIf="quizzes.length > 0" class="row g-4">
+      <div *ngFor="let quiz of quizzes" class="col-md-6 col-lg-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <button 
+            
+            class="btn-close position-absolute top-0 end-0 m-2 text-danger" 
+            (click)="deleteQuiz(quiz.id)" 
+            aria-label="Close">
+          </button>
+            <h5 class="card-title text-primary text-truncate">{{ quiz.title }}</h5>
+            <p class="card-text">
+              <strong>Subject:</strong> {{ quiz.subjectId }}
+            </p>
+            <p class="card-text">
+              <strong>Duration:</strong> {{ quiz.duration }} minutes
+            </p>
+            <p class="card-text">
+              <strong>Questions:</strong> {{ quiz.questions.length }}
+            </p>
+            <p class="card-text">
+                <strong>TimesPlayed : {{quiz.timePlayed}}</strong> 
+              </p>
+          </div>
+          <div class="card-footer bg-transparent border-top-0 text-center">
+            <a class="btn btn-outline-primary w-100">
+              View Quiz
+            </a>
+            <a [routerLink]="['/edit-quiz', quiz.id]" class="btn btn-secondary">Edit Quiz</a>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

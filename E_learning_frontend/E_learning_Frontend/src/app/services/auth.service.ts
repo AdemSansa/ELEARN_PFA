@@ -32,7 +32,7 @@ export class AuthService {
   }
 
   setIsTeacher(): void {
-    this.isTeacher = this.userRole === "Teacher"; 
+    this.isTeacher = this.userRole === "ROLE_TEACHER"; 
     localStorage.setItem('isTeacher', JSON.stringify(this.isTeacher));
   }
   
@@ -170,6 +170,16 @@ export class AuthService {
   }
   updateAvatar(userId: string, avatarUrl: string): Observable<any> {
     return this.http.patch(`${this.apiUrl}/${userId}/avatar`, { avatarUrl }, { responseType: 'text' });
+  }
+  isAdmin(): boolean {
+    const roles = this.getUserRoles(); // Get roles from token or localStorage
+    return roles.includes('ROLE_ADMIN');
+  }
+
+  getUserRoles(): string[] {
+    const token = this.getToken();
+    const decodedToken = this.decodeToken();
+    return decodedToken?.roles || [];
   }
 
  

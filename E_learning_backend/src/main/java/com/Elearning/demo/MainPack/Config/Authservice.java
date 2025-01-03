@@ -71,6 +71,7 @@ public class  Authservice {
         newUser.setName(user.getName());
         newUser.setEmail(user.getEmail());
         newUser.set_ROLE("ROLE_USER");
+        newUser.setActiveRole("ROLE_USER");
         newUser.setPassword(SecurityConfig.passwordEncoder().encode(user.getPassword()));
         newUser.setAdress(user.getAdress());
         newUser.setCity(user.getCity());
@@ -107,6 +108,7 @@ public class  Authservice {
         }
         // Reset failed attempts if login is successful
         user.setFailedAttempts(0);
+        user.setActive(true);
         userRepository.save(user);
         return jwtUtil.generateToken(user.getEmail(),user.getName(),user.getId(),user.getRoles());
     }

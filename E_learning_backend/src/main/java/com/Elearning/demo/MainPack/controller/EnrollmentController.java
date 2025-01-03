@@ -37,10 +37,11 @@ public class EnrollmentController {
         return ResponseEntity.ok(enrollmentService.getEnrollmentsByUser(user));
     }
     @GetMapping("/course/{courseId}")
-    public List<Enrollment> getEnrollmentsByCourse(@PathVariable String courseId) {
+    public ResponseEntity<?> getEnrollmentsByCourse(@PathVariable String courseId) {
         Course course = new Course(); // Load the course by courseId
         course.setId(courseId); // Set courseId for now, you can load it from a DB
-        return enrollmentService.getEnrollmentsByCourse(course);
+
+        return ResponseEntity.ok(enrollmentService.getEnrollmentsByCourse(course));
     }
     @GetMapping("/courseid/{userId}")
     public ResponseEntity<?> getUserCoursesIDS(@PathVariable String userId) {
@@ -48,5 +49,7 @@ public class EnrollmentController {
         user.setId(userId);  // Set the userId for now, you can load the user from a DB or Auth context
         return ResponseEntity.ok(enrollmentService.getCoursesIdsByUser(user));
     }
+
+    //Get All Enrollments By all courses
 
 }

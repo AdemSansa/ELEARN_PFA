@@ -37,7 +37,6 @@ export class CompleteProfileComponent {
       this.authService.completeProfile(this.profileData).subscribe(
         (response) => {
           console.log('Profile updated successfully:', response);
-          alert('Profile updated successfully!');
         },
         (error) => {
           console.error('Error updating profile:', error);

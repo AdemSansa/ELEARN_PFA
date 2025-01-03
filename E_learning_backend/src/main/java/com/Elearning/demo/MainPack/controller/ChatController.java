@@ -34,7 +34,6 @@ public class ChatController {
         chat.setCreatedAt(LocalDateTime.now());
         chat.setCreatedBy(chat.getCreatedBy());
         chat.setCreatedAt(LocalDateTime.now());
-
         Chat savedChat = chatRepository.save(chat);
         return ResponseEntity.ok(savedChat);
     }
