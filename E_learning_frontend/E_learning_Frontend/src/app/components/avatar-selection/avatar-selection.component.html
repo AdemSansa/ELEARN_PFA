@@ -1,14 +1,14 @@
-<p>avatar-selection works!</p><br><br><br><br><br><br>
-<div class="avatar-selection-container">
-    <h2>Select Your Avatar</h2>
-    <div class="avatar-grid">
-      <img
-        *ngFor="let avatar of avatars"
-        [src]="avatar"
-        [class.selected]="avatar === selectedAvatar"
-        (click)="selectAvatar(avatar)"
-        class="avatar-option"
-      />
-    </div>
-    <button (click)="saveAvatar()" class="save-button">Save Avatar</button>
-  </div>
+    <p>avatar-selection works!</p><br><br><br><br><br><br>
+    <div class="avatar-selection-container">
+        <h2>Select Your Avatar</h2>
+        <div class="avatar-grid">
+          <img
+            *ngFor="let avatar of avatars"
+            [src]="avatar"
+            [class.selected]="avatar === selectedAvatar"
+            (click)="selectAvatar(avatar)"
+            class="avatar-option"
+          />
+        </div>
+        <button (click)="saveAvatar()" class="save-button">Save Avatar</button>
+      </div>

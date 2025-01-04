@@ -10,34 +10,57 @@ import { EnrollmentService } from 'src/app/services/Enrollment_service/enrollmen
   styleUrls: ['./user-courses.component.css']
 })
 export class UserCoursesComponent {
- 
+
   courses: any[] = [];
   userId: string | null = null;
-
-  constructor(private EnrollmentService: EnrollmentService,private auth:AuthService ,private   router: Router){};
-
+  
+  constructor(private EnrollmentService: EnrollmentService, private auth: AuthService, private router: Router) {}
   ngOnInit(): void {
-    // Get user ID (assume you store it in local storage or decoded token)
-    
+    this.fetchUserCourses();
+  }
+
+  private fetchUserCourses(): void {
     const decodedToken = this.auth.decodeToken();
-    this.userId = decodedToken?.id || null; // Replace `id` with the key for user ID in your token
-    
+    this.userId = decodedToken?.id || null;
+    console.log('Decoded User ID:', this.userId);
 
     if (this.userId) {
+      console.log('Fetching enrolled courses for user:', this.userId);
+
       this.EnrollmentService.getEnrolledCourses(this.userId).subscribe(
         (data) => {
-          this.courses = data; // Assuming API returns an array of courses
+          console.log('Enrolled courses data:', data);
+          this.courses = data;
+
+          this.courses.forEach(enrollment => {
+            console.log('Fetching progress for course ID:', enrollment.course.id);
+
+            if (this.userId && enrollment && enrollment.course) {
+              this.EnrollmentService.getProgress(this.userId, enrollment.course.id).subscribe(
+                (progressData) => {
+                  console.log('Progress data for course ID ' + enrollment.course.id + ':', progressData);
+                  enrollment.course.progress = progressData?.progress || 0;
+                  console.log('Progress for course ID ' + enrollment.course.id + ':', enrollment.course.progress);
+                },
+                (error) => {
+                  console.error('Error fetching progress for course ID ' + enrollment.course.id + ':', error);
+                }
+              );
+            }
+          });
         },
         (error) => {
           console.error('Error fetching user courses:', error);
         }
       );
+    } else {
+      console.log('No userId found!');
     }
   }
+
+
   StartCourse(courseId: string): void {
-    // Redirect user to Lessons Page
     this.router.navigate(['/lessons', courseId]);
-  
   }
 
 }

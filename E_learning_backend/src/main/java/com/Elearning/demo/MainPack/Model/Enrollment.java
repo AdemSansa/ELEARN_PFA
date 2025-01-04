@@ -5,6 +5,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Document("enrollments")
 public class Enrollment {
     @Id
@@ -14,11 +17,19 @@ public class Enrollment {
 
     @DBRef
     private Course course; // Store the entire Course object (referenced)
-
+private int progress;
     private String enrollmentDate;
-
+    private List<String> completedLessons = new ArrayList<>();
     public String getEnrollmentDate() {
         return enrollmentDate;
+    }
+
+    public int getProgress() {
+        return progress;
+    }
+
+    public void setProgress(int progress) {
+        this.progress = progress;
     }
 
     public void setEnrollmentDate(String enrollmentDate) {
@@ -47,5 +58,12 @@ public class Enrollment {
 
     public void setId(String id) {
         this.id = id;
+    }
+    public List<String> getCompletedLessons() {
+        return completedLessons;
+    }
+
+    public void setCompletedLessons(List<String> completedLessons) {
+        this.completedLessons = completedLessons;
     }
 }
