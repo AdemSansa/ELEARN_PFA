@@ -13,7 +13,7 @@ export class UserCoursesComponent {
  
   courses: any[] = [];
   userId: string | null = null;
-
+  progressMap: { [courseId: string]: number } = {}; 
   constructor(private EnrollmentService: EnrollmentService,private auth:AuthService ,private   router: Router){};
 
   ngOnInit(): void {
@@ -39,5 +39,9 @@ export class UserCoursesComponent {
     this.router.navigate(['/lessons', courseId]);
   
   }
-
+  loadProgress(userId: string, courseId: string): void {
+    this.EnrollmentService.getProgress(userId, courseId).subscribe((progress) => {
+      this.progressMap[courseId] = progress;
+    });
+  }
 }

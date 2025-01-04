@@ -1,12 +1,110 @@
-<br><br><br><br><br><br><h1>Lessons for Course {{ courseId }}</h1>
+<br><br><br><br><br><br><br><div class="course-container">
+  <!-- Left Content -->
+  <div class="content">
+    <div *ngIf="selectedLesson" class="lesson-details">
+      <h2 class="lesson-title">{{ selectedLesson.title }}</h2>
+      <div class="video-container">
+        <ng-container *ngIf="isYouTubeVideo(selectedLesson.videoUrl); else videoPlayer">
+          <iframe
+          [src]="sanitizeYouTubeUrl(selectedLesson.videoUrl)"
+          frameborder="0"
+          allowfullscreen
+        ></iframe>
+        </ng-container>
+        <ng-template #videoPlayer>
+          <video controls [src]="selectedLesson.videoUrl" (ended)="onVideoComplete()"></video>
+        </ng-template>
+      </div>
+      <h2>Content</h2><p class="lesson-content" (scroll)="onScroll($event)">{{ selectedLesson.content }}</p>
+      <h3>Description </h3><p class="lesson-description">{{ selectedLesson.description }}</p>
+      
+    </div>
+    <div *ngIf="!selectedLesson">
+      <p>No lessons right now.</p>
+    </div>
+  </div>
 
-<div *ngIf="lessons.length > 0">
-  <ul>
-    <li *ngFor="let lesson of lessons">
-      <h3>{{ lesson.title }}</h3>
-      <p>{{ lesson.content }}</p>
-    </li>
-  </ul>
+  <!-- Right Sidebar -->
+  <div class="sidebar">
+    <h3>{{this.courseName}} Lessons</h3>
+    <ul>
+      <li
+        *ngFor="let lesson of lessons"
+        [class.active]="lesson.id === selectedLesson?.id"
+        (click)="selectLesson(lesson)"
+      > 
+      <input
+          type="checkbox"
+          [checked]="isLessonCompleted(lesson.id)"
+          (change)="toggleLessonCompletion(lesson, $event)"
+        />
+        {{ lesson.title }}
+      </li>
+    </ul>
+
+    <!-- Add Lesson Button --><ng-container *ngIf="this.authSeervice.getIsTeacher()">
+      
+    <button class="btn open-form" (click)="openForm()">Add Lesson</button></ng-container>
+  </div>
 </div>
 
-<p *ngIf="lessons.length === 0">No lessons available for this course.</p>
+<!-- Popup Form -->
+<div class="form-popup" [class.show]="isFormVisible">
+  <div class="container form-wrapper">
+    <button class="btn close-form" (click)="closeForm()">Close</button>
+    <form (ngSubmit)="addLesson()" #lessonForm="ngForm">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <h1 class="form-title">Add Lesson</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label for="title">Title</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            [(ngModel)]="newLesson.title"
+            class="form-control"
+            required
+          />
+        </div>
+        <div class="form-group col-md-6">
+          <label for="videoUrl">Video URL</label>
+          <input
+            type="text"
+            id="videoUrl"
+            name="videoUrl"
+            [(ngModel)]="newLesson.videoUrl"
+            class="form-control"
+            required
+          />
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-12">
+          <label for="content">Content</label>
+          <textarea
+            id="content"
+            name="content"
+            [(ngModel)]="newLesson.content"
+            class="form-control"
+          ></textarea>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-12">
+          <label for="description">Description</label>
+          <textarea
+            id="description"
+            name="description"
+            [(ngModel)]="newLesson.description"
+            class="form-control"
+          ></textarea>
+        </div>
+      </div>
+      <button type="submit" class="btn send-form">Add Lesson</button>
+    </form>
+  </div>
+</div>

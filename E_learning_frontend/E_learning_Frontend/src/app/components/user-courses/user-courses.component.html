@@ -6,31 +6,31 @@
   <br><br><br><br><br><br>
 <div class="wrapper">
     <h1>My Learning  </h1>
-    <div class="cols" *ngIf="courses">
-        <div class="col" *ngFor="let course of courses" ontouchstart="this.classList.toggle('hover');">
-            <div class="container">
-                <div class="front" style="background-image: url('https://unsplash.it/500/500/')">
-                    <div class="inner">
-                        <p>{{ course.course.title}}</p>
-                        <span>{{course.course.author}}</span>
-                    </div>
-                </div>
-                <div class="back">
-                    <div class="inner">
-                        <p>{{ course.course.description }}</p>
-                        <a class="fancy"  (click)="StartCourse(course.course.id)">
-                            <span class="top-key"></span>
-                            <span class="text"  >Start Course  </span>
-                            <span class="bottom-key-1"></span>
-                            <span class="bottom-key-2"></span>
-                          </a>
-                    </div>
-                    
-                </div>
-               
+    <div class="course-container">
+        <div 
+          class="course-card" 
+          *ngFor="let course of courses" 
+          [style.backgroundImage]="'url(' + course.course.imageUrl + ')'"
+        >
+          <div class="course-content">
+            <img [src]="course.course.imageLogoUrl" alt="{{ course.course.title }}" class="course-logo" />
+            <p>{{ course.course.title}}</p>
+            <span>{{course.course.author}}</span>
+          </div><div class="progress-bar-container">
+            <div class="progress-bar">
+              <div
+                class="progress-bar-fill"
+                [style.width]="(progressMap[course.course.id] || 0) + '%'"
+              ></div>
             </div>
+            <p class="progress-text">{{ progressMap[course.course.id] || 0 }}% Completed</p>
+          </div>
+          <div class="course-hover-content">
+          <button class="enroll-button" (click)="StartCourse(course.course.id)">Start Course </button>
         </div>
-    </div>
+        </div>
+      </div>
+    
     <div *ngIf="courses.length === 0">
         <p>No courses found. Enroll in a course to see it here!</p>
       </div>

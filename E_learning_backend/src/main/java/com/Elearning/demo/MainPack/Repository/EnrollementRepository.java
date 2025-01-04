@@ -6,9 +6,10 @@ import com.Elearning.demo.MainPack.Model.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface EnrollementRepository extends MongoRepository<Enrollment, String> {
     List<Enrollment> findByUser(User user);
     List<Enrollment> findByCourse(Course course);
-
+    Optional<Enrollment> findByUserIdAndCourseId(String userId, String courseId);
 }

@@ -19,10 +19,26 @@ public class Course {
     private String author; // Teacher ID or name
     private Date createdDate;
     private Date updatedDate;
-
+    private String imageUrl;
+    private String imageLogoUrl;
     @Field
     private List<Lesson> lessons = new ArrayList<>();
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getImageLogoUrl() {
+        return imageLogoUrl;
+    }
+
+    public void setImageLogoUrl(String imageLogoUrl) {
+        this.imageLogoUrl = imageLogoUrl;
+    }
 
     // Getters and Setters
     public String getId() {

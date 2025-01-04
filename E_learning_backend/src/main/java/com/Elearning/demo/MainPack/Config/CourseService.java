@@ -26,6 +26,8 @@ public class CourseService {
         if (existingCourse.isPresent()) {
             Course updatedCourse = existingCourse.get();
             updatedCourse.setTitle(course.getTitle());
+            updatedCourse.setImageLogoUrl(course.getImageLogoUrl());
+            updatedCourse.setImageUrl(course.getImageUrl());
             updatedCourse.setDescription(course.getDescription());
             updatedCourse.setAuthor(course.getAuthor());
             updatedCourse.setUpdatedDate(new Date());

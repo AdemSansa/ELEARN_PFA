@@ -1,357 +1,165 @@
-
-
-*{
-  margin: 0;
-  padding: 0;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+.course-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  padding: 16px;
 }
 
-h1{
-  font-size: 2.5rem;
-  font-family: 'Montserrat';
-  font-weight: normal;
-  color: #444;
-  text-align: center;
-  margin: 2rem 0;
-}
-
-.wrapper{
-  width: 100%;
-  margin: 0 auto;
-  max-width: 80rem;
-
- 
-  
-}
-
-.cols {
+.course-card {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 1rem;
-  overflow: hidden; /* Prevent overflow issues */
-}
-.col {
-  flex: 1 1 auto;
-  min-width: 200px; /* Set a minimum width for cards */
-  margin: 0.5rem;
-  width: calc(20% - 1rem); /* 5 cards per row (20% width) */
-  margin: 0.5rem; /* Optional: Adds spacing between cards */
-  box-sizing: border-box; /* Ensures padding/margin are included in the width */
-}
-
-@media screen and (max-width: 64rem) {
-  .col {
-      width: calc(33.33% - 1rem); /* 3 cards per row for medium screens */
-  }
-}
-
-@media screen and (max-width: 48rem) {
-  .col {
-      width: calc(50% - 1rem); /* 2 cards per row for smaller screens */
-  }
-}
-
-@media screen and (max-width: 32rem) {
-  .col {
-      width: 100%; /* 1 card per row for mobile screens */
-  }
-}
-
-
-
-.container{
-  -webkit-transform-style: preserve-3d;
-          transform-style: preserve-3d;
-    -webkit-perspective: 1000px;
-            perspective: 1000px;
-}
-
-.front,
-.back{
+  align-items: center;
+  justify-content: center;
   background-size: cover;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.25);
-  border-radius: 10px;
- 
-    background-position: center;
-    -webkit-transition: -webkit-transform .7s cubic-bezier(0.4, 0.2, 0.2, 1);
-    transition: -webkit-transform .7s cubic-bezier(0.4, 0.2, 0.2, 1);
-    -o-transition: transform .7s cubic-bezier(0.4, 0.2, 0.2, 1);
-    transition: transform .7s cubic-bezier(0.4, 0.2, 0.2, 1);
-    transition: transform .7s cubic-bezier(0.4, 0.2, 0.2, 1), -webkit-transform .7s cubic-bezier(0.4, 0.2, 0.2, 1);
-    -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-    text-align: center;
-    min-height: 280px;
-    height: auto;
-    border-radius: 10px;
-    color: #fff;
-    font-size: 1.5rem;
-}
-
-.back{
-  background: #cedce7;
-  background: -webkit-linear-gradient(45deg,  #cedce7 0%,#596a72 100%);
-  background: -o-linear-gradient(45deg,  #cedce7 0%,#596a72 100%);
-  background: linear-gradient(45deg,  #cedce7 0%,#596a72 100%);
-}
-
-.front:after{
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    width: 100%;
-    height: 100%;
-    content: '';
-    display: block;
-    opacity: .6;
-    background-color: #000;
-    -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-    border-radius: 10px;
-}
-.container:hover .front,
-.container:hover .back{
-    -webkit-transition: -webkit-transform .7s cubic-bezier(0.4, 0.2, 0.2, 1);
-    transition: -webkit-transform .7s cubic-bezier(0.4, 0.2, 0.2, 1);
-    -o-transition: transform .7s cubic-bezier(0.4, 0.2, 0.2, 1);
-    transition: transform .7s cubic-bezier(0.4, 0.2, 0.2, 1);
-    transition: transform .7s cubic-bezier(0.4, 0.2, 0.2, 1), -webkit-transform .7s cubic-bezier(0.4, 0.2, 0.2, 1);
-}
-
-.back{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-}
-
-.inner{
-    -webkit-transform: translateY(-50%) translateZ(60px) scale(0.94);
-            transform: translateY(-50%) translateZ(60px) scale(0.94);
-    top: 50%;
-    position: absolute;
-    left: 0;
-    width: 100%;
-    padding: 2rem;
-    -webkit-box-sizing: border-box;
-            box-sizing: border-box;
-    outline: 1px solid transparent;
-    -webkit-perspective: inherit;
-            perspective: inherit;
-    z-index: 2;
-}
-
-.container .back{
-    -webkit-transform: rotateY(180deg);
-            transform: rotateY(180deg);
-    -webkit-transform-style: preserve-3d;
-            transform-style: preserve-3d;
-}
-
-.container .front{
-    -webkit-transform: rotateY(0deg);
-            transform: rotateY(0deg);
-    -webkit-transform-style: preserve-3d;
-            transform-style: preserve-3d;
-}
-
-.container:hover .back{
-  -webkit-transform: rotateY(0deg);
-          transform: rotateY(0deg);
-  -webkit-transform-style: preserve-3d;
-          transform-style: preserve-3d;
-}
-
-.container:hover .front{
-  -webkit-transform: rotateY(-180deg);
-          transform: rotateY(-180deg);
-  -webkit-transform-style: preserve-3d;
-          transform-style: preserve-3d;
-}
-
-.front .inner p{
-  font-size: 2rem;
-  margin-bottom: 2rem;
-  position: relative;
-}
-
-.front .inner p:after{
-  content: '';
-  width: 4rem;
-  height: 2px;
-  position: absolute;
-  background: #C6D4DF;
-  display: block;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  bottom: -.75rem;
-}
-
-.front .inner span{
-  color: rgba(255,255,255,0.7);
-  font-family: 'Montserrat';
-  font-weight: 300;
-}
-
-@media screen and (max-width: 64rem){
-  .col{
-    width: calc(33.333333% - 2rem);
-  }
-}
-
-@media screen and (max-width: 48rem){
-  .col{
-    width: calc(50% - 2rem);
-  }
-}
-
-@media screen and (max-width: 32rem){
-  .col{
-    width: 100%;
-    margin: 0 0 2rem 0;
-  }
-}
-
-
-.button {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  margin-top: 25%;
-  font-size: 1rem;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 500;
+  background-position: center;
+  height: 150px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   color: #fff;
-  text-transform: uppercase;
   text-align: center;
-  text-decoration: none;
-  background: linear-gradient(45deg, #596a72, #cedce7);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.course-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Main content (logo and title) */
+.course-content {
+  display: flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+  padding: 10px;
+  border-radius: 4px;
+  z-index: 2; /* Keeps it on top of the hover content */
+  transition: opacity 0.3s ease;
+}
+
+.course-card:hover .course-content {
+  opacity: 0; /* Fades out the main content on hover */
+}
+
+.course-logo {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  object-fit: contain;
+}
+
+.course-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+/* Hover content (Enroll button or message) */
+.course-hover-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: rgba(0, 0, 0, 0.8); /* Dark overlay */
+  opacity: 0; /* Hidden by default */
+  transition: opacity 0.3s ease;
+}
+
+.course-card:hover .course-hover-content {
+  opacity: 1; /* Revealed on hover */
+}
+.course-content {
+  display: flex;
+  flex-direction: column; /* Stack content vertically */
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+  padding: 10px;
+  border-radius: 4px;
+  z-index: 2; /* Keeps it on top of the hover content */
+  transition: opacity 0.3s ease;
+}
+
+.course-content {
+  display: flex;
+  align-items: center; /* Aligns items (logo and text) vertically */
+  background: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+  padding: 10px;
+  border-radius: 4px;
+  z-index: 2; /* Keeps it on top of the hover content */
+  transition: opacity 0.3s ease;
+}
+
+.course-logo {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  object-fit: contain;
+}
+
+.course-text {
+  display: flex;
+  flex-direction: column; /* Stacks title and author */
+}
+
+.course-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  line-height: 1.2; /* Optional: Adjust line height for better spacing */
+}
+
+.course-author {
+  font-size: 1rem;
+  font-weight: normal;
+  color: #ccc; /* Lighter text for author */
+  margin-top: 2px; /* Small spacing between title and author */
+}
+.enroll-button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #28a745;
   border: none;
   border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
+  transition: background 0.3s ease;
 }
 
-.button:hover {
-  background: linear-gradient(45deg, #cedce7, #596a72);
-  transform: scale(1.05);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+.enroll-button:hover {
+  background-color: #218838;
 }
 
-.button:active {
-  transform: scale(0.95);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-}
-
-/* From Uiverse.io by cssbuttons-io */ 
-.fancy {
-  margin-top: 45%;
-  background-color: transparent;
-  border: 2px solid #000;
-  border-radius: 0;
-  box-sizing: border-box;
+.already-enrolled {
+  font-size: 1rem;
   color: #fff;
-  cursor: pointer;
-  display: inline-block;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  outline: none;
-  overflow: visible;
-  padding: 1.25em 2em;
-  position: relative;
+  font-weight: bold;
+}
+.progress-bar-container {
+  margin-top: 10px;
+}
+
+.progress-bar {
+  width: 100%;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: #4caf50; /* Green progress */
+  width: 0%; /* Start with 0 width */
+  transition: width 0.5s ease;
+}
+
+.progress-text {
   text-align: center;
-  text-decoration: none;
-  text-transform: none;
-  transition: all 0.3s ease-in-out;
-  user-select: none;
-  font-size: 13px;
- }
- 
- .fancy::before {
-  content: " ";
-  width: 1.5625rem;
-  height: 2px;
-  background: black;
-  top: 50%;
-  left: 1.5em;
-  position: absolute;
-  transform: translateY(-50%);
-  transform-origin: center;
-  transition: background 0.3s linear, width 0.3s linear;
- }
- 
- .fancy .text {
-  font-size: 1.125em;
-  line-height: 1.33333em;
-  padding-left: 2em;
-  display: block;
-  text-align: left;
-  transition: all 0.3s ease-in-out;
-  text-transform: uppercase;
-  text-decoration: none;
-  color: black;
- }
- 
- .fancy .top-key {
-  height: 2px;
-  width: 1.5625rem;
-  top: -2px;
-  left: 0.625rem;
-  position: absolute;
-  background: #e8e8e8;
-  transition: width 0.5s ease-out, left 0.3s ease-out;
- }
- 
- .fancy .bottom-key-1 {
-  height: 2px;
-  width: 1.5625rem;
-  right: 1.875rem;
-  bottom: -2px;
-  position: absolute;
-  background: #e8e8e8;
-  transition: width 0.5s ease-out, right 0.3s ease-out;
- }
- 
- .fancy .bottom-key-2 {
-  height: 2px;
-  width: 0.625rem;
-  right: 0.625rem;
-  bottom: -2px;
-  position: absolute;
-  background: #e8e8e8;
-  transition: width 0.5s ease-out, right 0.3s ease-out;
- }
- 
- .fancy:hover {
-  color: white;
-  background: black;
- }
- 
- .fancy:hover::before {
-  width: 0.9375rem;
-  background: white;
- }
- 
- .fancy:hover .text {
-  color: white;
-  padding-left: 1.5em;
- }
- 
- .fancy:hover .top-key {
-  left: -2px;
-  width: 0px;
- }
- 
- .fancy:hover .bottom-key-1,
-  .fancy:hover .bottom-key-2 {
-  right: 0;
-  width: 0;
- }
- .disabled {
-  pointer-events: none; /* Prevents clicking */
-  opacity: 0.5; /* Makes the button look disabled */
+  font-size: 0.9em;
+  margin-top: 5px;
+  color: #555;
 }

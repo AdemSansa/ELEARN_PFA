@@ -11,7 +11,20 @@ public class Lesson {
     private String title;
     private String content;
     private String description ;
+private String videoUrl;
+    public Lesson(String title, String content, String courseId, String videoUrl) {
+        this.title = title;
+        this.content = content;
+        this.courseId = courseId;
+        this.videoUrl = videoUrl;
+    }
+    public String getVideoUrl() {
+        return videoUrl;
+    }
 
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
+    }
 
     private String courseId;
 
@@ -66,6 +79,16 @@ public class Lesson {
     public void setContent(String content) {
         this.content = content;
     }
-
+    @Override
+    public String toString() {
+        return "Lesson{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", description='" + description + '\'' +
+                ", videoUrl='" + videoUrl + '\'' +
+                ", courseId='" + courseId + '\'' +
+                '}';
+    }
 
 }
