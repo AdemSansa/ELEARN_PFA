@@ -39,7 +39,7 @@ export class UserCoursesComponent {
               this.EnrollmentService.getProgress(this.userId, enrollment.course.id).subscribe(
                 (progressData) => {
                   console.log('Progress data for course ID ' + enrollment.course.id + ':', progressData);
-                  enrollment.course.progress = progressData?.progress || 0;
+                  enrollment.course.progress = progressData || 0;
                   console.log('Progress for course ID ' + enrollment.course.id + ':', enrollment.course.progress);
                 },
                 (error) => {

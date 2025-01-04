@@ -623,6 +623,8 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    z-index: 10; /* Ensure it is higher than any overlapping elements */
+
     transition: background 0.3s ease;
   }
   

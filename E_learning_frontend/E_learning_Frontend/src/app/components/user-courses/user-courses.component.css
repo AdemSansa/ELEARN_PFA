@@ -126,6 +126,8 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  z-index: 10; /* Ensure it is higher than any overlapping elements */
+
   transition: background 0.3s ease;
 }
 
@@ -133,10 +135,9 @@
   background-color: #218838;
 }
 
-<<<<<<< HEAD
 .already-enrolled {
   font-size: 1rem;
-=======
+}
 .button:active {
   transform: scale(0.95);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
@@ -149,11 +150,9 @@
   border: 2px solid #000;
   border-radius: 0;
   box-sizing: border-box;
->>>>>>> firstBranch
   color: #fff;
   font-weight: bold;
 }
-<<<<<<< HEAD
 .progress-bar-container {
   margin-top: 10px;
   display: flex;
@@ -179,7 +178,6 @@
   font-size: 14px;
   color: #333;
 }
-=======
 button {
   position: relative;
   padding: 12px 35px;
@@ -331,4 +329,3 @@ button:hover .star-6 {
 }
 
 
->>>>>>> firstBranch
