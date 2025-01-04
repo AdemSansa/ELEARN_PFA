@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -24,4 +25,24 @@ export class ForumService {
   addChat(chat: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/chats/add`, chat);
   }
+
+  //Add A forum 
+  addForum(forum: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    return this.http.post<any>(`${this.baseUrl}/forums/add`, forum ,{headers});
+  }
+  editForum(id:string,forum: any): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/forums/edit/${id}`, forum);
+  }
+
+  // Delete forum 
+  DeleteForum(id: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    return this.http.delete<any>(`${this.baseUrl}/forums/delete/${id}`,{headers});
+  }
 }
+

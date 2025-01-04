@@ -1,0 +1,136 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .header {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Search Bar */
+  .search-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .search-bar {
+    width: 80%;
+    max-width: 500px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Table Styles */
+  .table-container {
+    overflow-x: auto;
+    margin: 0 auto;
+    width: 90%;
+  }
+  
+  .styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .styled-table th,
+  .styled-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .styled-table th {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .styled-table tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .styled-table tbody tr:nth-of-type(even) {
+    background-color: #f9f9f9;
+  }
+  
+  /* Role Flags */
+  .role-flags {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .role-badge {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background-color: #e0e0e0;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+
+  
+  
+  /* Action Buttons */
+  .action-btn {
+    padding: 8px 12px;
+    font-size: 14px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .action-btn.ban {
+    background-color: #ff6b6b;
+  }
+  
+  .action-btn.ban:hover {
+    background-color: #ff4d4d;
+  }
+  
+  .action-btn.delete {
+    background-color: #333;
+  }
+  
+  .action-btn.delete:hover {
+    background-color: #555;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .search-bar {
+      width: 100%;
+    }
+  
+    .styled-table th,
+    .styled-table td {
+      padding: 10px;
+      font-size: 14px;
+    }
+  }
+  .chat-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #ccc;
+  }
+  

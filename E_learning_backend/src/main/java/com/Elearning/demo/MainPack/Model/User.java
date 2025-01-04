@@ -23,7 +23,7 @@ public class User {
     private String name;
     private String email;
     private String password;
-
+    private boolean active;
     //Added Fields For profile
     private int PhoneNumber;
     private String Adress;
@@ -38,12 +38,31 @@ public class User {
 
     private String avatarURL;
 
+    //Active Role
+    private String activeRole;
+
+    public String getActiveRole() {
+        return activeRole;
+    }
+
+    public void setActiveRole(String activeRole) {
+        this.activeRole = activeRole;
+    }
+
     public String getAvatarURL() {
         return avatarURL;
     }
 
     public void setAvatarURL(String avatarURL) {
         this.avatarURL = avatarURL;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     private List <String> _ROLE = new ArrayList<>();

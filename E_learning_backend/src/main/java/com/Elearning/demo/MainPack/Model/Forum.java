@@ -11,8 +11,19 @@ public class Forum {
     private String id;
     private String title;
     private String description;
+    private String userUrl;
+
 
     // Getters and Setters
+    public String getUserUrl() {
+        return userUrl;
+    }
+    public void setUserUrl(String UserUrl) {
+        userUrl = UserUrl;
+    }
+
+
+
     public String getId() {
         return id;
     }

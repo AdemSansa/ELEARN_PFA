@@ -1,0 +1,52 @@
+<p class="header">Admin User Management</p>
+<h2>User Management</h2>
+
+<!-- Search Bar -->
+<div class="search-container">
+  <input
+    type="text"
+    [(ngModel)]="searchText"
+    placeholder="Search users..."
+    class="search-bar"
+  />
+</div>
+
+<div class="table-container">
+  <table class="styled-table">
+    <thead>
+      <tr>
+        <th>Avatar</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Roles</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users | filterUsers: searchText">
+        <td><div class="chat-header d-flex align-items-center mb-2">
+            <img [src]="user.avatarURL" alt="User Image" class="chat-image me-3" />
+            </div></td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td>
+          <div class="role-flags">
+            <span *ngFor="let role of user.roles" class="role-badge">
+              <i class="flag-icon" [ngClass]="'flag-icon-' + getFlagClass(role)"></i>
+              {{ role.replace('ROLE_', '') }}
+            </span>
+          </div>
+        </td>
+        <td style="display: flex; gap: 1rem;">
+            <button class="action-btn view" (click)="viewUser(user.id)">View</button>
+            <button class="action-btn edit" (click)="editUser(user.id)">Edit</button>
+            <button class="action-btn roles" (click)="openRoleDialog(user)">Manage Roles</button>
+
+            <button class="action-btn ban" [disabled]="user.isBanned" (click)="banUser(user.id)">Ban</button>
+            <button class="action-btn delete" (click)="deleteUser(user.id)">Delete</button>
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

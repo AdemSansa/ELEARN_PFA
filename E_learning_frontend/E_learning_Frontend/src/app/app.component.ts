@@ -9,11 +9,21 @@ import { Observable } from 'rxjs';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   user:any;
   title = 'E_learning_Frontend';
   ismenuVisble!:boolean;
   constructor(public auth:AuthService,private router:Router){}
+  ngOnInit(): void {
+    this.user=this.auth.getUserInfo().subscribe((data)=>{
+      this.user=data;
+      console.log(this.user);
+    }
+    );
+
+   
+    
+  }
   
  
    

@@ -7,9 +7,10 @@
   })
   export class EnrollmentService {
 
-    private apiUrl = 'http://localhost:8081/api/enrollments';
-    constructor(private http:HttpClient) { }
-    
+  private apiUrl = 'http://localhost:8081/api/enrollments';
+  private AdminURL = 'http://localhost:8081/Admin'
+  constructor(private http:HttpClient) { }
+  
 
     // Enroll user in a course 
     enrollInCourse(userId: string, courseId: string): Observable<any> {
@@ -39,4 +40,11 @@
     getCompletedLessons(userId: string, courseId: string): Observable<string[]> {
       return this.http.get<string[]>(`${this.apiUrl}/${courseId}/completedLessons?userId=${userId}`);
     }
+  
+  // get enrollments per courses
+  getMostEnrolledCourses(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.AdminURL}/courses`);
+  }
+
+
   }

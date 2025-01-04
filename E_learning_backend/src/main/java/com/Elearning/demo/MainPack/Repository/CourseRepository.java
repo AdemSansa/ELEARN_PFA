@@ -11,6 +11,6 @@ public interface CourseRepository extends MongoRepository<Course, String> {
     List<Course> findByTitle(String title);
     List<Course> findByDescription(String description);
     List<Course> findByCreatedDate(String createdDate);
-
+    long count();
 
 }
