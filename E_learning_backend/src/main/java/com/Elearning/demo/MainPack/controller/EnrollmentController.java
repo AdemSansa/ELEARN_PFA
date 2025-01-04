@@ -57,21 +57,27 @@ public class EnrollmentController {
         List<User> enrolledUsers = enrollmentService.getEnrolledUsersByCourse(courseId);
         return ResponseEntity.ok(enrolledUsers);
     }
-    @PostMapping("/{courseId}/lessons/{lessonId}/complete")
-    public ResponseEntity<Void> completeLesson(@PathVariable String courseId, @PathVariable String lessonId, Authentication authentication) {
-        String userId = authentication.getName(); // Get the logged-in user's ID
-        enrollmentService.completeLesson(userId, courseId, lessonId);
-        return ResponseEntity.ok().build();
+
+    @PutMapping("/completeLesson")
+    public ResponseEntity<?> completeLesson(@RequestParam String userId, @RequestParam String courseId, @RequestParam String lessonId) {
+        try {
+            enrollmentService.completeLesson(userId, courseId, lessonId);
+            return ResponseEntity.ok("Lesson marked as completed");
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+    @GetMapping("/calculateProgress")
+    public ResponseEntity<Integer> calculateProgress(@RequestParam String userId, @RequestParam String courseId) {
+        System.out.println("Received userId: " + userId + ", courseId: " + courseId); // Debugging line
+        try {
+            int progress = enrollmentService.calculateProgress(userId, courseId);
+            return ResponseEntity.ok(progress);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 
-    @GetMapping("/{courseId}/progress")
-    public ResponseEntity<Integer> getProgress(
-            @PathVariable String courseId,
-            @RequestParam String userId
-    ) {
-        int progress = enrollmentService.calculateProgress(userId, courseId);
-        return ResponseEntity.ok(progress);
-    }
     @GetMapping("/{courseId}/completedLessons")
     public ResponseEntity<List<String>> getCompletedLessons(@RequestParam String userId, @PathVariable String courseId) {
         List<String> completedLessons = enrollmentService.getCompletedLessons(userId, courseId);

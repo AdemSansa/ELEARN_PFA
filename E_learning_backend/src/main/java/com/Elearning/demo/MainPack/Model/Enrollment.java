@@ -17,11 +17,19 @@ public class Enrollment {
 
     @DBRef
     private Course course; // Store the entire Course object (referenced)
-
+private int progress;
     private String enrollmentDate;
     private List<String> completedLessons = new ArrayList<>();
     public String getEnrollmentDate() {
         return enrollmentDate;
+    }
+
+    public int getProgress() {
+        return progress;
+    }
+
+    public void setProgress(int progress) {
+        this.progress = progress;
     }
 
     public void setEnrollmentDate(String enrollmentDate) {

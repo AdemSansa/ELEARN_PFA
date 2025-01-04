@@ -26,13 +26,16 @@
     getEnrolledUsers(courseId: string): Observable<any[]> {
       return this.http.get<any[]>(`${this.apiUrl}/enrolledUsers/${courseId}`);
     }
-    completeLesson(userId: string, courseId: string, lessonId: string): Observable<void> {
-      return this.http.post<void>(`${this.apiUrl}/${courseId}/lessons/${lessonId}/complete?userId=${userId}`, {});
-    }
-  
-    getProgress(userId: string, courseId: string): Observable<number> {
-      return this.http.get<number>(`/api/enrollments/${courseId}/progress?userId=${userId}`);
-    }
+   
+    completeLesson(userId: string, courseId: string, lessonId: string): Observable<string> {
+      const url = `${this.apiUrl}/completeLesson?userId=${userId}&courseId=${courseId}&lessonId=${lessonId}`;
+      return this.http.put(url, null, { responseType: 'text' });  // Make sure responseType is set to 'text'
+  }
+  getProgress(userId: string, courseId: string): Observable<any> {
+    console.log('Requesting progress with userId:', userId, 'and courseId:', courseId); // Debugging line
+    return this.http.get<any>(`${this.apiUrl}/calculateProgress?userId=${userId}&courseId=${courseId}`);
+  }
+ 
     getCompletedLessons(userId: string, courseId: string): Observable<string[]> {
       return this.http.get<string[]>(`${this.apiUrl}/${courseId}/completedLessons?userId=${userId}`);
     }

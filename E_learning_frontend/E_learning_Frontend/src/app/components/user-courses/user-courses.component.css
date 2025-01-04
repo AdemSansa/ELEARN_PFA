@@ -140,26 +140,26 @@
 }
 .progress-bar-container {
   margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .progress-bar {
   width: 100%;
-  background-color: #e0e0e0;
-  border-radius: 5px;
-  overflow: hidden;
   height: 10px;
+  background-color: #f3f3f3;
+  border-radius: 5px;
+  margin-bottom: 5px;
 }
 
 .progress-bar-fill {
   height: 100%;
-  background-color: #4caf50; /* Green progress */
-  width: 0%; /* Start with 0 width */
-  transition: width 0.5s ease;
+  background-color: #4caf50;
+  border-radius: 5px;
 }
 
 .progress-text {
-  text-align: center;
-  font-size: 0.9em;
-  margin-top: 5px;
-  color: #555;
+  font-size: 14px;
+  color: #333;
 }

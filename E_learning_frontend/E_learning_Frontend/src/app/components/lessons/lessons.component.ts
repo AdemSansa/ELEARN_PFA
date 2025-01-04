@@ -63,7 +63,7 @@ export class LessonsComponent {
 
   ngOnInit(): void {  this.courseId = this.route.snapshot.paramMap.get('courseId') || '';
     console.log('Course ID:', this.courseId); // Debugging courseId
-  
+  this.userId = this.authSeervice.getUserId() || '';
     if (this.courseId) {
       this.courseService.getCourseById(this.courseId).subscribe(
         (course) => {
@@ -83,8 +83,17 @@ export class LessonsComponent {
           console.error('Error fetching lessons:', error);
         }
       );
-    } 
+    } this.enrollmentService.getCompletedLessons(this.userId, this.courseId).subscribe(
+      (completedLessons) => {
+        console.log('Completed Lessons:', completedLessons); // Log completed lessons
+        this.completedLessons = completedLessons; // Optionally update the completed lessons array
+      },
+      (error) => {
+        console.error('Error fetching completed lessons:', error);
+      }
+    );
   }
+  
   isYouTubeVideo(url: string): boolean {
     return url.includes('youtube.com') || url.includes('youtu.be');
   }
@@ -104,6 +113,8 @@ export class LessonsComponent {
 
   toggleLessonCompletion(lesson: Lesson, event: any) {
     const isChecked = event.target.checked;
+    console.log(this.userId);
+    
     this.enrollmentService.completeLesson(this.userId, this.courseId, lesson.id).subscribe(
       () => {
         if (isChecked) {
@@ -117,7 +128,6 @@ export class LessonsComponent {
       }
     );
   }
-
   selectLesson(lesson: Lesson) {
     this.selectedLesson = lesson;
   }

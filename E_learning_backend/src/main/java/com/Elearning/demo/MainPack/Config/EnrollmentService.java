@@ -9,6 +9,7 @@ import com.Elearning.demo.MainPack.Repository.CourseRepository;
 import com.Elearning.demo.MainPack.Repository.EnrollementRepository;
 import com.Elearning.demo.MainPack.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -36,13 +37,14 @@ public class EnrollmentService {
                 throw new RuntimeException("User is already enrolled in this course");
             }
         }
+
         Enrollment enrollment = new Enrollment();
         enrollment.setUser(user);
         enrollment.setCourse(course);
-        enrollment.setEnrollmentDate(System.currentTimeMillis() + ""); // You can format this date as needed
+        enrollment.setEnrollmentDate(System.currentTimeMillis() + "");
+        enrollment.setProgress(0);
 
         return enrollmentRepository.save(enrollment);
-
     }
     public List<Enrollment> getEnrollmentsByUser(User user) {
         return enrollmentRepository.findByUser(user);
@@ -72,18 +74,29 @@ public class EnrollmentService {
 
         return enrolledUsers;
     }
-    public void completeLesson(String userId, String courseId, String lessonId) {
+    public ResponseEntity<Void> completeLesson(String userId, String courseId, String lessonId) {
         Enrollment enrollment = enrollmentRepository
                 .findByUserIdAndCourseId(userId, courseId)
                 .orElseThrow(() -> new RuntimeException("Enrollment not found"));
 
-        if (!enrollment.getCompletedLessons().contains(lessonId)) {
-            enrollment.getCompletedLessons().add(lessonId);
-            enrollmentRepository.save(enrollment);
+        List<String> completedLessons = enrollment.getCompletedLessons();
+        if (!completedLessons.contains(lessonId)) {
+            completedLessons.add(lessonId);
+            enrollment.setCompletedLessons(completedLessons);
         }
+
+        // Calculate and set progress after completing the lesson
+        int progress = calculateProgress(userId, courseId);
+        enrollment.setProgress(progress);
+
+        // Save updated enrollment with progress
+        enrollmentRepository.save(enrollment);
+
+        return ResponseEntity.ok().build();
     }
 
     public int calculateProgress(String userId, String courseId) {
+        // Retrieve the enrollment for the user in the specified course
         Enrollment enrollment = enrollmentRepository
                 .findByUserIdAndCourseId(userId, courseId)
                 .orElseThrow(() -> new RuntimeException("Enrollment not found"));
