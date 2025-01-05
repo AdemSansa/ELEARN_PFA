@@ -44,5 +44,8 @@ export class ForumService {
     });
     return this.http.delete<any>(`${this.baseUrl}/forums/delete/${id}`,{headers});
   }
+  getTopChatters(): Observable<any[]> {
+    return this.http.get<any[]>(this.baseUrl + '/chats/top-chatters');
+  }
 }
 

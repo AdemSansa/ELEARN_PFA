@@ -26,9 +26,11 @@ import { AdminDashboardComponent } from './components/admin-dashboard/admin-dash
 import { AdminUserManagementComponent } from './components/admin-user-management/admin-user-management.component';
 import { AdminGuard } from './Guards/admin.guard';
 import { StatisticsComponent } from './components/statistics/statistics.component';
+import { AppComponent } from './app.component';
 
 const routes: Routes = [
 {path: '', redirectTo: 'home', pathMatch: 'full' }, 
+{path: 'homee', component: AppComponent },
 {path: 'login', component: LoginComponent },
 {path: 'register', component: SignupComponent },
 {path: 'home', component: HomeComponent }, 

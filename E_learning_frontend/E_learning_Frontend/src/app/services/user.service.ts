@@ -25,6 +25,9 @@ export class UserService {
     return this.http.put(`/api/users/${userId}/roles`, roles);
   }
   
+  getMostEnrolledUsers(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/topUsers`);
+}
 
   
 }

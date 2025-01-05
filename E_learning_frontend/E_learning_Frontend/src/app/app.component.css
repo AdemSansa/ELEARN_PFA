@@ -13,3 +13,88 @@
     object-fit: cover;
     border: 1px solid #ccc;
   }
+  .admin-interface-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+  }
+  
+  .admin-interface-btn button {
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 12px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+  }
+  
+  .admin-interface-btn button:hover {
+    background: linear-gradient(45deg, #0056b3, #007bff);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+    transform: translateY(-3px);
+  }
+  
+  .admin-interface-btn button:active {
+    background: linear-gradient(45deg, #004494, #0056b3);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    transform: translateY(2px);
+  }
+  
+  @media (max-width: 768px) {
+    .admin-interface-btn button {
+      padding: 10px 20px;
+      font-size: 14px;
+    }
+  }
+  .admin-interface-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column; /* Stack buttons vertically */
+    align-items: center; /* Center-align buttons */
+    gap: 15px; /* Add space between buttons */
+  }
+  
+  .admin-interface-btn button {
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 12px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    width: 200px; /* Set a consistent button width */
+  }
+  
+  .admin-interface-btn button:hover {
+    background: linear-gradient(45deg, #0056b3, #007bff);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+    transform: translateY(-3px);
+  }
+  
+  .admin-interface-btn button:active {
+    background: linear-gradient(45deg, #004494, #0056b3);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    transform: translateY(2px);
+  }
+  
+  @media (max-width: 768px) {
+    .admin-interface-btn button {
+      padding: 10px 20px;
+      font-size: 14px;
+      width: 150px; /* Adjust width for smaller screens */
+    }
+  }
+  
+  
+  

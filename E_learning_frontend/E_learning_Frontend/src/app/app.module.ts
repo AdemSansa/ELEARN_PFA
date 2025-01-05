@@ -15,6 +15,9 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { CoursesComponent } from './components/courses/courses.component';
 import { UserCoursesComponent } from './components/user-courses/user-courses.component';
 
+
+import { NgChartsModule } from 'ng2-charts';
+
 import { TeacherCoursesComponent } from './components/courses/teacher-courses/teacher-courses.component';
 
 import { LessonsComponent } from './components/lessons/lessons.component';
@@ -90,7 +93,10 @@ import { StatisticsComponent } from './components/statistics/statistics.componen
     AppRoutingModule,
     RouterModule,
     MatDialogModule, // Include this after ensuring Material dependencies
-],
+    NgChartsModule,
+    
+    
+    ],
   
   schemas: [CUSTOM_ELEMENTS_SCHEMA],  
   providers: [],

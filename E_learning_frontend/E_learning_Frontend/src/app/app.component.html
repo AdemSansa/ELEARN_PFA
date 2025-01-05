@@ -11,7 +11,7 @@
         
          <nav id="navbar"   class="navbar order-last order-lg-0" >
            <ul>             
-            <img [src]="user.AvatarURL" alt="User Image" class="chat-image me-3" />
+            <img [src]="user?.avatar" alt="User Image" class="chat-image me-3" />
 
             <li><a class="nav-link scrollto" [routerLink]="['home']">Home </a></li>
             <li><a class="nav-link scrollto" [routerLink]="['courses']"  >Available Courses</a></li>
@@ -29,7 +29,7 @@
            </ul>
            <i class="bi bi-list mobile-nav-toggle"></i>
           </nav><ng-container *ngIf="this.auth.isLoggedIn()">
-            <a   [routerLink]="['profile']" class="book-a-table-btn scrollto d-none d-lg-flex">{{this.auth.userName }} Profile</a>
+            <a   [routerLink]="['profile']" class="book-a-table-btn scrollto d-none d-lg-flex">{{user?.name }} Profile</a>
 
             <a (click)="this.auth.logout()"  [routerLink]="['/login']" class="book-a-table-btn scrollto d-none d-lg-flex">Log out</a>
            
@@ -52,7 +52,7 @@
             
              <nav id="navbar"   class="navbar order-last order-lg-0" >
                <ul>             
-                <img [src]="user.AvatarURL" alt="User Image" class="chat-image me-3" />
+                <img [src]="user?.avatar" alt="User Image" class="chat-image me-3" />
 
                 <li><a class="nav-link scrollto" [routerLink]="['home']">Home </a></li>
     
@@ -63,7 +63,7 @@
                </ul>
                <i class="bi bi-list mobile-nav-toggle"></i>
               </nav><ng-container *ngIf="this.auth.isLoggedIn()">
-                <a    class="book-a-table-btn scrollto d-none d-lg-flex">{{this.auth.userName}} Profile</a>
+                <a  [routerLink]="['profile']"  class="book-a-table-btn scrollto d-none d-lg-flex">{{user?.name}} Profile</a>
                 <a (click)="this.auth.logout()"  [routerLink]="['/login']" class="book-a-table-btn scrollto d-none d-lg-flex">Log out</a>
                
               </ng-container>
@@ -86,7 +86,7 @@
           
            <nav id="navbar"  class="navbar order-last order-lg-0" >
              <ul>             
-              <li><a class="nav-link scrollto">Home {{this.auth.userName}} </a></li>
+              <li><a class="nav-link scrollto">Home  </a></li>
                  <li><a class="nav-link scrollto">About</a></li>
                <li><a class="nav-link scrollto">Contact</a></li>
   
@@ -105,4 +105,8 @@
      </div>
     </div>
 <router-outlet></router-outlet>
+<div class="admin-interface-btn" *ngIf="this.auth.isAdmin()">
+  <button (click)="navigateToAdmin()">Admin Interface</button>
+  <button [routerLink]="['/home']">Go back to Home Page</button>
+</div>
 <app-footer></app-footer>

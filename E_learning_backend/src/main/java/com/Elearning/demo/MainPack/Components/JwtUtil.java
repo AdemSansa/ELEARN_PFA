@@ -12,12 +12,13 @@ public class JwtUtil {
     private Set<String> blacklistedTokens = new HashSet<>();
 
     // Generate Token
-    public String generateToken(String email,String name,String userId, List role) {
+    public String generateToken(String email,String name,String userId, List role ,String avatar) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("id", userId);   // Add user ID
         claims.put("name", name);  // Add user name
         claims.put("email", email);
         claims.put("roles",role);// Optional: Add email
+        claims.put("avatar",avatar);
         return Jwts.builder()
                 .setSubject(email)
                 .setClaims(claims)
