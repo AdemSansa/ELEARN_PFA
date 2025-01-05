@@ -3,6 +3,7 @@ package com.Elearning.demo.MainPack.controller;
 import com.Elearning.demo.MainPack.Config.Authservice;
 import com.Elearning.demo.MainPack.Config.UserService;
 import com.Elearning.demo.MainPack.Model.Chat;
+import com.Elearning.demo.MainPack.Model.TopChatter;
 import com.Elearning.demo.MainPack.Model.User;
 import com.Elearning.demo.MainPack.Repository.ChatRepository;
 import com.Elearning.demo.MainPack.Repository.UserRepository;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/chats")
@@ -43,4 +45,11 @@ public class ChatController {
     public ResponseEntity<List<Chat>> getChatsByForumId(@PathVariable String forumId) {
         return ResponseEntity.ok(chatRepository.findChatByForumId(forumId));
     }
+
+
+    @GetMapping("/top-chatters")
+    public ResponseEntity<List<TopChatter>> getTopChatters() {
+        return ResponseEntity.ok(chatRepository.findTopChatters());
+    }
+
 }

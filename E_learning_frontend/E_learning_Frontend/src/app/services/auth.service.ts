@@ -77,7 +77,6 @@ export class AuthService {
       () => {
         console.log('Logout successful');
         localStorage.removeItem('jwtToken');
-        this.router.navigate(['/login']);
       },
       (error) => {
         console.error('Logout failed:', error);
@@ -128,7 +127,8 @@ export class AuthService {
 
   // Updated method to fetch and extract user info including username
   getUserInfo(): Observable<any> {
-    const token = localStorage.getItem('jwtToken');
+    const token = this.getToken();
+    console.log(token);
     
     if (!token) {
       throw new Error('User not logged in');

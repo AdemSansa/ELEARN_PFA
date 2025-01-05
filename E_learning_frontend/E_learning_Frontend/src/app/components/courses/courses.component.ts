@@ -92,6 +92,7 @@ export class CoursesComponent implements OnInit {
           (response) => {
             console.log('Enrollment successful:', response);
             Swal.fire('Success', 'Enrollment successful!', 'success');
+            this.ngOnInit();
             this.router.navigate([this.router.url]);
 
           },

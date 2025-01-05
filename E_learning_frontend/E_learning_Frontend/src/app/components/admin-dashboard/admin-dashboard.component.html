@@ -1,6 +1,14 @@
-<p>admin-dashboard works!</p><br><br><br><br><br><br><br><br><br><br><br>
-<h1>Admin Dashboard</h1>
-<nav>
-  <a routerLink="/admin/users">Manage Users</a>
-</nav>
-<router-outlet></router-outlet>
+<div class="admin-dashboard">
+  <header class="dashboard-header">
+    <h1>Admin Dashboard</h1>
+    <nav class="dashboard-nav">
+      <ul>
+        <li><a routerLink="/admin/users" routerLinkActive="active">Manage Users</a></li>
+        <li><a routerLink="/admin/statistics" routerLinkActive="active">View Statistics</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="dashboard-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

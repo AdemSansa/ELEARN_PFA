@@ -5,12 +5,17 @@ import com.Elearning.demo.MainPack.Config.EnrollmentService;
 import com.Elearning.demo.MainPack.Config.UserService;
 import com.Elearning.demo.MainPack.Model.Course;
 import com.Elearning.demo.MainPack.Model.User;
+import com.Elearning.demo.MainPack.Model.UserEnrollmentDTO;
+import com.Elearning.demo.MainPack.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("/Admin")
@@ -19,10 +24,13 @@ public class AdminController {
     private final UserService userService;
     private final EnrollmentService enrollmentService;
     private final CourseService courseService;
-    public AdminController(UserService userService, EnrollmentService enrollmentService , CourseService courseService) {
+    private final UserRepository userRepository;
+
+    public AdminController(UserService userService, EnrollmentService enrollmentService , CourseService courseService, UserRepository userRepository) {
         this.userService = userService;
         this.enrollmentService = enrollmentService;
         this.courseService = courseService;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/users")
@@ -61,5 +69,15 @@ public class AdminController {
     public ResponseEntity<List<Map<String, Object>>> getCoursesWithEnrollmentCounts() {
         List<Map<String, Object>> coursesWithEnrollments = courseService.getCoursesWithEnrollmentCounts();
         return ResponseEntity.ok(coursesWithEnrollments);
+    }
+
+    //Top users enrolled
+    @GetMapping("/topUsers")
+
+    public ResponseEntity<List<UserEnrollmentDTO>> getTopUsers() {
+        List<UserEnrollmentDTO> users = userService.getUsersWithMostEnrollments();
+        users= users.stream().limit(10).toList();
+
+        return ResponseEntity.ok(users);
     }
 }
