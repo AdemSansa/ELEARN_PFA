@@ -27,6 +27,7 @@ import { AdminUserManagementComponent } from './components/admin-user-management
 import { AdminGuard } from './Guards/admin.guard';
 import { StatisticsComponent } from './components/statistics/statistics.component';
 import { AppComponent } from './app.component';
+import { ChatComponent } from './components/chat/chat.component';
 
 const routes: Routes = [
 {path: '', redirectTo: 'home', pathMatch: 'full' }, 
@@ -53,6 +54,7 @@ const routes: Routes = [
 {path: 'CreateQuiz', component: QuizComponentComponent },
 
 { path: 'edit-quiz/:id', component: EditQuizComponent },
+{ path: 'livechat', component: ChatComponent },
 
 {
   path: 'admin',
