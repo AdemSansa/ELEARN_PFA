@@ -42,7 +42,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
 
-                        .requestMatchers("/auth/forgot-password", "/auth/reset-password", "/auth/**","/Admin/**","/api/**","/api/enrollments/**","/api/lessons/**","/api/**","/admin/**").permitAll()
+                        .requestMatchers("/messages/**","/chat-websocket","/chat-websocket/**","/live-chat/**","/auth/forgot-password", "/auth/reset-password", "/auth/**","/Admin/**","/api/**","/api/enrollments/**","/api/lessons/**","/api/**","/admin/**").permitAll()
                         .anyRequest().authenticated()
                 );
 
@@ -51,6 +51,7 @@ public class SecurityConfig {
     }
     @Bean
     public UrlBasedCorsConfigurationSource corsConfigurationSource() {
+
         CorsConfiguration corsConfig = new CorsConfiguration();
         corsConfig.addAllowedOrigin("http://localhost:4200");
         corsConfig.addAllowedMethod("*");
