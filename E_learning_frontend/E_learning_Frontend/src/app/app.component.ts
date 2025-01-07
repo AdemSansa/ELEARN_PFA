@@ -3,14 +3,44 @@ import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {
+  trigger,
+  state,
+  style,
+  transition,
+  animate,
+} from '@angular/animations';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  animations:[
+    trigger('toggleChat', [
+      state(
+        'hidden',
+        style({
+          transform: 'translateY(100%)',
+          opacity: 0,
+        })
+      ),
+      state(
+        'visible',
+        style({
+          transform: 'translateY(0)',
+          opacity: 1,
+        })
+      ),
+      transition('hidden <=> visible', [
+        animate('300ms ease-in-out'), // Duration and easing
+      ]),
+    ]),
+  ],
 })
 export class AppComponent implements OnInit {
   user:any;
+  isChatVisible = false; // Initial state: Chat is hidden
+  isButtonVisible = false; // Initial state: Button is hidden
   title = 'E_learning_Frontend';
   ismenuVisble!:boolean;
   isAdmin!:boolean;
@@ -43,9 +73,13 @@ export class AppComponent implements OnInit {
     var tokencheck = localStorage.getItem('jwtToken');
     console.log(tokencheck);
     this.isAdmin=false;
-
+    this.isChatVisible = false;
     this.router.navigate(['/login']);
 
+  }
+
+  toggleChat(): void {
+    this.isChatVisible = !this.isChatVisible;
   }
  
   

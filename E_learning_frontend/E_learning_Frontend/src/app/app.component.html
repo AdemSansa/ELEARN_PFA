@@ -104,8 +104,24 @@
        </header >
      </div>
     </div>
+   
 <router-outlet></router-outlet>
+<div *ngIf="this.auth.isLoggedIn()">
+ <!-- Toggle Button -->
+ <button class="chat-toggle-button" (click)="toggleChat()">
+  <i class="fas fa-comments"></i> <!-- FontAwesome comment icon -->
+</button>
+
+<!-- Live Chat Component -->
+<div
+  class="chat-container"
+  [ngClass]="{ 'visible': isChatVisible, 'hidden': !isChatVisible }"
+>
+  <app-chat></app-chat>
+</div>
+</div>
 <div class="admin-interface-btn" *ngIf="this.auth.isAdmin()">
+  
   <button (click)="navigateToAdmin()">Admin Interface</button>
   <button [routerLink]="['/home']">Go back to Home Page</button>
 </div>
