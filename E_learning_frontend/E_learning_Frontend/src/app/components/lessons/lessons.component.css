@@ -140,3 +140,8 @@ h1.form-title {
   margin-bottom: 20px;
   color: #333;
 }
+.error {
+  color: red;
+  font-size: 0.85em;
+  margin-top: 5px;
+}

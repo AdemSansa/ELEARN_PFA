@@ -17,7 +17,7 @@
       </div>
       <h2>Content</h2><p class="lesson-content" (scroll)="onScroll($event)">{{ selectedLesson.content }}</p>
       <h3>Description </h3><p class="lesson-description">{{ selectedLesson.description }}</p>
-      
+
     </div>
     <div *ngIf="!selectedLesson">
       <p>No lessons right now.</p>
@@ -32,23 +32,24 @@
         *ngFor="let lesson of lessons"
         [class.active]="lesson.id === selectedLesson?.id"
         (click)="selectLesson(lesson)"
-      > 
+      >
       <input
           type="checkbox"
           [checked]="isLessonCompleted(lesson.id)"
           (change)="toggleLessonCompletion(lesson, $event)"
+          [disabled]="isLessonCompleted(lesson.id)"
         />
         {{ lesson.title }}
       </li>
     </ul>
 
-    <!-- Add Lesson Button --><ng-container *ngIf="this.authSeervice.getIsTeacher()">
-      
+    <ng-container *ngIf="this.authSeervice.getIsTeacher()">
+
     <button class="btn open-form" (click)="openForm()">Add Lesson</button></ng-container>
   </div>
 </div>
 
-<!-- Popup Form -->
+
 <div class="form-popup" [class.show]="isFormVisible">
   <div class="container form-wrapper">
     <button class="btn close-form" (click)="closeForm()">Close</button>
@@ -62,49 +63,81 @@
         <div class="form-group col-md-6">
           <label for="title">Title</label>
           <input
-            type="text"
-            id="title"
-            name="title"
-            [(ngModel)]="newLesson.title"
-            class="form-control"
-            required
-          />
+          type="text"
+          id="title"
+          name="title"
+          [(ngModel)]="newLesson.title"
+          #title="ngModel"
+          class="form-control"
+          required
+          minlength="3"
+          maxlength="100"
+        />
+        <div *ngIf="title.invalid && title.touched" class="error">
+          <small *ngIf="title.errors?.['required']">Title is required.</small>
+          <small *ngIf="title.errors?.['minlength']">Minimum 3 characters.</small>
+          <small *ngIf="title.errors?.['maxlength']">Maximum 100 characters.</small>
+        </div>
         </div>
         <div class="form-group col-md-6">
           <label for="videoUrl">Video URL</label>
           <input
+          #videoUrl="ngModel"
             type="text"
             id="videoUrl"
             name="videoUrl"
             [(ngModel)]="newLesson.videoUrl"
             class="form-control"
-            required
-          />
+            required pattern="https?:\/\/.+"
+          /><div *ngIf="videoUrl.invalid && videoUrl.touched" class="error">
+            <small *ngIf="videoUrl.errors?.['required']">Video URL is required.</small>
+            <small *ngIf="videoUrl.errors?.['pattern']">
+              Please provide a valid URL (e.g., https://...).
+            </small>
+          </div>
         </div>
       </div>
       <div class="row">
         <div class="form-group col-md-12">
           <label for="content">Content</label>
           <textarea
+          #content="ngModel"
             id="content"
             name="content"
             [(ngModel)]="newLesson.content"
-            class="form-control"
-          ></textarea>
+            class="form-control" required
+          ></textarea><div *ngIf="content.invalid && content.touched" class="error">
+            <small *ngIf="content.errors?.['required']">Content is required.</small>
+          </div>
         </div>
       </div>
       <div class="row">
         <div class="form-group col-md-12">
           <label for="description">Description</label>
           <textarea
+          #description="ngModel"
             id="description"
             name="description"
             [(ngModel)]="newLesson.description"
             class="form-control"
-          ></textarea>
+            required
+        minlength="10"
+      ></textarea>
+      <div *ngIf="description.invalid && description.touched" class="error">
+        <small *ngIf="description.errors?.['required']">Description is required.</small>
+        <small *ngIf="description.errors?.['minlength']">
+          Minimum 10 characters.
+        </small>
+      </div>
         </div>
       </div>
-      <button type="submit" class="btn send-form">Add Lesson</button>
+      <button
+      type="submit"
+      class="btn send-form"
+      [disabled]="lessonForm.invalid"
+    >
+      Add Lesson
+    </button>
     </form>
   </div>
 </div>

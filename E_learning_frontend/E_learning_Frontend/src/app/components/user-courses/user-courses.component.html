@@ -3,7 +3,7 @@
   <div class="course-container">
     <div 
       class="course-card" 
-      *ngFor="let course of courses" 
+      *ngFor="let course of courses"   (mouseenter)="onCourseHover(course)"
       [style.backgroundImage]="'url(' + course.course.imageUrl + ')'"
     >
       <div class="course-content">
@@ -12,8 +12,12 @@
         <span>{{ course.course.author }}</span>
       </div>
 
+      
+      <div class="course-hover-content">
+        <button class="enroll-button" (click)="StartCourse(course.course.id)">Start Course</button>
+      </div> 
       <div class="progress-bar-container">
-        <div class="progress-bar">
+        <div class="progress-bar" [style.width.%]="course.course.progress">
           <div 
             class="progress-bar-fill" 
             [style.width]="course.course.progress + '%'"
@@ -21,13 +25,8 @@
         </div>
         <p class="progress-text">{{ course.course.progress }}% Completed</p>
       </div>
-
-      <div class="course-hover-content">
-        <button class="enroll-button" (click)="StartCourse(course.course.id)">Start Course</button>
-      </div>
     </div>
   </div>
-
   <div *ngIf="courses.length === 0">
     <p>No courses found. Enroll in a course to see it here!</p>
   </div>

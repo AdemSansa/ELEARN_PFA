@@ -7,8 +7,8 @@
 				<img src="assets/img1.svg" alt="">
 			</div>
 		</div>
-		
-        
+
+
         <div class="form-holder">
             <div class="form-content justify-content-end">
                 <div class="form-items">
@@ -22,11 +22,44 @@
                     <h3 class="font-md">Sign-up</h3>
                     <p>Access to the most powerful tool in the entire design and web industry.</p>
                     <form (ngSubmit)="onRegister()">
-                        <input class="form-control" type="text" name="name" [(ngModel)]="name" placeholder="Full Name" required>
-                        <input class="form-control" type="email" name="email" [(ngModel)]="email" placeholder="E-mail Address" required>
-                        <input class="form-control" type="password" name="password" [(ngModel)]="password" placeholder="Password" required>
-                        
-                  
+                        <input class="form-control" type="text" name="name" [(ngModel)]="name" placeholder="Full Name" #nameCtrl="ngModel"
+                        required
+                        minlength="3"
+                        maxlength="50">
+
+
+                        <div *ngIf="nameCtrl.invalid && nameCtrl.touched" class="text-danger">
+                            <small *ngIf="nameCtrl.errors?.['required']">Name is required.</small>
+                            <small *ngIf="nameCtrl.errors?.['minlength']">Name must be at least 3 characters long.</small>
+                            <small *ngIf="nameCtrl.errors?.['maxlength']">Name cannot exceed 50 characters.</small>
+                          </div>
+
+
+
+
+
+
+                        <input     #emailCtrl="ngModel"
+                         class="form-control" type="email" name="email" [(ngModel)]="email" placeholder="E-mail Address"  required
+                        email
+                      />
+                      <div *ngIf="emailCtrl.invalid && emailCtrl.touched" class="text-danger">
+                        <small *ngIf="emailCtrl.errors?.['required']">Email is required.</small>
+                        <small *ngIf="emailCtrl.errors?.['email']">Enter a valid email address.</small>
+                      </div>
+                        <input      #passwordCtrl="ngModel"
+                        class="form-control" type="password" name="password" [(ngModel)]="password" placeholder="Password" required
+                        minlength="8"
+                        pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+                      /> <div *ngIf="passwordCtrl.invalid && passwordCtrl.touched" class="text-danger">
+                        <small *ngIf="passwordCtrl.errors?.['required']">Password is required.</small>
+                        <small *ngIf="passwordCtrl.errors?.['minlength']">Password must be at least 8 characters long.</small>
+                        <small *ngIf="passwordCtrl.errors?.['pattern']">
+                          Password must contain at least one letter and one number.
+                        </small>
+                      </div>
+
+
 
                         <!-- Teacher Secret Key input field -->
                         <div *ngIf="this.authService.regTeach==true" class="teacher-fields">
@@ -44,5 +77,5 @@
                 </div>
             </div>
         </div>
-    
+
 
