@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import {
   trigger,
   state,
@@ -10,6 +10,7 @@ import {
   transition,
   animate,
 } from '@angular/animations';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -44,16 +45,26 @@ export class AppComponent implements OnInit {
   title = 'E_learning_Frontend';
   ismenuVisble!:boolean;
   isAdmin!:boolean;
-  constructor(public auth:AuthService,private router:Router){}
+  private userSubscription!: Subscription;
+
+  constructor(public auth:AuthService,private router:Router, private userService : UserService , private cdr : ChangeDetectorRef){}
   ngOnInit(): void {
-    this.user = this.auth.decodeToken();
-    console.log(this.user);
+
+    this.loadUserData();
+
+    this.userSubscription = this.auth.userLoggedIn.subscribe(() => {
+      this.loadUserData();
+    });
+    const Token = this.auth.decodeToken();
+    this.user = Token;
+    this.cdr.detectChanges(); // Force update
+
     
     if(this.user!=null){
-      this.isAdmin=this.auth.isAdmin();
+      this.isAdmin=this.isAdminf();
     }
   }
-  
+ 
   navigateToAdmin(): void {
     this.router.navigate(['/admin']); // Replace '/admin' with the admin interface route
   }
@@ -80,6 +91,25 @@ export class AppComponent implements OnInit {
 
   toggleChat(): void {
     this.isChatVisible = !this.isChatVisible;
+  }
+
+
+  loadUserData(): void {
+    const token = this.auth.decodeToken();
+    this.user = token;
+
+    if (this.user != null) {
+      this.isAdmin = this.isAdminf();
+    }
+  }
+  isLoggedIn(): boolean {
+    const token = this.auth.getToken();
+    return token !== null && token.length > 0;
+  }
+
+  isAdminf(): boolean {
+    const roles = this.auth.getUserRoles(); // Get roles from token or localStorage
+    return roles.includes('ROLE_ADMIN');
   }
  
   
