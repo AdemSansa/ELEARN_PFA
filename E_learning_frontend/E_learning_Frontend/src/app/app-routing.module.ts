@@ -26,41 +26,57 @@ import { AdminDashboardComponent } from './components/admin-dashboard/admin-dash
 import { AdminUserManagementComponent } from './components/admin-user-management/admin-user-management.component';
 import { AdminGuard } from './Guards/admin.guard';
 import { StatisticsComponent } from './components/statistics/statistics.component';
+import { AppComponent } from './app.component';
+import { studentGuard } from './Guards/student.guard';
+import { teacherGuard } from './Guards/teacher.guard';
 
 const routes: Routes = [
-{path: '', redirectTo: 'home', pathMatch: 'full' }, 
-{path: 'login', component: LoginComponent },
-{path: 'register', component: SignupComponent },
-{path: 'home', component: HomeComponent }, 
-{path: 'reset-password', component: ResetPasswordComponent }, 
-{path : 'Admin', component :UserListComponent} ,
-{path :"courses",component: CoursesComponent},
-{path :"Teachercourses",component: TeacherCoursesComponent},
-{path :"MyCourses",component: UserCoursesComponent},
-{path: 'lessons/:courseId', component: LessonsComponent },
-{path: 'profile',component:ProfileComponent },
-{path: 'Complete-profile', component: CompleteProfileComponent },
-{path: 'forum', component: ForumListComponent },
-{ path: 'forum/:id', component: ChatListComponent },
-{ path: 'avatar-selection', component: AvatarSelectionComponent },
-{ path: 'quizzes', component: QuizListComponent},
-{path: 'quiz/:id', component: QuizDetailsComponent},
-{ path: 'results', component: QuizResultsComponent },
+  { path: '', redirectTo: 'home', pathMatch: 'full' }, 
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: SignupComponent },
+  { path: 'home', component: HomeComponent }, 
+  { path: 'reset-password', component: ResetPasswordComponent },
+  { path: 'courses', component: CoursesComponent },
+  { path: 'MyCourses', component: UserCoursesComponent },
+  { path: 'lessons/:courseId', component: LessonsComponent },
+  { path: 'profile', component: ProfileComponent },
+  { path: 'Complete-profile', component: CompleteProfileComponent },
+  { path: 'forum', component: ForumListComponent },
+  { path: 'forum/:id', component: ChatListComponent },
+  { path: 'avatar-selection', component: AvatarSelectionComponent },
+  { path: 'quizzes', component: QuizListComponent },
+  { path: 'quiz/:id', component: QuizDetailsComponent },
+  { path: 'results', component: QuizResultsComponent },
 
-{ path: 'Teacher-quiz', component: TeacherQuizComponent },
-{path: 'CreateQuiz', component: QuizComponentComponent },
-
-{ path: 'edit-quiz/:id', component: EditQuizComponent },
-
-{
-  path: 'admin',
-  component: AdminDashboardComponent,
-  children: [
-    { path: 'users', component: AdminUserManagementComponent },
-    {path:'statistics', component: StatisticsComponent}
-  ],
-  canActivate: [AdminGuard], // Protect the route
-},
+  {
+    path: 'admin',
+    component: AdminDashboardComponent,
+    children: [
+      { path: 'users', component: AdminUserManagementComponent },
+      { path: 'statistics', component: StatisticsComponent }
+    ],
+    canActivate: [AdminGuard], 
+  },
+  {
+    path: 'student',
+    component: AdminDashboardComponent,
+    children: [
+      { path: 'MyCourses', component: UserCoursesComponent },
+    ],
+    canActivate: [studentGuard], 
+  },
+  {
+    path: 'teacher',
+    component: AdminDashboardComponent,
+    children: [
+      { path: 'Teachercourses', component: TeacherCoursesComponent },
+      { path: 'Teacher-quiz', component: TeacherQuizComponent },
+      { path: 'CreateQuiz', component: QuizComponentComponent },
+      { path: 'edit-quiz/:id', component: EditQuizComponent }
+    ],
+    canActivate: [teacherGuard], 
+  },
+  { path: '**', redirectTo: 'home' }
 ];
 
  // Route for lessons
