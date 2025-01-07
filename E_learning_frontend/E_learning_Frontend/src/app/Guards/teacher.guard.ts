@@ -7,7 +7,7 @@ export const teacherGuard: CanActivateFn = (route, state) => {
   const authS = inject(AuthService);
 
   console.log('Checking teacherGuard...');
-  if (authS.getIsTeacher()) {
+  if (authS.isteacher()) {
     console.log('Access granted: Teacher');
     return true;
   } else {
