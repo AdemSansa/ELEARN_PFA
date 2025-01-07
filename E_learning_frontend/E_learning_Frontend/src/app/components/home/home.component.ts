@@ -11,11 +11,9 @@ import { AuthService } from 'src/app/services/auth.service';
     constructor(private auth:AuthService) { }
 
    
-      ngOnInit(): void {
+    ngOnInit(): void {
         const user = this.auth.decodeToken();
         this.user = user;
-        
-    
-   
+      
   }
 }

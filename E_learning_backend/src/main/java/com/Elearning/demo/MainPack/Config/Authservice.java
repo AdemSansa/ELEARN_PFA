@@ -110,7 +110,7 @@ public class  Authservice {
         user.setFailedAttempts(0);
         user.setActive(true);
         userRepository.save(user);
-        return jwtUtil.generateToken(user.getEmail(),user.getName(),user.getId(),user.getRoles());
+        return jwtUtil.generateToken(user.getEmail(),user.getName(),user.getId(),user.getRoles(),user.getAvatarURL());
     }
 
     public boolean validateToken(String token) {

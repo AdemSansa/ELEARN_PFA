@@ -3,23 +3,25 @@ package com.Elearning.demo.MainPack.Config;
 
 import com.Elearning.demo.MainPack.Components.JwtUtil;
 import com.Elearning.demo.MainPack.Model.User;
+import com.Elearning.demo.MainPack.Model.UserEnrollmentDTO;
+import com.Elearning.demo.MainPack.Repository.EnrollementRepository;
 import com.Elearning.demo.MainPack.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.MongoDatabaseFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 
-    @Service
+@Service
     public class UserService {
 
         private final UserRepository userRepository;
+        private final EnrollementRepository enrollmentRepository;
 
-        public UserService(UserRepository userRepository) {
+        public UserService(UserRepository userRepository, EnrollementRepository enrollmentRepository) {
             this.userRepository = userRepository;
+            this.enrollmentRepository = enrollmentRepository;
         }
 
         public List<User> getAllUsers() {
@@ -65,6 +67,25 @@ import java.util.Optional;
             user.setRoles(roles);
             return userRepository.save(user);
         }
+
+
+        // get Users with the most enrollments
+        public List<UserEnrollmentDTO> getUsersWithMostEnrollments() {
+            List<User> users = userRepository.findAll();
+            List<UserEnrollmentDTO> userEnrollmentList = new ArrayList<>();
+
+            for (User user : users) {
+                int enrollmentCount = enrollmentRepository.findByUser(user).size();
+                userEnrollmentList.add(new UserEnrollmentDTO(user.getId(), user.getName(), enrollmentCount));
+            }
+
+            // Sort by enrollment count in descending order
+            userEnrollmentList.sort((u1, u2) -> Integer.compare(u2.getEnrollmentCount(), u1.getEnrollmentCount()));
+
+            return userEnrollmentList;
+        }
+
+
 
     }
 

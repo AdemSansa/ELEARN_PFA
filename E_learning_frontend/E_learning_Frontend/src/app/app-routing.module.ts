@@ -29,6 +29,7 @@ import { StatisticsComponent } from './components/statistics/statistics.componen
 import { AppComponent } from './app.component';
 import { studentGuard } from './Guards/student.guard';
 import { teacherGuard } from './Guards/teacher.guard';
+import { ChatComponent } from './components/chat/chat.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' }, 
@@ -47,6 +48,7 @@ const routes: Routes = [
   { path: 'quizzes', component: QuizListComponent },
   { path: 'quiz/:id', component: QuizDetailsComponent },
   { path: 'results', component: QuizResultsComponent },
+  { path: 'livechat', component: ChatComponent },
 
   {
     path: 'admin',

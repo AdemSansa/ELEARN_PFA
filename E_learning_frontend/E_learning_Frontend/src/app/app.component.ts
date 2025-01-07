@@ -13,24 +13,25 @@ export class AppComponent implements OnInit {
   user:any;
   title = 'E_learning_Frontend';
   ismenuVisble!:boolean;
+  isAdmin!:boolean;
   constructor(public auth:AuthService,private router:Router){}
   ngOnInit(): void {
-    this.user=this.auth.getUserInfo().subscribe((data)=>{
-      this.user=data;
-      console.log(this.user);
-    }
-    );
-
-   
+    this.user = this.auth.decodeToken();
+    console.log(this.user);
     
+    if(this.user!=null){
+      this.isAdmin=this.auth.isAdmin();
+    }
   }
   
- 
+  navigateToAdmin(): void {
+    this.router.navigate(['/admin']); // Replace '/admin' with the admin interface route
+  }
    
   
   ngDoCheck(): void {
     let currentroute=this.router.url;
-    if(currentroute=='/login' || currentroute=='/register'){
+    if(currentroute=='/login' || currentroute=='/register' || currentroute=='/admin' || currentroute=='/admin/statistics' || currentroute=='/admin/users' ){
       this.ismenuVisble=false;
     }else{
       this.ismenuVisble=true;
@@ -38,10 +39,15 @@ export class AppComponent implements OnInit {
     }
   logout(){
     this.auth.logout();
+    this.ngOnInit();
     var tokencheck = localStorage.getItem('jwtToken');
     console.log(tokencheck);
+    this.isAdmin=false;
+
     this.router.navigate(['/login']);
+
   }
  
+  
 
 }

@@ -213,8 +213,6 @@ private decode(token:string){
         this.router.navigate(['/home']);
         console.log(this.authService.decodeToken());
         
-        console.log(this.authService.userRole);
-
       },
       error: (err) => {
         console.error('Login failed:', err);
