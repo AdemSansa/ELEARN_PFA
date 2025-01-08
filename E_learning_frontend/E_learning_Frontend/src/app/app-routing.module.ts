@@ -38,7 +38,6 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent }, 
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'courses', component: CoursesComponent },
-  { path: 'MyCourses', component: UserCoursesComponent },
   { path: 'lessons/:courseId', component: LessonsComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'Complete-profile', component: CompleteProfileComponent },
@@ -49,7 +48,14 @@ const routes: Routes = [
   { path: 'quiz/:id', component: QuizDetailsComponent },
   { path: 'results', component: QuizResultsComponent },
   { path: 'livechat', component: ChatComponent },
-
+  { path: 'Teachercourses', component: TeacherCoursesComponent , 
+    canActivate: [teacherGuard], },
+  { path: 'Teacher-quiz', component: TeacherQuizComponent , 
+    canActivate: [teacherGuard],  },
+  { path: 'CreateQuiz', component: QuizComponentComponent , 
+    canActivate: [teacherGuard], },
+  { path: 'edit-quiz/:id', component: EditQuizComponent , 
+    canActivate: [teacherGuard],  },
   {
     path: 'admin',
     component: AdminDashboardComponent,
@@ -59,25 +65,11 @@ const routes: Routes = [
     ],
     canActivate: [AdminGuard], 
   },
-  {
-    path: 'student',
-    component: AdminDashboardComponent,
-    children: [
-      { path: 'MyCourses', component: UserCoursesComponent },
-    ],
+  
+{ path: 'MyCourses', component: UserCoursesComponent, 
     canActivate: [studentGuard], 
   },
-  {
-    path: 'teacher',
-    component: AdminDashboardComponent,
-    children: [
-      { path: 'Teachercourses', component: TeacherCoursesComponent },
-      { path: 'Teacher-quiz', component: TeacherQuizComponent },
-      { path: 'CreateQuiz', component: QuizComponentComponent },
-      { path: 'edit-quiz/:id', component: EditQuizComponent }
-    ],
-    canActivate: [teacherGuard], 
-  },
+ 
   { path: '**', redirectTo: 'home' }
 ];
 

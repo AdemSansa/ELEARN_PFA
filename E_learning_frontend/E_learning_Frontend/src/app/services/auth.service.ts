@@ -182,6 +182,10 @@ export class AuthService {
     const roles = this.getUserRoles(); // Get roles from token or localStorage
     return roles.includes('ROLE_USER');
   }
+  isteacher(): boolean {
+    const roles = this.getUserRoles(); // Get roles from token or localStorage
+    return roles.includes('ROLE_TEACHER');
+  }
 
 
   getUserRoles(): string[] {
