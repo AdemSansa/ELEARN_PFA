@@ -1,0 +1,19 @@
+<br><br><br><br><br><br><br>
+<div class="wrapper"  >
+    <h1>All Categories</h1>    <div class="course-container">
+        <div 
+          class="course-card" 
+          *ngFor="let category of categories" 
+          [style.backgroundImage]="'url(' + category.imageUrl + ')'" (click)="navigateToCourses(category.id)"
+        >
+          <div class="course-content">
+            <img [src]="'assets/logo1.png'"alt="{{ category.title }}" class="course-logo" />
+            <span class="course-title">{{category.name}}</span>    
+
+          </div>
+          <div class="course-hover-content"><div class="card___wrapper-acounts">
+            <span class="course-title">{{category.description}}</span>
+          </div>
+        </div>
+      </div>
+</div>

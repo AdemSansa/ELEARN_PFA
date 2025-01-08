@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-avatar-selection',
@@ -35,10 +36,17 @@ export class AvatarSelectionComponent implements OnInit {
     this.selectedAvatar = avatar;
   }
 
+
   saveAvatar() {
     this.authService.updateAvatar(this.userId, this.selectedAvatar).subscribe(() => {
-      alert('Avatar updated successfully!');
-      this.router.navigate(['/home']); // Redirect to home page
+      Swal.fire({
+        title: 'Success!',
+        text: 'Avatar updated successfully!',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      }).then(() => {
+        this.router.navigate(['/home']); 
+      });
     });
   }
 }
