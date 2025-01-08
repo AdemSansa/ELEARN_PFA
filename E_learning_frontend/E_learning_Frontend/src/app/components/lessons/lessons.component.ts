@@ -7,16 +7,6 @@ import { EnrollmentService } from 'src/app/services/Enrollment_service/enrollmen
 import { LessonService } from 'src/app/services/Lesson_Service/lesson.service';
 import Swal from 'sweetalert2';
 
-interface Lesson {
-  id: string;
-  title: string;
-  content: string;
-  videoUrl: string;
-  description: string;
-  completed?: boolean
-}
-
-
 @Component({
   selector: 'app-lessons',
   templateUrl: './lessons.component.html',
@@ -26,12 +16,20 @@ export class LessonsComponent {
   userId: string = ''; 
   courseId: string = '';
   isFormVisible = false; // For popup visibility
-  newLesson: Lesson = { id: '', title: '', content: '', videoUrl: '', description: '' };
-  lessons: Lesson[] = [];
-  courseName:String="";
-  selectedLesson = this.lessons[0];
-  completedLessons: string[] = []; 
-  constructor(private route: ActivatedRoute, private lessonService: LessonService,private sanitizer: DomSanitizer,public authSeervice:  AuthService,private courseService: CourseService, private enrollmentService:EnrollmentService) {}
+  lessons: any[] = [];
+  courseName: string = "";
+  selectedLesson: any = null;
+  completedLessons: string[] = [];
+  newLesson: any = { title: '', content: '', videoUrl: '', description: '' }; // Initialize newLesson
+
+  constructor(
+    private route: ActivatedRoute,
+    private lessonService: LessonService,
+    private sanitizer: DomSanitizer,
+    public authService: AuthService,
+    private courseService: CourseService,
+    private enrollmentService: EnrollmentService
+  ) {}
 
   openForm() {
     this.isFormVisible = true;
@@ -47,13 +45,13 @@ export class LessonsComponent {
       return;
     }
 
-    // Call the backend to save the lesson
     this.lessonService.addLessonToCourse(this.courseId, this.newLesson).subscribe(
       (lesson) => {
-        this.lessons.push(lesson); // Add the lesson to the list
-        this.selectedLesson = lesson; // Optionally auto-select the new lesson
-        this.closeForm(); // Close the popup
-        this.newLesson = { id: '', title: '', content: '', videoUrl: '', description: '' }; // Reset the form
+        console.log('Lesson added:', lesson); // Check if ID is included in response
+        this.lessons.push(lesson); // Add the new lesson to the list
+        this.selectedLesson = lesson; // Auto-select the new lesson
+        this.closeForm(); // Close the form
+        this.newLesson = { title: '', content: '', videoUrl: '', description: '' }; // Reset the form
       },
       (error) => {
         console.error('Error adding lesson:', error);
@@ -61,36 +59,42 @@ export class LessonsComponent {
     );
   }
 
-
-  ngOnInit(): void {  this.courseId = this.route.snapshot.paramMap.get('courseId') || '';
+  ngOnInit(): void {
+    this.courseId = this.route.snapshot.paramMap.get('courseId') || '';
     console.log('Course ID:', this.courseId); // Debugging courseId
-  this.userId = this.authSeervice.getUserId() || '';
+    this.userId = this.authService.getUserId() || '';
+    
     if (this.courseId) {
+      // Fetch course details
       this.courseService.getCourseById(this.courseId).subscribe(
         (course) => {
-          this.courseName = course.title ; 
+          this.courseName = course.title; 
         },
         (error) => {
           console.error('Error fetching course:', error);
         }
       );
-  
+
+      // Fetch lessons for this course
       this.lessonService.getLessonsByCourse(this.courseId).subscribe(
         (data) => {
           console.log('Lessons fetched:', data);
           this.lessons = data;
           if (this.lessons.length > 0) {
-            this.selectedLesson = this.lessons[0];
+            this.selectedLesson = this.lessons[0]; // Select the first lesson
           }
         },
         (error) => {
           console.error('Error fetching lessons:', error);
         }
       );
-    } this.enrollmentService.getCompletedLessons(this.userId, this.courseId).subscribe(
+    }
+
+    // Fetch completed lessons for the user
+    this.enrollmentService.getCompletedLessons(this.userId, this.courseId).subscribe(
       (completedLessons) => {
-        console.log('Completed Lessons:', completedLessons); // Log completed lessons
-        this.completedLessons = completedLessons; // Optionally update the completed lessons array
+        console.log('Completed Lessons:', completedLessons);
+        this.completedLessons = completedLessons;
       },
       (error) => {
         console.error('Error fetching completed lessons:', error);
@@ -101,6 +105,7 @@ export class LessonsComponent {
   isYouTubeVideo(url: string): boolean {
     return url.includes('youtube.com') || url.includes('youtu.be');
   }
+
   sanitizeYouTubeUrl(url: string): SafeResourceUrl {
     let videoId = '';
     if (url.includes('youtube.com')) {
@@ -110,12 +115,13 @@ export class LessonsComponent {
       videoId = url.split('/').pop() || '';
     }
     return this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${videoId}`);
-  }  
+  }
+
   isLessonCompleted(lessonId: string): boolean {
     return this.completedLessons.includes(lessonId);
   }
 
-  toggleLessonCompletion(lesson: Lesson, event: any) {
+  toggleLessonCompletion(lesson: any, event: any) {
     const isChecked = event.target.checked;
     console.log(this.userId);
     
@@ -132,27 +138,26 @@ export class LessonsComponent {
       }
     );
   }
-  selectLesson(lesson: Lesson) {
+
+  selectLesson(lesson: any) {
     this.selectedLesson = lesson;
   }
+
   onVideoComplete(): void {
     console.log('Video has ended');
     this.markLessonAsComplete();
   }
 
-  // Method triggered on scroll
   onScroll(event: Event): void {
     const scrollPosition = (event.target as HTMLElement).scrollTop;
     console.log(`Scroll position: ${scrollPosition}`);
     this.markLessonAsComplete();
   }
+
   private markLessonAsComplete(): void {
-    // Call your EnrollmentService to update the completion status in the backend
-    this.enrollmentService.completeLesson(this.userId, this.courseId, this.selectedLesson.id)
-      .subscribe(() => {
-        console.log('Lesson marked as complete');
-        // Optionally, update the UI by changing the checkbox state
-        this.selectedLesson.completed = true;
-      });
+    this.enrollmentService.completeLesson(this.userId, this.courseId, this.selectedLesson.id).subscribe(() => {
+      console.log('Lesson marked as complete');
+      this.selectedLesson.completed = true;
+    });
   }
 }

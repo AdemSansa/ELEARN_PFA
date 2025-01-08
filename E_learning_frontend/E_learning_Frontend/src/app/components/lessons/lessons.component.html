@@ -30,7 +30,7 @@
     <ul>
       <li
         *ngFor="let lesson of lessons"
-        [class.active]="lesson.id === selectedLesson?.id"
+        [class.active]="lesson.id === selectedLesson.id"
         (click)="selectLesson(lesson)"
       >
       <input
@@ -43,7 +43,7 @@
       </li>
     </ul>
 
-    <ng-container *ngIf="this.authSeervice.getIsTeacher()">
+    <ng-container *ngIf="this.authService.getIsTeacher()">
 
     <button class="btn open-form" (click)="openForm()">Add Lesson</button></ng-container>
   </div>
