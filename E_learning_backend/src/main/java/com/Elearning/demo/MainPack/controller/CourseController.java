@@ -1,7 +1,9 @@
 package com.Elearning.demo.MainPack.controller;
 
 
+import com.Elearning.demo.MainPack.Config.CategoryService;
 import com.Elearning.demo.MainPack.Config.CourseService;
+import com.Elearning.demo.MainPack.Model.Category;
 import com.Elearning.demo.MainPack.Model.Course;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,14 +16,14 @@ import java.util.List;
 public class CourseController {
     @Autowired
     private CourseService courseService;
-
+    @Autowired
+    private CategoryService categoryService;
     // Create a new course
     @PostMapping
-    public ResponseEntity<Course> createCourse(@RequestBody Course course) {
-        Course newCourse = courseService.createCourse(course);
+    public ResponseEntity<Course> createCourse(@RequestBody Course course, @RequestParam String categoryId) {
+        Course newCourse = courseService.createCourse(course, categoryId);
         return ResponseEntity.ok(newCourse);
     }
-
     // Get all courses
     @GetMapping
     public ResponseEntity<List<Course>> getAllCourses() {
@@ -29,6 +31,12 @@ public class CourseController {
         return ResponseEntity.ok(courses);
     }
 
+    @GetMapping("/category/{categoryId}")
+    public ResponseEntity<List<Course>> getCoursesByCategory(@PathVariable String categoryId) {
+        Category category = categoryService.getCategoryById(categoryId);
+        List<Course> courses = courseService.getCoursesByCategory(category);
+        return ResponseEntity.ok(courses);
+    }
 
     // Get a course by ID
     @GetMapping("/{id}")
@@ -37,13 +45,11 @@ public class CourseController {
         return ResponseEntity.ok(course);
     }
 
-    // Update a course
     @PutMapping("/{id}")
     public ResponseEntity<Course> updateCourse(@PathVariable String id, @RequestBody Course course) {
         Course updatedCourse = courseService.updateCourse(id, course);
         return ResponseEntity.ok(updatedCourse);
     }
-
     // Delete a course
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCourse(@PathVariable String id) {

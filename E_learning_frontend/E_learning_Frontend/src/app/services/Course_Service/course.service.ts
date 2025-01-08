@@ -18,9 +18,13 @@ export class CourseService {
     return this.http.get<any>(`${this.apiUrl}/author/${author}`);
   }
 
-   
-  createCourse(course: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}`, course);
+  getCoursesByCategory(categoryId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/category/${categoryId}`);
+  }
+
+ 
+  createCourse(course: any, categoryId: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}?categoryId=${categoryId}`, course);
   }
   deleteCourse(id: string): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/${id}`);

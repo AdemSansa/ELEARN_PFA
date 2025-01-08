@@ -30,14 +30,16 @@ import { AppComponent } from './app.component';
 import { studentGuard } from './Guards/student.guard';
 import { teacherGuard } from './Guards/teacher.guard';
 import { ChatComponent } from './components/chat/chat.component';
+import { CatgoriesComponent } from './components/catgories/catgories.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' }, 
+  { path: 'courses/:categoryId', component: CoursesComponent } ,
+  { path: 'categories', component: CatgoriesComponent} ,
   { path: 'login', component: LoginComponent },
   { path: 'register', component: SignupComponent },
   { path: 'home', component: HomeComponent }, 
   { path: 'reset-password', component: ResetPasswordComponent },
-  { path: 'courses', component: CoursesComponent },
   { path: 'lessons/:courseId', component: LessonsComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'Complete-profile', component: CompleteProfileComponent },
