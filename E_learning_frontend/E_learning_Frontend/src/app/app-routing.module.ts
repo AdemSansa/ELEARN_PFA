@@ -30,6 +30,9 @@ import { AppComponent } from './app.component';
 import { studentGuard } from './Guards/student.guard';
 import { teacherGuard } from './Guards/teacher.guard';
 import { ChatComponent } from './components/chat/chat.component';
+import { AboutComponent } from './components/about/about.component';
+
+
 import { CatgoriesComponent } from './components/catgories/catgories.component';
 
 const routes: Routes = [
@@ -50,6 +53,8 @@ const routes: Routes = [
   { path: 'quiz/:id', component: QuizDetailsComponent },
   { path: 'results', component: QuizResultsComponent },
   { path: 'livechat', component: ChatComponent },
+    {path: 'About', component: AboutComponent },
+
   { path: 'Teachercourses', component: TeacherCoursesComponent , 
     canActivate: [teacherGuard], },
   { path: 'Teacher-quiz', component: TeacherQuizComponent , 
@@ -73,6 +78,7 @@ const routes: Routes = [
   },
  
   { path: '**', redirectTo: 'home' }
+
 ];
 
  // Route for lessons

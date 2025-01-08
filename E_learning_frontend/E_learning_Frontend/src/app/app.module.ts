@@ -45,6 +45,7 @@ import { ViewUserComponent } from './components/view-user/view-user.component';
 import { RoleManagementDialogComponent } from './components/role-management/role-management.component';
 import { StatisticsComponent } from './components/statistics/statistics.component';
 import { ChatComponent } from './components/chat/chat.component';
+import { AboutComponent } from './components/about/about.component';
 import { CatgoriesComponent } from './components/catgories/catgories.component';
 
 @NgModule({
@@ -82,6 +83,10 @@ import { CatgoriesComponent } from './components/catgories/catgories.component';
     RoleManagementDialogComponent,
     StatisticsComponent,
     ChatComponent,
+
+    AboutComponent,
+    
+
     CatgoriesComponent,
    
     
