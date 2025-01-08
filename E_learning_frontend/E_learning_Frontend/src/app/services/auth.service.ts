@@ -174,7 +174,15 @@ export class AuthService {
   updateAvatar(userId: string, avatarUrl: string): Observable<any> {
     return this.http.patch(`${this.apiUrl}/${userId}/avatar`, { avatarUrl }, { responseType: 'text' });
   }
-  
+  isAdmin(): boolean {
+    const roles = this.getUserRoles(); // Get roles from token or localStorage
+    return roles.includes('ROLE_ADMIN');
+  }
+  isStudent(): boolean {
+    const roles = this.getUserRoles(); // Get roles from token or localStorage
+    return roles.includes('ROLE_USER');
+  }
+
 
   getUserRoles(): string[] {
     const token = this.getToken();

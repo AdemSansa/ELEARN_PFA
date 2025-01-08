@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { CourseService } from 'src/app/services/Course_Service/course.service';
 import { EnrollmentService } from 'src/app/services/Enrollment_service/enrollment.service';
 import { LessonService } from 'src/app/services/Lesson_Service/lesson.service';
+import Swal from 'sweetalert2';
 
 interface Lesson {
   id: string;
@@ -41,8 +42,8 @@ export class LessonsComponent {
   }
 
   addLesson() {
-    if (!this.newLesson.title || !this.newLesson.videoUrl) {
-      alert('Title and Video URL are required!');
+    if (!this.newLesson.videoUrl.includes('youtube.com') && !this.newLesson.videoUrl.includes('youtu.be')) {
+      Swal.fire('Invalid Video URL', 'Only YouTube videos are allowed.', 'error');
       return;
     }
 
@@ -78,6 +79,9 @@ export class LessonsComponent {
         (data) => {
           console.log('Lessons fetched:', data);
           this.lessons = data;
+          if (this.lessons.length > 0) {
+            this.selectedLesson = this.lessons[0];
+          }
         },
         (error) => {
           console.error('Error fetching lessons:', error);
