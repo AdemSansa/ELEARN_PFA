@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
@@ -13,7 +13,7 @@ declare var google: any;
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  constructor(private authService: AuthService,private router: Router,    private route: ActivatedRoute,
+  constructor(private authService: AuthService,private router: Router,    private route: ActivatedRoute,private cdr : ChangeDetectorRef,
     private fb: FormBuilder) {}
   authForm! :FormGroup;
 
@@ -202,7 +202,12 @@ private decode(token:string){
         this.authService.getUserInfo().subscribe({
           next: (response) => {
             if(response.AvatarURL!=null)
+            {
+              this.cdr.detectChanges();
               this.router.navigate(['/home']);
+              this.cdr.detectChanges();
+
+            }
             else  
               this.router.navigate(['/avatar-selection']);
           },
