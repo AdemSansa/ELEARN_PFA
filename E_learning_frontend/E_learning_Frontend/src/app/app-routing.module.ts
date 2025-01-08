@@ -28,6 +28,7 @@ import { AdminGuard } from './Guards/admin.guard';
 import { StatisticsComponent } from './components/statistics/statistics.component';
 import { AppComponent } from './app.component';
 import { ChatComponent } from './components/chat/chat.component';
+import { AboutComponent } from './components/about/about.component';
 
 const routes: Routes = [
 {path: '', redirectTo: 'home', pathMatch: 'full' }, 
@@ -55,7 +56,7 @@ const routes: Routes = [
 
 { path: 'edit-quiz/:id', component: EditQuizComponent },
 { path: 'livechat', component: ChatComponent },
-
+{path: 'About', component: AboutComponent },
 {
   path: 'admin',
   component: AdminDashboardComponent,

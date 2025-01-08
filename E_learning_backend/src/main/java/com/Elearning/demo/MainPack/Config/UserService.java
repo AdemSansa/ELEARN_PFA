@@ -67,6 +67,15 @@ import java.util.*;
             user.setRoles(roles);
             return userRepository.save(user);
         }
+        // get All emails
+        public List<String> getAllEmails() {
+            List<User> users = userRepository.findAll();
+            List<String> emails = new ArrayList<>();
+            for (User user : users) {
+                emails.add(user.getEmail());
+            }
+            return emails;
+        }
 
 
         // get Users with the most enrollments

@@ -4,8 +4,11 @@ package com.Elearning.demo.MainPack.controller;
 
 import com.Elearning.demo.MainPack.Config.QuizService;
 import com.Elearning.demo.MainPack.Config.ResultService;
+import com.Elearning.demo.MainPack.Config.UserService;
 import com.Elearning.demo.MainPack.Model.Quiz;
 import com.Elearning.demo.MainPack.Model.Result;
+import com.Elearning.demo.MainPack.Model.User;
+import com.Elearning.demo.MainPack.Services.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +27,11 @@ public class QuizController {
     @Autowired
     private ResultService resultService;
 
+    @Autowired
+    EmailService emailService;
+
+    @Autowired
+    UserService userService;
 
 
 
@@ -50,6 +58,8 @@ public class QuizController {
     @PostMapping
     public ResponseEntity<Quiz> createQuiz(@RequestBody Quiz quiz) {
         Quiz savedQuiz = quizService.createQuiz(quiz);
+        User user = userService.getUserById(savedQuiz.getUserId());
+        userService.getAllEmails().forEach(email -> emailService.sendQuizNotificationEmail(email,user.getName() ,savedQuiz.getTitle()));
         return ResponseEntity.ok(savedQuiz);
     }
 
@@ -98,6 +108,9 @@ public class QuizController {
         result.setPassed(score >= totalScore * 0.6);
 
         Result savedResult = resultService.saveResult(result);
+        System.out.println("Result saved: " + savedResult.toString());
+        emailService.sendQuizResultEmail(userService.getUserById(userId).getEmail(),userService.getUserById(userId).getName(),
+                quiz.getTitle(), score, totalScore, score*100/totalScore);
         return ResponseEntity.ok(savedResult);
     }
     // Return Quizzes bu User

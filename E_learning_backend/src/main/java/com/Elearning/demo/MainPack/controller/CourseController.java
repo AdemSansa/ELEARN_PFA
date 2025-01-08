@@ -1,8 +1,11 @@
 package com.Elearning.demo.MainPack.controller;
 
 
+import com.Elearning.demo.MainPack.Config.Authservice;
 import com.Elearning.demo.MainPack.Config.CourseService;
+import com.Elearning.demo.MainPack.Config.UserService;
 import com.Elearning.demo.MainPack.Model.Course;
+import com.Elearning.demo.MainPack.Services.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,11 +17,21 @@ import java.util.List;
 public class CourseController {
     @Autowired
     private CourseService courseService;
+    @Autowired
+    EmailService emailService;
+
+    @Autowired
+    private UserService userService;
 
     // Create a new course
     @PostMapping
     public ResponseEntity<Course> createCourse(@RequestBody Course course) {
         Course newCourse = courseService.createCourse(course);
+        List<String> emails = userService.getAllEmails();
+        for (String email : emails) {
+            emailService.sendEmail(email, newCourse.getAuthor(), newCourse.getTitle());
+        }
+
         return ResponseEntity.ok(newCourse);
     }
 
