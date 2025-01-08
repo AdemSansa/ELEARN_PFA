@@ -1,6 +1,7 @@
 package com.Elearning.demo.MainPack.Config;
 
 
+import com.Elearning.demo.MainPack.Model.Category;
 import com.Elearning.demo.MainPack.Model.Course;
 import com.Elearning.demo.MainPack.Model.CourseEnrollmentCount;
 import com.Elearning.demo.MainPack.Model.Enrollment;
@@ -15,13 +16,20 @@ import java.util.*;
 @Service
 public class CourseService {
     @Autowired
+    private CategoryService categoryService;
+    @Autowired
     CourseRepository courseRepository;
     @Autowired
     EnrollementRepository enrollementRepository;
 
-    public Course createCourse(Course course) {
+    public Course createCourse(Course course, String categoryId) {
+        Category category = categoryService.getCategoryById(categoryId);
+        if (category == null || category.getId() == null) {
+            throw new RuntimeException("Category not found or invalid ID");
+        }
         course.setCreatedDate(new Date());
         course.setUpdatedDate(new Date());
+        course.setCategory(category);
         return courseRepository.save(course);
     }
     public Course updateCourse(String id, Course course) {
@@ -33,12 +41,14 @@ public class CourseService {
             updatedCourse.setImageUrl(course.getImageUrl());
             updatedCourse.setDescription(course.getDescription());
             updatedCourse.setAuthor(course.getAuthor());
+            updatedCourse.setCategory(course.getCategory());
             updatedCourse.setUpdatedDate(new Date());
             return courseRepository.save(updatedCourse);
         } else {
             throw new RuntimeException("Course not found with id: " + id);
         }
     }
+
     public void deleteCourse(String id) {
         courseRepository.deleteById(id);
     }
@@ -56,7 +66,9 @@ public class CourseService {
         return courseRepository.findByAuthor(author);
     }
 
-
+    public List<Course> getCoursesByCategory(Category category) {
+        return courseRepository.findByCategory(category);
+    }
     public List<Map<String, Object>> getCoursesWithEnrollmentCounts() {
         List<CourseEnrollmentCount> enrollmentCounts = enrollementRepository.findCourseEnrollmentCounts();
         List<Course> courses = courseRepository.findAll();

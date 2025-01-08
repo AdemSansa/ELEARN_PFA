@@ -1,5 +1,6 @@
 package com.Elearning.demo.MainPack.Repository;
 
+import com.Elearning.demo.MainPack.Model.Category;
 import com.Elearning.demo.MainPack.Model.Course;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
@@ -13,4 +14,7 @@ public interface CourseRepository extends MongoRepository<Course, String> {
     List<Course> findByCreatedDate(String createdDate);
     long count();
 
+    List<Course> findByCategory(Category category);
+
+    List<Course> findByCategoryName(String categoryName);
 }

@@ -12,12 +12,7 @@ public class Lesson {
     private String content;
     private String description ;
 private String videoUrl;
-    public Lesson(String title, String content, String courseId, String videoUrl) {
-        this.title = title;
-        this.content = content;
-        this.courseId = courseId;
-        this.videoUrl = videoUrl;
-    }
+
     public String getVideoUrl() {
         return videoUrl;
     }
@@ -36,7 +31,7 @@ private String videoUrl;
         this.courseId = courseId;
     }
 
-    public Lesson(){}; // Default constructor
+ // Default constructor
 
 
 
@@ -50,11 +45,7 @@ private String videoUrl;
 
 
 
-    public Lesson( String title, String content, Course courseId) {
-        this.title = title;
-        this.content = content;
 
-    }
 
     public String getId() {
         return id;

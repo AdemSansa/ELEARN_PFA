@@ -23,7 +23,16 @@ public class Course {
     private String imageLogoUrl;
     @Field
     private List<Lesson> lessons = new ArrayList<>();
+    @DBRef
+    private Category category;
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
     public String getImageUrl() {
         return imageUrl;
     }

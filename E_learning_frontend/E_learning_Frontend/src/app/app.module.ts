@@ -46,6 +46,7 @@ import { RoleManagementDialogComponent } from './components/role-management/role
 import { StatisticsComponent } from './components/statistics/statistics.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { AboutComponent } from './components/about/about.component';
+import { CatgoriesComponent } from './components/catgories/catgories.component';
 
 @NgModule({
   declarations: [
@@ -82,8 +83,11 @@ import { AboutComponent } from './components/about/about.component';
     RoleManagementDialogComponent,
     StatisticsComponent,
     ChatComponent,
+
     AboutComponent,
     
+
+    CatgoriesComponent,
    
     
     

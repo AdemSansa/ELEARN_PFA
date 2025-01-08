@@ -27,45 +27,58 @@ import { AdminUserManagementComponent } from './components/admin-user-management
 import { AdminGuard } from './Guards/admin.guard';
 import { StatisticsComponent } from './components/statistics/statistics.component';
 import { AppComponent } from './app.component';
+import { studentGuard } from './Guards/student.guard';
+import { teacherGuard } from './Guards/teacher.guard';
 import { ChatComponent } from './components/chat/chat.component';
 import { AboutComponent } from './components/about/about.component';
 
+
+import { CatgoriesComponent } from './components/catgories/catgories.component';
+
 const routes: Routes = [
-{path: '', redirectTo: 'home', pathMatch: 'full' }, 
-{path: 'homee', component: AppComponent },
-{path: 'login', component: LoginComponent },
-{path: 'register', component: SignupComponent },
-{path: 'home', component: HomeComponent }, 
-{path: 'reset-password', component: ResetPasswordComponent }, 
-{path : 'Admin', component :UserListComponent} ,
-{path :"courses",component: CoursesComponent},
-{path :"Teachercourses",component: TeacherCoursesComponent},
-{path :"MyCourses",component: UserCoursesComponent},
-{path: 'lessons/:courseId', component: LessonsComponent },
-{path: 'profile',component:ProfileComponent },
-{path: 'Complete-profile', component: CompleteProfileComponent },
-{path: 'forum', component: ForumListComponent },
-{ path: 'forum/:id', component: ChatListComponent },
-{ path: 'avatar-selection', component: AvatarSelectionComponent },
-{ path: 'quizzes', component: QuizListComponent},
-{path: 'quiz/:id', component: QuizDetailsComponent},
-{ path: 'results', component: QuizResultsComponent },
+  { path: '', redirectTo: 'home', pathMatch: 'full' }, 
+  { path: 'courses/:categoryId', component: CoursesComponent } ,
+  { path: 'categories', component: CatgoriesComponent} ,
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: SignupComponent },
+  { path: 'home', component: HomeComponent }, 
+  { path: 'reset-password', component: ResetPasswordComponent },
+  { path: 'lessons/:courseId', component: LessonsComponent },
+  { path: 'profile', component: ProfileComponent },
+  { path: 'Complete-profile', component: CompleteProfileComponent },
+  { path: 'forum', component: ForumListComponent },
+  { path: 'forum/:id', component: ChatListComponent },
+  { path: 'avatar-selection', component: AvatarSelectionComponent },
+  { path: 'quizzes', component: QuizListComponent },
+  { path: 'quiz/:id', component: QuizDetailsComponent },
+  { path: 'results', component: QuizResultsComponent },
+  { path: 'livechat', component: ChatComponent },
+    {path: 'About', component: AboutComponent },
 
-{ path: 'Teacher-quiz', component: TeacherQuizComponent },
-{path: 'CreateQuiz', component: QuizComponentComponent },
+  { path: 'Teachercourses', component: TeacherCoursesComponent , 
+    canActivate: [teacherGuard], },
+  { path: 'Teacher-quiz', component: TeacherQuizComponent , 
+    canActivate: [teacherGuard],  },
+  { path: 'CreateQuiz', component: QuizComponentComponent , 
+    canActivate: [teacherGuard], },
+  { path: 'edit-quiz/:id', component: EditQuizComponent , 
+    canActivate: [teacherGuard],  },
+  {
+    path: 'admin',
+    component: AdminDashboardComponent,
+    children: [
+      { path: 'users', component: AdminUserManagementComponent },
+      { path: 'statistics', component: StatisticsComponent }
+    ],
+    canActivate: [AdminGuard], 
+  },
+  
+{ path: 'MyCourses', component: UserCoursesComponent, 
+    canActivate: [studentGuard], 
+  },
+ 
+  { path: '**', redirectTo: 'home' }
 
-{ path: 'edit-quiz/:id', component: EditQuizComponent },
-{ path: 'livechat', component: ChatComponent },
-{path: 'About', component: AboutComponent },
-{
-  path: 'admin',
-  component: AdminDashboardComponent,
-  children: [
-    { path: 'users', component: AdminUserManagementComponent },
-    {path:'statistics', component: StatisticsComponent}
-  ],
-  canActivate: [AdminGuard], // Protect the route
-},
 ];
 
  // Route for lessons
