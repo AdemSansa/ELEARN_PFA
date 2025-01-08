@@ -5,3 +5,128 @@
   a {
     text-decoration: none;
   }
+
+  .chat-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #ccc;
+  }
+ /* Chat Toggle Button */
+.chat-toggle-button {
+  position: fixed;
+  bottom: 30px;
+  right: 30px; /* Positioned to the bottom-right */
+  z-index: 1000;
+  background: linear-gradient(135deg, #4caf50, #388e3c); /* Green gradient */
+  color: #fff;
+  border: none;
+  padding: 15px;
+  border-radius: 50%;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  font-size: 22px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.chat-toggle-button:hover {
+  background: linear-gradient(135deg, #388e3c, #2e7d32); /* Darker green on hover */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  transform: scale(1.1);
+}
+
+.chat-toggle-button i {
+  font-size: 28px; /* Icon size */
+}
+
+/* Admin Buttons Container */
+.admin-interface-btn {
+  position: fixed;
+  bottom: 30px; /* Positioned to the bottom-left */
+  left: 30px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column; /* Stack buttons vertically */
+  align-items: flex-start; /* Align to the left */
+  gap: 10px; /* Space between buttons */
+}
+
+.admin-interface-btn button {
+  background: linear-gradient(135deg, #2196f3, #1976d2); /* Blue gradient */
+  color: #fff;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 25px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 0.3s ease-in-out;
+}
+
+.admin-interface-btn button:hover {
+  background: linear-gradient(135deg, #1976d2, #1565c0); /* Darker blue on hover */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  transform: scale(1.05);
+}
+
+.admin-interface-btn button:first-child {
+  background: linear-gradient(135deg, #ff9800, #f57c00); /* Orange gradient for the first admin button */
+}
+
+.admin-interface-btn button:first-child:hover {
+  background: linear-gradient(135deg, #f57c00, #e65100); /* Darker orange on hover */
+}
+
+/* Chat Container Visibility */
+.chat-container {
+  position: fixed;
+  bottom: 80px; /* Positioned above the chat button */
+  right: 30px;
+  width: 470px;
+  max-height: 550px;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  display: none;
+  flex-direction: column;
+}
+
+.chat-container.visible {
+  display: flex;
+}
+
+.chat-container.hidden {
+  display: none;
+}
+
+/* Responsive Adjustments */
+@media screen and (max-width: 768px) {
+  .chat-toggle-button {
+    bottom: 20px;
+    right: 20px;
+  }
+
+  .admin-interface-btn {
+    bottom: 20px;
+    left: 20px;
+  }
+
+  .chat-container {
+    width: 90%; /* Smaller chat container on small screens */
+    bottom: 100px;
+  }
+}
+.header-social-links
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}

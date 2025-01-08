@@ -1,0 +1,59 @@
+<h2 mat-dialog-title class="profile-title">User Profile</h2>
+<div mat-dialog-content class="dialog-content">
+  <div class="profile-header">
+    <img
+      [src]="user?.avatarURL || 'assets/default-avatar.png'"
+      alt="User Avatar"
+      class="avatar"
+    />
+    <h3 class="username">{{ user?.name }}</h3>
+    <p class="email">{{ user?.email }}</p>
+  </div>
+
+  <div class="profile-info">
+    <div class="info-section">
+      <h4>General Information</h4>
+      <p><strong>Phone Number:</strong> {{ user?.phoneNumber || 'N/A' }}</p>
+      <p><strong>Roles:</strong> {{ user?.roles.length ? user.roles.join(', ') : 'None' }}</p>
+      <p><strong>Address:</strong> {{ user?.adress || 'N/A' }}</p>
+      <p><strong>City:</strong> {{ user?.city || 'N/A' }}</p>
+      <p><strong>Country:</strong> {{ user?.country || 'N/A' }}</p>
+      <p><strong>Birth Date:</strong> {{ user?.birthDate || 'N/A' }}</p>
+    </div>
+
+    <div class="status-section">
+      <h4>Status</h4>
+      <p><strong>Is Banned:</strong> {{ user?.blocked ? 'Yes' : 'No' }}</p>
+      <p><strong>Active:</strong> {{ user?.active ? 'Yes' : 'No' }}</p>
+      <p><strong>Failed Login Attempts:</strong> {{ user?.failedAttempts }}</p>
+    </div>
+
+    <div class="social-links">
+      <h4>Social Links</h4>
+      <p *ngIf="user?.facebookURL">
+        <strong>Facebook:</strong>
+        <a href="{{ user?.facebookURL }}" target="_blank">View</a>
+      </p>
+      <p *ngIf="user?.twitterURL">
+        <strong>Twitter:</strong>
+        <a href="{{ user?.twitterURL }}" target="_blank">View</a>
+      </p>
+      <p *ngIf="user?.instagramURL">
+        <strong>Instagram:</strong>
+        <a href="{{ user?.instagramURL }}" target="_blank">View</a>
+      </p>
+      <p *ngIf="user?.linkedinURL">
+        <strong>LinkedIn:</strong>
+        <a href="{{ user?.linkedinURL }}" target="_blank">View</a>
+      </p>
+      <p *ngIf="user?.githubURL">
+        <strong>GitHub:</strong>
+        <a href="{{ user?.githubURL }}" target="_blank">View</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<div mat-dialog-actions class="dialog-actions">
+  <button mat-button mat-dialog-close class="close-btn">Close</button>
+</div>

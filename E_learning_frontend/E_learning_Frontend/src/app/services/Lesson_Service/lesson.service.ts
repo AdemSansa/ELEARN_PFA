@@ -11,10 +11,11 @@ export class LessonService {
 
   constructor(private http: HttpClient) {}
 
-  // Fetch lessons by course ID
     getLessonsByCourse(courseId: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/courses/${courseId}`);
   }
-
+  addLessonToCourse(courseId: string, lesson: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/courses/${courseId}`, lesson);
+  }
 
 }

@@ -1,7 +1,7 @@
 
 
 
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -12,6 +12,10 @@ import { jwtDecode } from 'jwt-decode';
 })
 export class AuthService {
 
+
+  userLoggedIn = new EventEmitter<void>(); // EventEmitter to notify login events
+
+
   private apiUrl = 'http://localhost:8081/auth';
   private user: any = null; 
   userName: string | null = null;
@@ -19,17 +23,20 @@ export class AuthService {
   private currentUserSubject: BehaviorSubject<any>;
   userRole: any;
   regTeach: boolean =false;
+  Avatar: string | null = null;
 
   constructor(private http: HttpClient, private router: Router) {
     const decodedToken = this.decodeToken();
     this.currentUserSubject = new BehaviorSubject<any>(decodedToken);
     this.userName = decodedToken?.name || null;
-    this.userRole = decodedToken?.role?.[0] || null;
+    this.userRole = decodedToken?.roles?.[0] || null;
+   
+    
     this.setIsTeacher(); // Ensure role is set correctly at the start
   }
 
   setIsTeacher(): void {
-    this.isTeacher = this.userRole === "Teacher"; 
+    this.isTeacher = this.userRole === "ROLE_TEACHER"; 
     localStorage.setItem('isTeacher', JSON.stringify(this.isTeacher));
   }
   
@@ -45,6 +52,7 @@ export class AuthService {
   login(email: string, password: string): Observable<any> {
     this.currentUserSubject.next(this.decodeToken());
     localStorage.setItem('currentUser', JSON.stringify(this.currentUserSubject.value));
+    this.userLoggedIn.emit();
     return this.http.post(`${this.apiUrl}/login`, { email, password });
   }
  
@@ -74,7 +82,7 @@ export class AuthService {
       () => {
         console.log('Logout successful');
         localStorage.removeItem('jwtToken');
-        this.router.navigate(['/login']);
+        this.userLoggedIn.emit();
       },
       (error) => {
         console.error('Logout failed:', error);
@@ -82,10 +90,7 @@ export class AuthService {
     );
   }
 
-  isLoggedIn(): boolean {
-    const token = this.getToken();
-    return token !== null && token.length > 0;
-  }
+  
 
   forgotPassword(email: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/forgot-password`, { email });
@@ -125,7 +130,9 @@ export class AuthService {
 
   // Updated method to fetch and extract user info including username
   getUserInfo(): Observable<any> {
-    const token = localStorage.getItem('jwtToken');
+    const token = this.getToken();
+    console.log(token);
+    
     if (!token) {
       throw new Error('User not logged in');
     }
@@ -133,8 +140,10 @@ export class AuthService {
     return this.http.get(`${this.apiUrl}/user-info`, { headers }).pipe(
       tap((response: any) => {
         // Assuming 'response' contains the user info, and it has a 'name' field.
-        this.userName = response?.name;
+        this.userName = response?.name;        
         this.userRole = response?.role?.[0];
+        this.Avatar = response?.avatarURL;
+        
         this.setIsTeacher();  // Set teacher flag based on the role
       })
     );
@@ -156,6 +165,38 @@ export class AuthService {
     const url = `${this.apiUrl}/Complete_Profile`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post(url, user, { headers });
+  }
+
+
+  getLoggedInUser(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/current-user`);
+  }
+  updateAvatar(userId: string, avatarUrl: string): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/${userId}/avatar`, { avatarUrl }, { responseType: 'text' });
+  }
+  isAdmin(): boolean {
+    const roles = this.getUserRoles(); // Get roles from token or localStorage
+    return roles.includes('ROLE_ADMIN');
+  }
+  isStudent(): boolean {
+    const roles = this.getUserRoles(); // Get roles from token or localStorage
+    return roles.includes('ROLE_USER');
+  }
+  isteacher(): boolean {
+    const roles = this.getUserRoles(); // Get roles from token or localStorage
+    return roles.includes('ROLE_TEACHER');
+  }
+
+
+  getUserRoles(): string[] {
+    const token = this.getToken();
+    const decodedToken = this.decodeToken();
+    return decodedToken?.roles || [];
+  }
+
+  isAdmin(): boolean {
+    const roles = this.getUserRoles(); // Get roles from token or localStorage
+    return roles.includes('ROLE_ADMIN');
   }
 
  

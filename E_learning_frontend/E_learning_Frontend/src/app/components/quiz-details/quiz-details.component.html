@@ -1,0 +1,21 @@
+<br><br><br><br><br><br><br><br><div *ngIf="quiz" class="quiz-container">
+  <h2 class="quiz-title">{{ quiz.title }}</h2>
+  <p class="timer">⏳ Time Left: {{ timeLeft }} seconds</p>
+  <form>
+    <div *ngFor="let question of quiz.questions; let i = index" class="quiz-question">
+      <h3>{{ i + 1 }}. {{ question.content }}</h3>
+      <ul class="quiz-options">
+        <li *ngFor="let option of question.options; let j = index" class="quiz-option">
+          <input
+            type="radio"
+            [name]="'question' + i"
+            [value]="j"
+            (change)="selectAnswer(i, j)"
+          />
+          {{ option }}
+        </li>
+      </ul>
+    </div>
+    <button type="button" class="submit-button" (click)="submitQuiz()">Submit Quiz</button>
+  </form>
+</div>

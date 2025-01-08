@@ -1,68 +1,47 @@
 <br><br><br><br><br><br>
 
-<ng-container *ngIf="!this.auth.getIsTeacher()">
     
-<div class="wrapper">
+<div class="wrapper"  *ngIf="!this.auth.getIsTeacher()">
     <h1>All Courses </h1>
-    <div class="cols">
-        <div class="col" *ngFor="let course of courses" ontouchstart="this.classList.toggle('hover');">
-            <div class="container">
-                <div class="front" style="background-image: url('https://unsplash.it/500/500/')">
-                    <div class="inner">
-                        <p>{{ course.title }}</p>
-                        <span>{{course.author}}</span>
-                    </div>
-                </div>
-                <div class="back">
-                    <div class="inner">
-                        <p>{{ course.description }}</p>
-                        <ng-container *ngIf="!IsEnrolled(course.id) " >
-                        <a class="fancy" >
-                            <span class="top-key"></span>
-                            <span class="text" (click)='enroll(course.id)' >Enroll </span>
-                            <span class="bottom-key-1"></span>
-                            <span class="bottom-key-2"></span>
-                          </a>
-                        </ng-container>
-                        <ng-container *ngIf="IsEnrolled(course.id) " >
-                            <br><br>
-                            <p>Already owned </p>
-                            </ng-container>
-                    </div>
-                </div>
-            </div>
+    <div class="course-container">
+        <div 
+          class="course-card" 
+          *ngFor="let course of courses" 
+          [style.backgroundImage]="'url(' + course.imageUrl + ')'"
+        >
+          <div class="course-content">
+            <img [src]="course.imageLogoUrl" alt="{{ course.title }}" class="course-logo" />
+            <span class="course-title">{{ course.title }}</span>    <span class="course-author">By {{ course.author }}</span>
+
+          </div>
+          <div class="course-hover-content"><ng-container *ngIf="!IsEnrolled(course.id) " >
+            <button class="enroll-button" (click)='enroll(course.id)'>Enroll</button>
+            </ng-container>
+              <ng-container *ngIf="IsEnrolled(course.id) " >
+                <br><br>
+                <p>Already owned </p>
+                </ng-container>
+          </div>
         </div>
-    </div>
+      </div>
 </div>
-</ng-container>
-<ng-container *ngIf="this.auth.getIsTeacher()">  
     
-<div class="wrapper">
+<div class="wrapper"  *ngIf="this.auth.getIsTeacher()">
     <h1>All Courses </h1>
-   
-    <div class="cols">
-        <div class="col" *ngFor="let course of courses" ontouchstart="this.classList.toggle('hover');">
-            <div class="container">
-                
-                <div class="front" style="background-image: url('https://unsplash.it/500/500/')">
-                    <div class="inner">
-                        <p>{{ course.title }}</p>
-                        <span>{{course.author}}</span>
-                    </div>
-                </div>
-                <div class="back">
-                    <div class="inner">
-                        <p>{{ course.description }}</p>
-                        <a class="fancy" href="">
-                            <span class="top-key"></span>
-                            <span class="bottom-key-1"></span>
-                            <span class="bottom-key-2"></span>
-                          </a>
-                 
-                    </div>
-                </div>
-            </div>
+    <div class="course-container">
+        <div 
+          class="course-card" 
+          *ngFor="let course of courses" 
+          [style.backgroundImage]="'url(' + course.imageUrl + ')'"
+        >
+          <div class="course-content">
+            <img [src]="course.imageLogoUrl" alt="{{ course.title }}" class="course-logo" />
+    <span class="course-title">{{ course.title }}</span>
+    <span class="course-author">By {{ course.author }}</span>
+        
+          </div>
         </div>
-    </div>
-</div>
-</ng-container>
+      </div>
+  </div>
+
+  

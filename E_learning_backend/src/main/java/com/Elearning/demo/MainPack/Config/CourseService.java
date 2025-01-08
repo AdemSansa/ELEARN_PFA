@@ -2,19 +2,22 @@ package com.Elearning.demo.MainPack.Config;
 
 
 import com.Elearning.demo.MainPack.Model.Course;
+import com.Elearning.demo.MainPack.Model.CourseEnrollmentCount;
+import com.Elearning.demo.MainPack.Model.Enrollment;
 import com.Elearning.demo.MainPack.Repository.CourseRepository;
+import com.Elearning.demo.MainPack.Repository.EnrollementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.lang.reflect.Array;
+import java.util.*;
 
 @Service
 public class CourseService {
     @Autowired
     CourseRepository courseRepository;
-
+    @Autowired
+    EnrollementRepository enrollementRepository;
 
     public Course createCourse(Course course) {
         course.setCreatedDate(new Date());
@@ -26,6 +29,8 @@ public class CourseService {
         if (existingCourse.isPresent()) {
             Course updatedCourse = existingCourse.get();
             updatedCourse.setTitle(course.getTitle());
+            updatedCourse.setImageLogoUrl(course.getImageLogoUrl());
+            updatedCourse.setImageUrl(course.getImageUrl());
             updatedCourse.setDescription(course.getDescription());
             updatedCourse.setAuthor(course.getAuthor());
             updatedCourse.setUpdatedDate(new Date());
@@ -49,5 +54,24 @@ public class CourseService {
 
     public List<Course> getCoursesByAuthor(String author) {
         return courseRepository.findByAuthor(author);
+    }
+
+
+    public List<Map<String, Object>> getCoursesWithEnrollmentCounts() {
+        List<CourseEnrollmentCount> enrollmentCounts = enrollementRepository.findCourseEnrollmentCounts();
+        List<Course> courses = courseRepository.findAll();
+
+        List<Map<String, Object>> result = new ArrayList<>();
+        for (Course course : courses) {
+            String courseId = course.getId();
+            List <Enrollment> Enrolllments  = enrollementRepository.findByCourse(course);
+            Map<String, Object> courseData = new HashMap<>();
+            courseData.put("courseId", course.getId());
+            courseData.put("courseName", course.getTitle());
+            courseData.put("enrollments", Enrolllments.size());
+
+            result.add(courseData);
+        }
+        return result;
     }
 }

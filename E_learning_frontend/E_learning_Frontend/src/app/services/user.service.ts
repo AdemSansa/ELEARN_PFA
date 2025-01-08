@@ -18,7 +18,16 @@ export class UserService {
   deleteUser(id: String): Observable<any> {
     return this.http.delete(`${this.baseUrl}/deleteUser/${id}`);
   }   
+  getUserByID(id: String): Observable<any> {
+    return this.http.get(`${this.baseUrl}/getUserById/${id}`);
+  }
+  updateUserRoles(userId: string, roles: string[]): Observable<any> {
+    return this.http.put(`/api/users/${userId}/roles`, roles);
+  }
   
+  getMostEnrolledUsers(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/topUsers`);
+}
 
   
 }

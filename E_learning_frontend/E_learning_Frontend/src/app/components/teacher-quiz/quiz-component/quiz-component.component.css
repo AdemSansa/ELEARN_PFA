@@ -1,0 +1,9 @@
+
+.btn-close.text-danger {
+    font-size: 1.2rem;
+    opacity: 0.8;
+  }
+  .btn-close.text-danger:hover {
+    opacity: 1;
+    color: red;
+  }

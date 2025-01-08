@@ -17,13 +17,9 @@ export class CoursesComponent implements OnInit {
   otherUser:string="";
   enrolledCourses: string[] = []; // List of enrolled course IDs
 
-  TeacherName: any = this.auth.userName;
-  
-  
+  TeacherName: any = this.auth.userName;  
 
   constructor(private courseService : CourseService ,private enrollmentService:EnrollmentService ,public auth:AuthService,private router:Router) { }
-
-
 
 
     ngOnInit(): void {
@@ -33,7 +29,6 @@ export class CoursesComponent implements OnInit {
       console.log(this.auth.getIsTeacher());
       
   
-      // Fetch the courses the user is enrolled in
       if (this.otherUser) {
         this.enrollmentService.getIDSOfcoursesEnrolled(this.otherUser).subscribe((enrolledCourses) => {
           
@@ -51,7 +46,24 @@ export class CoursesComponent implements OnInit {
     return this.enrolledCourses.includes(courseId);
   }
 
-  
+  coursess = [
+    {
+      title: 'Python',
+      backgroundImage: 'assets/pyBack.jpg',
+      logo: 'assets/pyLogo.png',
+    },
+    {
+      title: 'JavaScript',
+      backgroundImage: 'assets/JsBack.png',
+      logo: 'assets/JsLogo.png',
+    },
+    {
+      title: 'Java',
+      backgroundImage: 'assets/JavaBack.jpg',
+      logo: 'assets/JavaLogo.png',
+    },
+    // Add more courses as needed
+  ];
    // Load all courses
    loadCourses(): void {
     this.courseService.getAllCourses().subscribe((data) => {
@@ -80,6 +92,7 @@ export class CoursesComponent implements OnInit {
           (response) => {
             console.log('Enrollment successful:', response);
             Swal.fire('Success', 'Enrollment successful!', 'success');
+            this.ngOnInit();
             this.router.navigate([this.router.url]);
 
           },
@@ -90,7 +103,7 @@ export class CoursesComponent implements OnInit {
         );
       } else {
         // Optional: Handle cancellation
-        console.log('Enrollment cancelled by the user.');
+        console.log('Enrollment cancelled by the usera');
       }
     });
   }
@@ -110,6 +123,8 @@ export class CoursesComponent implements OnInit {
       html: `
         <input id="course-title" class="swal2-input" placeholder="Course Title" />
         <textarea id="course-description" class="swal2-input" placeholder="Course Description"></textarea>
+      <input id="course-back" class="swal2-input" placeholder="Background Image URL" />
+      <input id="course-logo" class="swal2-input" placeholder="Logo URL" />
       `,
       focusConfirm: false,
       showCancelButton: true,
@@ -117,7 +132,8 @@ export class CoursesComponent implements OnInit {
       preConfirm: () => {
         const title = (document.getElementById('course-title') as HTMLInputElement)?.value;
         const description = (document.getElementById('course-description') as HTMLTextAreaElement)?.value;
-
+        const backgroundImage = (document.getElementById('course-back') as HTMLTextAreaElement)?.value;
+        const logo = (document.getElementById('course-logo') as HTMLTextAreaElement)?.value
         if (!title || !description ) {
           Swal.showValidationMessage('Please fill in all fields');
           return null;
@@ -127,8 +143,8 @@ export class CoursesComponent implements OnInit {
       }
     }).then((result) => {
       if (result.isConfirmed) {
-        const { title, description, author } = result.value!;
-        const newCourse = { title, description, author };
+        const { title, description, author,logo,backgroundImage} = result.value!;
+        const newCourse = { title, description, author,logo,backgroundImage };
 
         this.courseService.createCourse(newCourse).subscribe(
           (response) => {

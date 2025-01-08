@@ -1,0 +1,25 @@
+<div class="results-container">
+    <div class="results-card">
+      <h1>Quiz Results</h1>
+      <h2 [style.color]="pass ? 'var(--primary-color)' : 'var(--secondary-color)'">
+        {{ pass ? 'Congratulations! You Passed!' : 'Sorry, You Failed.' }}
+      </h2>
+      <p class="score">Your Score: <strong>{{ PassingPercentage }}%</strong></p>
+    </div>
+  
+    <div class="feedback">
+      <h3>Feedback</h3>
+      <div *ngFor="let fb of feedback" class="feedback-item">
+        <p>
+          <strong>Question:</strong> {{ fb.question }}
+        </p>
+        <p>
+          <span *ngIf="fb.correct" class="correct">Correct! Your answer: {{ fb.userAnswer }}</span>
+          <span *ngIf="!fb.correct" class="incorrect">
+            Incorrect. Your answer: {{ fb.userAnswer }}. Correct answer: {{ fb.correctAnswer }}
+          </span>
+        </p>
+      </div>
+    </div>
+  </div>
+  
