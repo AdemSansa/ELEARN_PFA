@@ -34,9 +34,9 @@ public class LessonService {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new RuntimeException("Course not found"));
 
-        lesson.setCourseId(courseId);
+        lesson.setCourseId(courseId); // Set the course ID
 
-        // Link the lesson to the course
+        // MongoDB will automatically generate the ID for new lessons
         Lesson savedLesson = lessonRepository.save(lesson);
 
         System.out.println(savedLesson.getCourseId());
@@ -55,7 +55,6 @@ public class LessonService {
 
         return savedLesson;
     }
-
 
 
 

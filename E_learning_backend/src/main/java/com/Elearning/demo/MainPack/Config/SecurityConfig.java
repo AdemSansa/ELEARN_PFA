@@ -43,7 +43,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
 
                         .requestMatchers("/messages/**","/chat-websocket","/chat-websocket/**","/live-chat/**","/auth/forgot-password",
-                                "/auth/reset-password", "/auth/**","/Admin/**","/api/**","/api/categories/**","/api/enrollments/**","/api/lessons/**",
+                                "/auth/reset-password", "/auth/**","/Admin/**","/api/**","/api/recommendations/**","/api/categories/**","/api/enrollments/**","/api/lessons/**",
                                 "/api/**","/admin/**").permitAll()
                         .anyRequest().authenticated()
                 );

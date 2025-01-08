@@ -15,4 +15,6 @@ public interface CourseRepository extends MongoRepository<Course, String> {
     long count();
 
     List<Course> findByCategory(Category category);
+
+    List<Course> findByCategoryName(String categoryName);
 }

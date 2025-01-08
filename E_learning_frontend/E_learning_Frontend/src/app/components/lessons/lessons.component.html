@@ -30,7 +30,7 @@
     <ul>
       <li
         *ngFor="let lesson of lessons"
-        [class.active]="lesson.id === selectedLesson.id"
+        [class.active]="lesson.id === selectedLesson?.id"
         (click)="selectLesson(lesson)"
       >
       <input
