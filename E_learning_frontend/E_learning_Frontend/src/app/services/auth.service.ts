@@ -1,7 +1,7 @@
 
 
 
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -11,6 +11,10 @@ import { jwtDecode } from 'jwt-decode';
   providedIn: 'root'
 })
 export class AuthService {
+
+
+  userLoggedIn = new EventEmitter<void>(); // EventEmitter to notify login events
+
 
   private apiUrl = 'http://localhost:8081/auth';
   private user: any = null; 
@@ -48,6 +52,7 @@ export class AuthService {
   login(email: string, password: string): Observable<any> {
     this.currentUserSubject.next(this.decodeToken());
     localStorage.setItem('currentUser', JSON.stringify(this.currentUserSubject.value));
+    this.userLoggedIn.emit();
     return this.http.post(`${this.apiUrl}/login`, { email, password });
   }
  
@@ -77,6 +82,7 @@ export class AuthService {
       () => {
         console.log('Logout successful');
         localStorage.removeItem('jwtToken');
+        this.userLoggedIn.emit();
       },
       (error) => {
         console.error('Logout failed:', error);
@@ -84,10 +90,7 @@ export class AuthService {
     );
   }
 
-  isLoggedIn(): boolean {
-    const token = this.getToken();
-    return token !== null && token.length > 0;
-  }
+  
 
   forgotPassword(email: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/forgot-password`, { email });
@@ -184,10 +187,16 @@ export class AuthService {
     return roles.includes('ROLE_TEACHER');
   }
 
+
   getUserRoles(): string[] {
     const token = this.getToken();
     const decodedToken = this.decodeToken();
     return decodedToken?.roles || [];
+  }
+
+  isAdmin(): boolean {
+    const roles = this.getUserRoles(); // Get roles from token or localStorage
+    return roles.includes('ROLE_ADMIN');
   }
 
  
