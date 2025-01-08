@@ -20,4 +20,5 @@ public interface EnrollementRepository extends MongoRepository<Enrollment, Strin
     })
     List<CourseEnrollmentCount> findCourseEnrollmentCounts();
 
+    List<Enrollment> findByUserId(String userId);
 }

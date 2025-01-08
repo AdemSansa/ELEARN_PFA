@@ -24,6 +24,9 @@ public class CourseService {
 
     public Course createCourse(Course course, String categoryId) {
         Category category = categoryService.getCategoryById(categoryId);
+        if (category == null || category.getId() == null) {
+            throw new RuntimeException("Category not found or invalid ID");
+        }
         course.setCreatedDate(new Date());
         course.setUpdatedDate(new Date());
         course.setCategory(category);
