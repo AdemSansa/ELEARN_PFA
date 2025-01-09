@@ -21,12 +21,12 @@ export class LessonsComponent {
   selectedLesson: any = null;
   completedLessons: string[] = [];
   newLesson: any = { title: '', content: '', videoUrl: '', description: '' }; // Initialize newLesson
-
+isTeacher: boolean = false;
   constructor(
     private route: ActivatedRoute,
     private lessonService: LessonService,
     private sanitizer: DomSanitizer,
-    public authService: AuthService,
+    private authService: AuthService,
     private courseService: CourseService,
     private enrollmentService: EnrollmentService
   ) {}
@@ -63,7 +63,7 @@ export class LessonsComponent {
     this.courseId = this.route.snapshot.paramMap.get('courseId') || '';
     console.log('Course ID:', this.courseId); // Debugging courseId
     this.userId = this.authService.getUserId() || '';
-    
+    this.isTeacher = this.authService.isteacher();
     if (this.courseId) {
       // Fetch course details
       this.courseService.getCourseById(this.courseId).subscribe(

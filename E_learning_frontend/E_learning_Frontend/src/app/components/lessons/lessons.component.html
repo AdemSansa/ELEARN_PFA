@@ -33,7 +33,8 @@
         [class.active]="lesson.id === selectedLesson.id"
         (click)="selectLesson(lesson)"
       >
-      <input
+  
+      <input *ngIf="!isTeacher"
           type="checkbox"
           [checked]="isLessonCompleted(lesson.id)"
           (change)="toggleLessonCompletion(lesson, $event)"
@@ -43,7 +44,7 @@
       </li>
     </ul>
 
-    <ng-container *ngIf="this.authService.getIsTeacher()">
+    <ng-container *ngIf="isTeacher">
 
     <button class="btn open-form" (click)="openForm()">Add Lesson</button></ng-container>
   </div>

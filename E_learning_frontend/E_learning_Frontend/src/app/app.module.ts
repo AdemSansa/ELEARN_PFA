@@ -58,7 +58,6 @@ import { ViewCategoryComponent } from './components/view-category/view-category.
 import { AdminCategoryManagementComponent } from './components/admin-category-management/admin-category-management.component';
 import { FiltercategoyPipe } from './filtercategoy.pipe';
 import { EditProfileDialogComponent } from './components/edit-profile-dialog/edit-profile-dialog.component';
-import { RecommendationsComponent } from './components/recommendations/recommendations.component';
 import { PreferencesComponent } from './components/preferences/preferences.component';
 
 @NgModule({
@@ -112,7 +111,7 @@ import { PreferencesComponent } from './components/preferences/preferences.compo
             AdminCategoryManagementComponent,
             FiltercategoyPipe,
             EditProfileDialogComponent,
-            RecommendationsComponent,
+            
             PreferencesComponent,
        
    

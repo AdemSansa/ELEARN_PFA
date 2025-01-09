@@ -67,7 +67,6 @@ intervals = new Map<any, any>();
 
 onCourseHover(course: any): void {
  
-  // Clear the previous interval if it's already running
   if (this.intervals.has(course)) {
     clearInterval(this.intervals.get(course)); // Stop the current animation
     this.intervals.delete(course); // Remove it from the map

@@ -50,9 +50,9 @@ export class ProfileComponent implements OnInit {
 
     this.enrollmentService.getEnrolledCourses(this.Auth.decodeToken().id).subscribe((data)=>{
       this.courseprogress = data;
-      console.log(this.courseprogress[0].course.id); 
-      console.log(this.courseprogress[1].course.title);
-      console.log(this.courseprogress[2].course.title);
+      console.log(this.courseprogress);
+      
+      
       for (let i = 0; i < this.courseprogress.length; i++) {
         this.enrollmentService.getProgress(this.Auth.decodeToken().id,this.courseprogress[i].course.id).subscribe((data)=>{
           this.Course = {
@@ -114,7 +114,7 @@ export class ProfileComponent implements OnInit {
   
 
   isTeacher(): boolean {
-    return this.authservice.isteacher();
+    return this.authservice.getIsTeacher();
   }
 
 

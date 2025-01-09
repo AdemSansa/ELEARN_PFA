@@ -96,7 +96,6 @@ public class EnrollmentService {
     }
 
     public int calculateProgress(String userId, String courseId) {
-        // Retrieve the enrollment for the user in the specified course
         Enrollment enrollment = enrollmentRepository
                 .findByUserIdAndCourseId(userId, courseId)
                 .orElseThrow(() -> new RuntimeException("Enrollment not found"));

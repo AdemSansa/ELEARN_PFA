@@ -196,7 +196,7 @@ export class AuthService {
     return roles.includes('ROLE_ADMIN');
   }
 
-  updatePreferences(preferences: any , id:String): Observable<any> {
+  updatePreferences(preferences: any ,id:string): Observable<any> {
     return this.http.post(`${this.apiUrl}/ChoosePreferences/${id}`, preferences,{
       headers: new HttpHeaders({'Content-Type': 'application/json'})
   }

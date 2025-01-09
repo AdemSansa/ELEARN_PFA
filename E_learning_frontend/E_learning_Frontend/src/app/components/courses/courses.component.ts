@@ -14,7 +14,7 @@ import { RecommandationService } from 'src/app/services/recommandation-service/r
 })
 export class CoursesComponent implements OnInit {
   recommendedCourses: any[] = [];
-
+userInfo: any;
   courses: any[] = [];
   categories: any[] = []; 
   userId: string = '';
@@ -114,17 +114,38 @@ export class CoursesComponent implements OnInit {
       this.courses = data;
     });
   }
-  GetRecommendation(): void {
+
+
+
+
+  prefererences: string[] = [];
     
-    const user = { id: 1, preferences: ['programming', 'design'] }; // Example user data
-      this.recommandationService.getRecommendations(user).subscribe(data => {
 
-        this.recommendedCourses = data;
-
-      }
-      );
-      
 
   
-}
+
+  GetRecommendation(): void {
+    console.log('Fetching recommendations...');
+    
+    this.auth.getUserInfo().subscribe(
+      (userInfo) => {
+        this.userInfo = userInfo;
+        console.log('User Info:', this.userInfo);
+        
+        
+        this.recommandationService.getRecommendations(this.userInfo.id).subscribe(
+          (recommendedCourses) => {
+            this.recommendedCourses = recommendedCourses;
+            console.log('Recommended Courses:', this.recommendedCourses);
+          },
+          (error) => {
+            console.error('Error fetching recommendations:', error);
+          }
+        );
+      },
+      (error) => {
+        console.error('Error fetching user info:', error);
+      }
+    );
+  }
 }

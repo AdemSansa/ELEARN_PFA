@@ -218,6 +218,7 @@ public class AuthController {
             userInfo.put("githubURL", user.get().getGithubURL());
             userInfo.put("linkedinURL", user.get().getLinkedinURL());
             userInfo.put("AvatarURL", user.get().getAvatarURL());
+            userInfo.put("preferences", user.get().getPreferences());
 
             return ResponseEntity.ok(userInfo);
         } else {
@@ -235,12 +236,11 @@ public class AuthController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-    @PostMapping("ChoosePreferences")
-    public ResponseEntity<?> choosePreferences(@RequestBody Map<String, List<String>> request) {
-        String userId = request.get("userId").get(0);
-        List<String> preferences = request.get("preferences");
+    @PostMapping("ChoosePreferences/{UserId}")
+    public ResponseEntity<?> choosePreferences(@RequestBody List<String> preferences, @PathVariable String UserId) {
 
-        User user = userRepository.findById(userId).orElse(null);
+
+        User user = userRepository.findById(UserId).orElse(null);
         if (user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }

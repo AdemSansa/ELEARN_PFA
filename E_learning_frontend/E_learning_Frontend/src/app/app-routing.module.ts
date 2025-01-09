@@ -38,7 +38,6 @@ import { AllcoursesComponent } from './components/allcourses/allcourses.componen
 import { AddCategoryComponent } from './components/add-category/add-category.component';
 import { AdminCourseManagementComponent } from './components/admin-course-management/admin-course-management.component';
 import { AdminCategoryManagementComponent } from './components/admin-category-management/admin-category-management.component';
-import { RecommendationsComponent } from './components/recommendations/recommendations.component';
 import { PreferencesComponent } from './components/preferences/preferences.component';
 
 const routes: Routes = [
@@ -64,7 +63,6 @@ const routes: Routes = [
   { path: 'livechat', component: ChatComponent },
     {path: 'About', component: AboutComponent },
     {path: 'AllCourses', component: AllcoursesComponent},
-    {path: 'forYou', component: RecommendationsComponent},
     { path: 'choose-preferences', component: PreferencesComponent },
 
   { path: 'Teachercourses', component: TeacherCoursesComponent , 

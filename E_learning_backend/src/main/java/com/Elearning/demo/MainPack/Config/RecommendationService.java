@@ -1,8 +1,10 @@
 package com.Elearning.demo.MainPack.Config;
 
+import com.Elearning.demo.MainPack.Model.Category;
 import com.Elearning.demo.MainPack.Model.Course;
 import com.Elearning.demo.MainPack.Model.Enrollment;
 import com.Elearning.demo.MainPack.Model.User;
+import com.Elearning.demo.MainPack.Repository.CategoryRepository;
 import com.Elearning.demo.MainPack.Repository.CourseRepository;
 import com.Elearning.demo.MainPack.Repository.EnrollementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ public class RecommendationService {
 
     @Autowired
     private EnrollementRepository enrollmentRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     // Get recommended courses based on user progress and enrolled categories
     public List<Course> getRecommendedCourses(String userId) {
@@ -100,27 +104,56 @@ public class RecommendationService {
     // Get recommendations for a user
     public List<Course> getRecommendedCourses(User user) {
         // Fetch all courses from the database
+        System.out.println("Fetching all courses...");
         List<Course> allCourses = courseRepository.findAll();
+        List<Category> categories = categoryRepository.findAll();
 
-        // List to store recommended courses
-        List<Course> recommendedCourses = new ArrayList<>();
+        // List to store recommended courses (use a set to avoid duplicates)
+        Set<Course> recommendedCourses = new HashSet<>();
 
-        // Loop through all courses and check if they match user's preferences
-        for (Course course : allCourses) {
-            // Check if the course category matches any of the user's preferences
+        // Fetch all enrollments of the user to avoid recommending already enrolled/completed courses
+        List<Enrollment> enrollments = enrollmentRepository.findByUserId(user.getId());
+        Set<String> enrolledCategoryNames = new HashSet<>();
+        Set<String> enrolledCourseIds = new HashSet<>();
+
+        // Track which courses the user has completed or is enrolled in
+        for (Enrollment enrollment : enrollments) {
+            enrolledCategoryNames.add(enrollment.getCourse().getCategory().getName());
+            enrolledCourseIds.add(enrollment.getCourse().getId());
+        }
+
+        // Loop through all categories to check if they match the user's preferences
+        for (Category category : categories) {
+            // Loop through the user's preferences to check for a match
             for (String preference : user.getPreferences()) {
-                if (course.getCategory().getName().equalsIgnoreCase(preference)) {
-                    // Add the course to the recommended list if a match is found
-                    recommendedCourses.add(course);
-                    break; // No need to check other preferences if already matched
+                System.out.println("Checking preference: " + preference + " for category: " + category.getName());
+                if (category.getName().equalsIgnoreCase(preference)) {
+                    // Skip recommending courses from categories the user is already enrolled in
+                    if (enrolledCategoryNames.contains(category.getName())) {
+                        System.out.println("User is already enrolled in a course from this category. Skipping...");
+                        continue; // Move to the next category
+                    }
+
+                    // Recommend courses of the same category that the user hasn't completed
+                    List<Course> courses = courseRepository.findByCategory(category);
+                    for (Course course : courses) {
+                        // Skip courses that the user has already completed or is enrolled in
+                        if (enrolledCourseIds.contains(course.getId())) {
+                            System.out.println("User is already enrolled/completed this course: " + course.getTitle());
+                            continue; // Skip this course
+                        }
+                        recommendedCourses.add(course); // Add course to the recommendations
+                        System.out.println("Course added: " + course.getTitle());
+                    }
+                    break; // No need to check other preferences once a match is found for this category
                 }
             }
         }
 
-        // Optional: Sort the courses by rating or other criteria (e.g., by difficulty, popularity)
-        // Example: Sorting by rating in descending order (highest rated courses first)
-        recommendedCourses.sort((course1, course2) -> Double.compare(course2.getRating(), course1.getRating()));
-
-        return recommendedCourses;
+        // Convert set to list before returning (if you want a list of courses)
+        return new ArrayList<>(recommendedCourses);
     }
+
+
+
 }

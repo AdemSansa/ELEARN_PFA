@@ -1,48 +1,29 @@
 <br><br><br><br><br><br>
-
-    
-<div class="wrapper"  *ngIf="!this.auth.getIsTeacher()">
-    <h1>All Courses </h1>
-    <div class="course-container">
-        <div 
-          class="course-card" 
-          *ngFor="let course of courses" 
-          [style.backgroundImage]="'url(' + course.imageUrl + ')'"
-        >
-          <div class="course-content">
-            <img [src]="course.imageLogoUrl" alt="{{ course.title }}" class="course-logo" />
-            <span class="course-title">{{ course.title }}</span>    <span class="course-author">By {{ course.author }}</span>
-
-          </div>
-          <div class="course-hover-content"><ng-container *ngIf="!IsEnrolled(course.id) " >
-            <button class="enroll-button" (click)='enroll(course.id)'>Enroll</button>
-            </ng-container>
-              <ng-container *ngIf="IsEnrolled(course.id) " >
-                <br><br>
-                <p>Already owned </p>
-                </ng-container>
-          </div>
-        </div>
+<br><br><br>
+<div class="wrapper" *ngIf="!this.auth.getIsTeacher()">
+  <h1 class="section-title">All Courses</h1>
+  <div class="course-container">
+    <div 
+      class="course-card" 
+      *ngFor="let course of courses" 
+      [style.backgroundImage]="'url(' + course.imageUrl + ')'"
+    >
+      <div class="course-content">
+        <img [src]="course.imageLogoUrl" alt="{{ course.title }}" class="course-logo" />
+        <h2 class="course-title">{{ course.title }}</h2>
+        <p class="course-author">By {{ course.author }}</p>
       </div>
-</div>
-    
-<div class="wrapper"  *ngIf="this.auth.getIsTeacher()">
-    <h1>All Courses </h1>
-    <div class="course-container">
-        <div 
-          class="course-card" 
-          *ngFor="let course of courses" 
-          [style.backgroundImage]="'url(' + course.imageUrl + ')'"
-        >
-          <div class="course-content">
-            <img [src]="course.imageLogoUrl" alt="{{ course.title }}" class="course-logo" />
-    <span class="course-title">{{ course.title }}</span>
-    <span class="course-author">By {{ course.author }}</span>
-        
-          </div>
-        </div>
+      <div class="course-hover-content">
+        <ng-container *ngIf="!IsEnrolled(course.id)">
+          <button class="enroll-button" (click)="enroll(course.id)">Enroll</button>
+        </ng-container>
+        <ng-container *ngIf="IsEnrolled(course.id)">
+          <p class="already-enrolled">Already Owned</p>
+        </ng-container>
       </div>
+    </div>
   </div>
+</div>
 
   <div class="wrapper"  *ngIf="!this.auth.getIsTeacher()">
     <h1>Recommended Courses</h1>

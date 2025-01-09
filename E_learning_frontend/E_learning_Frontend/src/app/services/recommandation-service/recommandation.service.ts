@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -10,11 +10,10 @@ export class RecommandationService {
 
   constructor(private http: HttpClient) {}
 
-  getRecommendedCourses(userId: string): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/courses/${userId}`);
-  }
-
-  getRecommendations(user: any): Observable<any[]> {
-    return this.http.post<any[]>(`${this.baseUrl}/recommendations`, user);
+  
+  getRecommendations(id: string): Observable<any> {
+    
+    
+    return this.http.get<any>(`${this.baseUrl}/recommendations/${id}`);
   }
 }
