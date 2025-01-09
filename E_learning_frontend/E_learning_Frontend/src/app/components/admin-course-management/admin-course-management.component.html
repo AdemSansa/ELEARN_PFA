@@ -1,0 +1,40 @@
+<p class="header">Admin Course Management</p>
+<h2>Course Management</h2>
+
+<!-- Search Bar -->
+<div class="search-container">
+  <input
+    type="text"
+    [(ngModel)]="searchText"
+    placeholder="Search courses..."
+    class="search-bar"
+  />
+</div>
+
+<div class="table-container">
+  <table class="styled-table">
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Author</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let course of Courses | filterCourses: searchText">
+        <td>
+          <img [src]="course.imageLogoUrl" alt="Course Image" class="course-image" />
+        </td>
+        <td>{{ course.title }}</td>
+        <td>{{ course.description | truncate: 100 }}</td>
+        <td>{{ course.author }}</td>
+        <td class="actions">
+          <button class="action-btn view" (click)="viewCourse(course.id)">View</button>
+          <button class="action-btn delete" (click)="deleteCourse(course.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

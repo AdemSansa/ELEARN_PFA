@@ -95,6 +95,15 @@ export class LessonsComponent {
       (completedLessons) => {
         console.log('Completed Lessons:', completedLessons);
         this.completedLessons = completedLessons;
+        this.enrollmentService.getProgress(this.userId, this.courseId).subscribe(
+          (progress) => {
+            console.log('Course Progress:', progress);
+          },
+          (error) => {
+            console.error('Error fetching course progress:', error);
+          }
+        );
+      
       },
       (error) => {
         console.error('Error fetching completed lessons:', error);

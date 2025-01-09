@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>{{ data.name }}</h2>
+
+<div mat-dialog-content>
+  <div class="category-details">
+    <div class="category-image">
+      <img [src]="data.imageUrl" alt="Category Image" class="category-image" />
+    </div>
+    <div class="category-info">
+      <p><strong>Category ID:</strong> {{ data.id }}</p>
+      <p><strong>Name:</strong> {{ data.name }}</p>
+      <p><strong>Description:</strong> {{ data.description }}</p>
+    </div>
+  </div>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="closeDialog()">Close</button>
+</div>

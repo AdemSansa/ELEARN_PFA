@@ -15,6 +15,16 @@ public class Course {
     @Id
     private String id;
     private String title;
+    private String categoryName;
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
     private String description;
     private String author; // Teacher ID or name
     private Date createdDate;
@@ -25,6 +35,26 @@ public class Course {
     private List<Lesson> lessons = new ArrayList<>();
     @DBRef
     private Category category;
+
+    public double getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(double difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    private double difficulty; // or any other feature
+    private double rating; // This will be used to suggest similar courses
+
 
     public Category getCategory() {
         return category;

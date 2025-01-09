@@ -16,5 +16,7 @@ public interface CourseRepository extends MongoRepository<Course, String> {
 
     List<Course> findByCategory(Category category);
 
-    List<Course> findByCategoryName(String categoryName);
+
+   List <Course> findByCategoryName(String categoryName);
+
 }

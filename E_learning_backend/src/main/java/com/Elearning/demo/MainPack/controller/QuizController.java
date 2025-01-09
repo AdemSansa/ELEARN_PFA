@@ -59,7 +59,10 @@ public class QuizController {
     public ResponseEntity<Quiz> createQuiz(@RequestBody Quiz quiz) {
         Quiz savedQuiz = quizService.createQuiz(quiz);
         User user = userService.getUserById(savedQuiz.getUserId());
-        userService.getAllEmails().forEach(email -> emailService.sendQuizNotificationEmail(email,user.getName() ,savedQuiz.getTitle()));
+         List <String> emails = userService.getAllEmails();
+         emailService.sendQuizNotificationEmail(emails, user.getName(), savedQuiz.getTitle());
+
+
         return ResponseEntity.ok(savedQuiz);
     }
 

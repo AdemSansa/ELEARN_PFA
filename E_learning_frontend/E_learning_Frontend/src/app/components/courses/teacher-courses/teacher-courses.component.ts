@@ -1,4 +1,4 @@
-    import { Component, OnInit } from '@angular/core';
+    import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
     import { AuthService } from 'src/app/services/auth.service';
   import { CategoryService } from 'src/app/services/category_service/category.service';
     import { CourseService } from 'src/app/services/Course_Service/course.service';
@@ -19,7 +19,7 @@
       categories: any[] = [];
       TeacherName: any = this.auth.userName;
       students: any[] = [];
-      constructor(private courseService : CourseService ,private enrollmentService:EnrollmentService ,  private categoryService: CategoryService ,public auth:AuthService,private userService: UserService) { }
+      constructor(private courseService : CourseService ,private enrollmentService:EnrollmentService ,  private categoryService: CategoryService ,public auth:AuthService,private userService: UserService , private cdr : ChangeDetectorRef) { }
 
       showAlert(event: MouseEvent, courseId: string): void {
         event.stopPropagation();
@@ -156,7 +156,10 @@
             this.courseService.createCourse(newCourse, categoryId).subscribe(
               (response) => {
                 Swal.fire('Success', 'Course added successfully!', 'success');
+                this.courses.push(response);
                 this.getCoursesByAuthor(this.TeacherName);
+                 
+              this.courses.join(response);
               },
               (error) => {
                 Swal.fire('Error', 'Failed to add course.', 'error');

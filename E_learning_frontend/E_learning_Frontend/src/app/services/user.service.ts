@@ -29,5 +29,9 @@ export class UserService {
     return this.http.get(`${this.baseUrl}/topUsers`);
 }
 
-  
+editUser(id: string, user: any): Observable<any> {
+  return this.http.put(`${this.baseUrl}/edit/${id}`, user);
+
+
+}
 }

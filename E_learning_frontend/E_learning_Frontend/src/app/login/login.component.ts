@@ -208,10 +208,12 @@ private decode(token:string){
               this.cdr.detectChanges();
 
             }
-            else  
+            else 
               this.router.navigate(['/avatar-selection']);
+            
           },
           error: (err) => {
+            
             console.error('Failed to get user info:', err);
           }
         });
@@ -220,8 +222,25 @@ private decode(token:string){
         
       },
       error: (err) => {
-        console.error('Login failed:', err);
-    this.showAlertError(err.error.message || 'Login failed');
+       console.log(err.error);
+       if(err.error=="Invalid password")
+       {
+        Swal.fire({
+          title: 'Error',
+          text: 'Invalid password',
+          icon: 'error',
+          confirmButtonText: 'Ok'
+        });
+       }
+       else{
+       
+            Swal.fire({
+              title: 'Error',
+              text: 'Your account has been blocked, please contact the administrator.',
+              icon: 'error',
+              confirmButtonText: 'Ok'
+            });}
+       
       },
     });
   }

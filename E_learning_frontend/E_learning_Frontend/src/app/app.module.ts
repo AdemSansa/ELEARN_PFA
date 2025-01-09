@@ -47,6 +47,19 @@ import { StatisticsComponent } from './components/statistics/statistics.componen
 import { ChatComponent } from './components/chat/chat.component';
 import { AboutComponent } from './components/about/about.component';
 import { CatgoriesComponent } from './components/catgories/catgories.component';
+import { AllcoursesComponent } from './components/allcourses/allcourses.component';
+import { AddCategoryComponent } from './components/add-category/add-category.component';
+import { AdminCourseManagementComponent } from './components/admin-course-management/admin-course-management.component';
+import { ViewCourseComponent } from './components/view-course/view-course.component';
+import { FilterCoursesPipe } from './filter-courses.pipe';
+import { TruncatePipe } from './truncate.pipe';
+import { EditCourseComponent } from './components/edit-course/edit-course.component';
+import { ViewCategoryComponent } from './components/view-category/view-category.component';
+import { AdminCategoryManagementComponent } from './components/admin-category-management/admin-category-management.component';
+import { FiltercategoyPipe } from './filtercategoy.pipe';
+import { EditProfileDialogComponent } from './components/edit-profile-dialog/edit-profile-dialog.component';
+import { RecommendationsComponent } from './components/recommendations/recommendations.component';
+import { PreferencesComponent } from './components/preferences/preferences.component';
 
 @NgModule({
   declarations: [
@@ -88,6 +101,20 @@ import { CatgoriesComponent } from './components/catgories/catgories.component';
     
 
     CatgoriesComponent,
+            AllcoursesComponent,
+            AddCategoryComponent,
+            AdminCourseManagementComponent,
+            ViewCourseComponent,
+            FilterCoursesPipe,
+            TruncatePipe,
+            EditCourseComponent,
+            ViewCategoryComponent,
+            AdminCategoryManagementComponent,
+            FiltercategoyPipe,
+            EditProfileDialogComponent,
+            RecommendationsComponent,
+            PreferencesComponent,
+       
    
     
     

@@ -1,0 +1,38 @@
+<p class="header">Admin Category Management</p>
+<h2>Category Management</h2>
+
+<!-- Search Bar -->
+<div class="search-container">
+  <input
+    type="text"
+    [(ngModel)]="searchText"
+    placeholder="Search categories..."
+    class="search-bar"
+  />
+</div>
+
+<div class="table-container">
+  <table class="styled-table">
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let category of categories | filtercategoy: searchText">
+        <td>
+          <img [src]="category.imageUrl" alt="Category Image" class="category-image" />
+        </td>
+        <td>{{ category.name }}</td>
+        <td>{{ category.description | truncate: 100 }}</td>
+        <td class="actions">
+          <button class="action-btn view" (click)="viewCategory(category._id)">View</button>
+          <button class="action-btn delete" (click)="deleteCategory(category._id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,26 @@
+.category-details {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .category-image img {
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+  }
+  
+  .category-info {
+    font-size: 14px;
+  }
+  
+  .category-info p {
+    margin: 5px 0;
+  }
+  
+  mat-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+  }
+  

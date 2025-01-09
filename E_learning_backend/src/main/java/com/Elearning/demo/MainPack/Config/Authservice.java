@@ -45,13 +45,15 @@ public class  Authservice {
         newUser.setCity(user.getCity());
         newUser.setCountry(user.getCountry());
         newUser.setBirthDate(user.getBirthDate());
+
+        newUser.setName(user.getName());
+
         newUser.setPhoneNumber(user.getPhoneNumber());
         newUser.setFacebookURL(user.getFacebookURL());
         newUser.setGithubURL(user.getGithubURL());
         newUser.setLinkedinURL(user.getLinkedinURL());
         newUser.setTwitterURL(user.getTwitterURL());
         newUser.setInstagramURL(user.getInstagramURL());
-        System.out.println(newUser.toString());
         return userRepository.save(newUser);
     }
 
@@ -95,6 +97,7 @@ public class  Authservice {
                 .orElseThrow(() -> new RuntimeException("User not found"));
         if(user.isBlocked())
         {
+
             throw new RuntimeException("User is blocked due to multiple failed attempts");
         }
 

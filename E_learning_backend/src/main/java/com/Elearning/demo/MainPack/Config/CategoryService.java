@@ -12,6 +12,7 @@ public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+
     public Category createCategory(Category category) {
         return categoryRepository.save(category);
     }
@@ -27,4 +28,12 @@ public class CategoryService {
     public void deleteCategory(String id) {
         categoryRepository.deleteById(id);
     }
-}
+
+    public Category updateCategory(String id, Category category) {
+        Category existingCategory = categoryRepository.findById(id).orElseThrow(() -> new RuntimeException("Category not found with id: " + id));
+        existingCategory.setName(category.getName());
+        existingCategory.setImageUrl(category.getImageUrl());
+        existingCategory.setDescription(category.getDescription());
+        return categoryRepository.save(existingCategory);
+
+}}

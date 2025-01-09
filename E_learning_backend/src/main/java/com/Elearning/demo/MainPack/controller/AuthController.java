@@ -235,7 +235,21 @@ public class AuthController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    @PostMapping("ChoosePreferences")
+    public ResponseEntity<?> choosePreferences(@RequestBody Map<String, List<String>> request) {
+        String userId = request.get("userId").get(0);
+        List<String> preferences = request.get("preferences");
 
+        User user = userRepository.findById(userId).orElse(null);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+
+        user.setPreferences(preferences);
+        userRepository.save(user);
+
+        return ResponseEntity.ok("Preferences updated successfully");
+    }
 
     @PatchMapping("/{id}/avatar")
     public ResponseEntity<?> updateAvatar(@PathVariable String id, @RequestBody Map<String, String> request) {

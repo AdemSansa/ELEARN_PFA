@@ -41,6 +41,25 @@ public class User {
     //Active Role
     private String activeRole;
 
+    public List<String> getPreferences() {
+        return preferences;
+    }
+
+    public void setPreferences(List<String> preferences) {
+        this.preferences = preferences;
+    }
+
+    public List<String> getCompletedCourses() {
+        return completedCourses;
+    }
+
+    public void setCompletedCourses(List<String> completedCourses) {
+        this.completedCourses = completedCourses;
+    }
+
+    private List<String> preferences; // e.g., favorite categories like "technology", "design"
+    private List<String> completedCourses; // List of course IDs use
+
     public String getActiveRole() {
         return activeRole;
     }

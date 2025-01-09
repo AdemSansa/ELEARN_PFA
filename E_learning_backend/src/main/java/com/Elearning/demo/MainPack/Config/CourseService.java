@@ -30,6 +30,7 @@ public class CourseService {
         course.setCreatedDate(new Date());
         course.setUpdatedDate(new Date());
         course.setCategory(category);
+        course.setCategoryName(category.getName());
         return courseRepository.save(course);
     }
     public Course updateCourse(String id, Course course) {

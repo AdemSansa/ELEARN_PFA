@@ -1,0 +1,31 @@
+<h2 mat-dialog-title>{{ data.title }}</h2>
+
+<div mat-dialog-content>
+  <div class="course-details">
+    <div class="course-image">
+      <img [src]="data.imageLogoUrl" alt="Course Image" class="course-image" />
+    </div>
+    <div class="course-info">
+      <p><strong>Course ID:</strong> {{ data.id }}</p>
+      <p><strong>Title:</strong> {{ data.title }}</p>
+      <p><strong>Description:</strong> {{ data.description }}</p>
+      <p><strong>Author:</strong> {{ data.author }}</p>
+      <p><strong>Created Date:</strong> {{ data.createdDate | date: 'short' }}</p>
+      <p><strong>Updated Date:</strong> {{ data.updatedDate | date: 'short' }}</p>
+      
+      <!-- Lessons -->
+      <div *ngIf="data.lessons && data.lessons.length > 0">
+        <p><strong>Lessons:</strong></p>
+        <ul>
+          <li *ngFor="let lesson of data.lessons">{{ lesson.title }}</li>
+        </ul>
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="closeDialog()">Close</button>
+</div>

@@ -27,4 +27,21 @@ implements OnInit {
   navigateToCourses(categoryId: string): void {
     this.router.navigate(['/courses', categoryId]);
   }
+  addCategory (Category: any) {  
+    this.categoryService.createCategory(Category).subscribe((data) => {
+      console.log(data);
+    });
+    
+  
+  } 
+  deleteCategory(categoryId: string) {
+    this.categoryService.deleteCategory(categoryId).subscribe((data) => {
+      console.log(data);
+    });
+  }
+  updateCategory(categoryId: string, category: any) {
+    this.categoryService.updateCategory(categoryId, category).subscribe((data) => {
+      console.log(data);
+    });
+  } 
 }

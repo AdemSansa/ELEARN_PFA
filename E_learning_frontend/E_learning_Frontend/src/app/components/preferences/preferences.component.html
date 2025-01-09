@@ -1,0 +1,11 @@
+<br><br><br><br><br><br><br><br><br>
+<h2>Choose your Preferences</h2>
+
+<form (ngSubmit)="savePreferences()">
+  <label *ngFor="let category of categories">
+    <input type="checkbox" [(ngModel)]="selectedPreferences[category]" name="preferences" />
+    {{ category }}
+  </label>
+
+  <button type="submit">Save Preferences</button>
+</form>

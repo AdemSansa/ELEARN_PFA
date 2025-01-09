@@ -5,6 +5,7 @@ import { CourseService } from 'src/app/services/Course_Service/course.service';
 import { EnrollmentService } from 'src/app/services/Enrollment_service/enrollment.service';
 import { CategoryService } from 'src/app/services/category_service/category.service';  // Import category service
 import Swal from 'sweetalert2';
+import { RecommandationService } from 'src/app/services/recommandation-service/recommandation.service';
 
 @Component({
   selector: 'app-courses',
@@ -12,6 +13,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./courses.component.css']
 })
 export class CoursesComponent implements OnInit {
+  recommendedCourses: any[] = [];
 
   courses: any[] = [];
   categories: any[] = []; 
@@ -24,7 +26,8 @@ export class CoursesComponent implements OnInit {
     private enrollmentService: EnrollmentService,
     private categoryService: CategoryService,  // Inject category service
     public auth: AuthService,
-    private router: Router,  private route: ActivatedRoute 
+    private router: Router,  private route: ActivatedRoute ,
+    private recommandationService: RecommandationService
   ) {}
 
   ngOnInit(): void {
@@ -33,6 +36,7 @@ export class CoursesComponent implements OnInit {
     
     // Get categories to display them
     this.loadCategories();
+    this.GetRecommendation();
     this.route.params.subscribe((params) => {
       this.selectedCategoryId = params['categoryId'] || null;
       if (this.selectedCategoryId) {
@@ -110,4 +114,17 @@ export class CoursesComponent implements OnInit {
       this.courses = data;
     });
   }
+  GetRecommendation(): void {
+    
+    const user = { id: 1, preferences: ['programming', 'design'] }; // Example user data
+      this.recommandationService.getRecommendations(user).subscribe(data => {
+
+        this.recommendedCourses = data;
+
+      }
+      );
+      
+
+  
+}
 }

@@ -30,7 +30,8 @@ export class UserCoursesComponent {
         (data) => {
           console.log('Enrolled courses data:', data);
           this.courses = data;
-
+          console.log('Enrolled courses:', this.courses);
+          
           this.courses.forEach(enrollment => {
             console.log('Fetching progress for course ID:', enrollment.course.id);
 

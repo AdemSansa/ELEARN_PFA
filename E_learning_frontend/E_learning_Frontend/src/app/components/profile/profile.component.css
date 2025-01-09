@@ -123,3 +123,39 @@
     margin-top: 20px;
   }
   
+
+
+
+
+
+  .course-progress-container {
+    margin-top: 20px;
+  }
+  
+  .course-progress-title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .course-progress-card {
+    margin-bottom: 15px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .progress {
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    overflow: hidden;
+    height: 20px;
+  }
+  
+  .progress-bar {
+    background-color: #007bff;
+    text-align: center;
+    color: white;
+    line-height: 20px;
+    font-size: 0.9rem;
+  }
+  

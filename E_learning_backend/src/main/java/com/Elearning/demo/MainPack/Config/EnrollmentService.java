@@ -111,6 +111,8 @@ public class EnrollmentService {
         long completedCount = courseLessons.stream()
                 .filter(lesson -> completedLessons.contains(lesson.getId()))
                 .count();
+        enrollment.setProgress((int) ((completedCount * 100) / courseLessons.size()));
+        System.out.println(enrollment.getProgress());
 
         return (int) ((completedCount * 100) / courseLessons.size());
     }

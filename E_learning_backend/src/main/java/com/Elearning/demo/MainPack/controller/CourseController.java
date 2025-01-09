@@ -26,7 +26,7 @@ public class CourseController {
     @Autowired
     private UserService userService;
 
-
+    @Autowired
     private CategoryService categoryService;
     // Create a new course
     @PostMapping
@@ -48,6 +48,7 @@ public class CourseController {
     @GetMapping("/category/{categoryId}")
     public ResponseEntity<List<Course>> getCoursesByCategory(@PathVariable String categoryId) {
         Category category = categoryService.getCategoryById(categoryId);
+        System.out.println(category);
         List<Course> courses = courseService.getCoursesByCategory(category);
         return ResponseEntity.ok(courses);
     }

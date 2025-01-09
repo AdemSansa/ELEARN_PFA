@@ -1,0 +1,37 @@
+.category-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+  
+  .styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+  }
+  
+  .styled-table th, .styled-table td {
+    padding: 12px;
+    text-align: left;
+  }
+  
+  .actions {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .action-btn {
+    padding: 6px 12px;
+    cursor: pointer;
+  }
+  
+  .action-btn.view {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .action-btn.delete {
+    background-color: #f44336;
+    color: white;
+  }
+  

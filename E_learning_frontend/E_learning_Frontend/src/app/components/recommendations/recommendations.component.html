@@ -1,0 +1,13 @@
+<div *ngIf="recommendedCourses.length > 0">
+    <h3>Recommended Courses for You</h3>
+    <ul>
+      <li *ngFor="let course of recommendedCourses">
+        <h4>{{ course.name }}</h4>
+        <p>{{ course.description }}</p>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="recommendedCourses.length === 0">
+    <p>No recommendations available.</p>
+  </div>
+  

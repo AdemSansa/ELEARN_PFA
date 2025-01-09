@@ -34,9 +34,18 @@ import { AboutComponent } from './components/about/about.component';
 
 
 import { CatgoriesComponent } from './components/catgories/catgories.component';
+import { AllcoursesComponent } from './components/allcourses/allcourses.component';
+import { AddCategoryComponent } from './components/add-category/add-category.component';
+import { AdminCourseManagementComponent } from './components/admin-course-management/admin-course-management.component';
+import { AdminCategoryManagementComponent } from './components/admin-category-management/admin-category-management.component';
+import { RecommendationsComponent } from './components/recommendations/recommendations.component';
+import { PreferencesComponent } from './components/preferences/preferences.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' }, 
+  { path: 'addCategory', component: AddCategoryComponent } ,
+
+  
   { path: 'courses/:categoryId', component: CoursesComponent } ,
   { path: 'categories', component: CatgoriesComponent} ,
   { path: 'login', component: LoginComponent },
@@ -54,6 +63,9 @@ const routes: Routes = [
   { path: 'results', component: QuizResultsComponent },
   { path: 'livechat', component: ChatComponent },
     {path: 'About', component: AboutComponent },
+    {path: 'AllCourses', component: AllcoursesComponent},
+    {path: 'forYou', component: RecommendationsComponent},
+    { path: 'choose-preferences', component: PreferencesComponent },
 
   { path: 'Teachercourses', component: TeacherCoursesComponent , 
     canActivate: [teacherGuard], },
@@ -61,6 +73,7 @@ const routes: Routes = [
     canActivate: [teacherGuard],  },
   { path: 'CreateQuiz', component: QuizComponentComponent , 
     canActivate: [teacherGuard], },
+
   { path: 'edit-quiz/:id', component: EditQuizComponent , 
     canActivate: [teacherGuard],  },
   {
@@ -68,7 +81,10 @@ const routes: Routes = [
     component: AdminDashboardComponent,
     children: [
       { path: 'users', component: AdminUserManagementComponent },
-      { path: 'statistics', component: StatisticsComponent }
+      { path: 'statistics', component: StatisticsComponent },
+      { path: 'courses', component: AdminCourseManagementComponent},
+      { path: 'categories', component: AdminCategoryManagementComponent}
+
     ],
     canActivate: [AdminGuard], 
   },

@@ -56,7 +56,11 @@ export class AppComponent implements OnInit {
       this.loadUserData();
     });
     const Token = this.auth.decodeToken();
-    this.user = Token;
+    this.userService.getUserByID(Token.id).subscribe((data) => {
+      this.user = data;
+    }
+    );
+    
     this.cdr.detectChanges(); // Force update
 
     
@@ -66,13 +70,13 @@ export class AppComponent implements OnInit {
   }
  
   navigateToAdmin(): void {
-    this.router.navigate(['/admin']); // Replace '/admin' with the admin interface route
+    this.router.navigate(['/admin/statistics']); // Replace '/admin' with the admin interface route
   }
    
   
   ngDoCheck(): void {
     let currentroute=this.router.url;
-    if(currentroute=='/login' || currentroute=='/register' || currentroute=='/admin' || currentroute=='/admin/statistics' || currentroute=='/admin/users' ){
+    if(currentroute=='/login' || currentroute=='/register' || currentroute=='/admin' || currentroute=='/admin/statistics' || currentroute=='/admin/users' || currentroute=='/admin/courses' || currentroute=='/admin/categories'){
       this.ismenuVisble=false;
     }else{
       this.ismenuVisble=true;

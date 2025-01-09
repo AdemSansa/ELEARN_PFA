@@ -8,11 +8,17 @@
         </h1>
         <nav id="navbar" class="navbar order-last order-lg-0">
           <ul>
-            <img [src]="user?.avatar" alt="User Image" class="chat-image me-3" />
+            <img [src]="user?.avatarURL" alt="User Image" class="chat-image me-3" />
             <li><a class="nav-link scrollto" routerLink="/home">Home</a></li>
             <li *ngIf="!auth.getIsTeacher()">
-              <a class="nav-link scrollto" routerLink="/categories">Available Courses</a>
+              <a class="nav-link scrollto" routerLink="/categories"> Categories</a>
+
             </li>
+            <li *ngIf="!auth.getIsTeacher()">
+              <a class="nav-link scrollto" routerLink="/AllCourses">All Courses</a>
+
+            </li>
+
             <li *ngIf="!auth.getIsTeacher()">
               <a class="nav-link scrollto" routerLink="/MyCourses">My Learning</a>
             </li>
@@ -23,7 +29,6 @@
               <a class="nav-link scrollto" routerLink="/Teacher-quiz">Publish a Quiz</a>
             </li>
             <li><a class="nav-link scrollto"  routerLink="/About">About</a></li>
-            <li><a class="nav-link scrollto" routerLink="/contact">Contact</a></li>
           </ul>
           <i class="bi bi-list mobile-nav-toggle"></i>
         </nav>
@@ -63,7 +68,7 @@
       </div>
     </header>
   </ng-container>
-
+</div>
   <!-- Chat Toggle Button -->
   <div *ngIf="isLoggedIn()">
     <button class="chat-toggle-button" (click)="toggleChat()">
@@ -76,10 +81,11 @@
 
   <!-- Admin Interface -->
   <div *ngIf="isAdmin" class="admin-interface-btn">
+  
     <button (click)="navigateToAdmin()">Admin Interface</button>
     <button routerLink="/home">Go back to Home Page</button>
   </div>
-</div>
+
 
 <router-outlet></router-outlet>
 <app-footer></app-footer>

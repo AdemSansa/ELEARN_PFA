@@ -45,8 +45,17 @@ export class AvatarSelectionComponent implements OnInit {
         icon: 'success',
         confirmButtonText: 'OK'
       }).then(() => {
-        this.router.navigate(['/home']); 
-      });
-    });
+        if(this.user.preferences == null){
+          this.router.navigate(['/choose-preferences']);
+      
+          
+        }
+        else{
+          this.router.navigate(['/home']);
+        }
+      }
+      );
+    }
+    );
   }
 }

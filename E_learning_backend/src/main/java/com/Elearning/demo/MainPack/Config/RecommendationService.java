@@ -2,6 +2,7 @@ package com.Elearning.demo.MainPack.Config;
 
 import com.Elearning.demo.MainPack.Model.Course;
 import com.Elearning.demo.MainPack.Model.Enrollment;
+import com.Elearning.demo.MainPack.Model.User;
 import com.Elearning.demo.MainPack.Repository.CourseRepository;
 import com.Elearning.demo.MainPack.Repository.EnrollementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +77,49 @@ public class RecommendationService {
                 }
             }
         }
+
+        return recommendedCourses;
+    }
+
+
+
+    public double cosineSimilarity(double[] user1, double[] user2) {
+        double dotProduct = 0.0;
+        double normA = 0.0;
+        double normB = 0.0;
+
+        for (int i = 0; i < user1.length; i++) {
+            dotProduct += user1[i] * user2[i];
+            normA += Math.pow(user1[i], 2);
+            normB += Math.pow(user2[i], 2);
+        }
+
+        return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
+    }
+
+    // Get recommendations for a user
+    public List<Course> getRecommendedCourses(User user) {
+        // Fetch all courses from the database
+        List<Course> allCourses = courseRepository.findAll();
+
+        // List to store recommended courses
+        List<Course> recommendedCourses = new ArrayList<>();
+
+        // Loop through all courses and check if they match user's preferences
+        for (Course course : allCourses) {
+            // Check if the course category matches any of the user's preferences
+            for (String preference : user.getPreferences()) {
+                if (course.getCategory().getName().equalsIgnoreCase(preference)) {
+                    // Add the course to the recommended list if a match is found
+                    recommendedCourses.add(course);
+                    break; // No need to check other preferences if already matched
+                }
+            }
+        }
+
+        // Optional: Sort the courses by rating or other criteria (e.g., by difficulty, popularity)
+        // Example: Sorting by rating in descending order (highest rated courses first)
+        recommendedCourses.sort((course1, course2) -> Double.compare(course2.getRating(), course1.getRating()));
 
         return recommendedCourses;
     }

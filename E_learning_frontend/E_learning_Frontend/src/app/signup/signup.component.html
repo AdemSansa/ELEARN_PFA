@@ -21,56 +21,44 @@
                     </div>
                     <h3 class="font-md">Sign-up</h3>
                     <p>Access to the most powerful tool in the entire design and web industry.</p>
-                    <form (ngSubmit)="onRegister()">
-                        <input class="form-control" type="text" name="name" [(ngModel)]="name" placeholder="Full Name" #nameCtrl="ngModel"
-                        required
-                        minlength="3"
-                        maxlength="50">
-
-
-                        <div *ngIf="nameCtrl.invalid && nameCtrl.touched" class="text-danger">
-                            <small *ngIf="nameCtrl.errors?.['required']">Name is required.</small>
-                            <small *ngIf="nameCtrl.errors?.['minlength']">Name must be at least 3 characters long.</small>
-                            <small *ngIf="nameCtrl.errors?.['maxlength']">Name cannot exceed 50 characters.</small>
-                          </div>
-
-
-
-
-
-
-                        <input     #emailCtrl="ngModel"
-                         class="form-control" type="email" name="email" [(ngModel)]="email" placeholder="E-mail Address"  required
-                        email
-                      />
+                    <form #form="ngForm" (ngSubmit)="onRegister()">
+                      <input class="form-control" type="text" name="name" [(ngModel)]="name" placeholder="Full Name" #nameCtrl="ngModel"
+                          required minlength="3" maxlength="50">
+                      <div *ngIf="nameCtrl.invalid && nameCtrl.touched" class="text-danger">
+                          <small *ngIf="nameCtrl.errors?.['required']">Name is required.</small>
+                          <small *ngIf="nameCtrl.errors?.['minlength']">Name must be at least 3 characters long.</small>
+                          <small *ngIf="nameCtrl.errors?.['maxlength']">Name cannot exceed 50 characters.</small>
+                      </div>
+                  
+                      <input #emailCtrl="ngModel" class="form-control" type="email" name="email" [(ngModel)]="email" placeholder="E-mail Address"
+                          required email>
                       <div *ngIf="emailCtrl.invalid && emailCtrl.touched" class="text-danger">
-                        <small *ngIf="emailCtrl.errors?.['required']">Email is required.</small>
-                        <small *ngIf="emailCtrl.errors?.['email']">Enter a valid email address.</small>
+                          <small *ngIf="emailCtrl.errors?.['required']">Email is required.</small>
+                          <small *ngIf="emailCtrl.errors?.['email']">Enter a valid email address.</small>
                       </div>
-                        <input      #passwordCtrl="ngModel"
-                        class="form-control" type="password" name="password" [(ngModel)]="password" placeholder="Password" required
-                        minlength="8"
-                        pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
-                      /> <div *ngIf="passwordCtrl.invalid && passwordCtrl.touched" class="text-danger">
-                        <small *ngIf="passwordCtrl.errors?.['required']">Password is required.</small>
-                        <small *ngIf="passwordCtrl.errors?.['minlength']">Password must be at least 8 characters long.</small>
-                        <small *ngIf="passwordCtrl.errors?.['pattern']">
-                          Password must contain at least one letter and one number.
-                        </small>
+                  
+                      <input #passwordCtrl="ngModel" class="form-control" type="password" name="password" [(ngModel)]="password"
+                          placeholder="Password" required minlength="8"
+                          pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$">
+                      <div *ngIf="passwordCtrl.invalid && passwordCtrl.touched" class="text-danger">
+                          <small *ngIf="passwordCtrl.errors?.['required']">Password is required.</small>
+                          <small *ngIf="passwordCtrl.errors?.['minlength']">Password must be at least 8 characters long.</small>
+                          <small *ngIf="passwordCtrl.errors?.['pattern']">Password must contain at least one letter and one number.</small>
                       </div>
-
-
-
-                        <!-- Teacher Secret Key input field -->
-                        <div *ngIf="this.authService.regTeach==true" class="teacher-fields">
-                            <input class="form-control" type="text" name="teacherSecretKey" [(ngModel)]="secretKey" placeholder="Teacher Secret Key" required>
-                        </div>
-
-                        <div class="form-button d-flex">
-                            <button id="submit" type="submit" class="btn btn-primary">Register</button>
-                            <a [routerLink]="'/login'" class="btn btn-outline-primary">Login</a>
-                        </div>
-                    </form>
+                  
+                      <!-- Teacher Secret Key input field -->
+                      <div *ngIf="this.authService.regTeach == true" class="teacher-fields">
+                          <input class="form-control" type="text" name="teacherSecretKey" [(ngModel)]="secretKey"
+                              placeholder="Teacher Secret Key" required>
+                      </div>
+                  
+                      <div class="form-button d-flex">
+                          <!-- Disable button when the form is invalid -->
+                          <button id="submit" type="submit" class="btn btn-primary" [disabled]="form.invalid">Register</button>
+                          <a [routerLink]="'/login'" class="btn btn-outline-primary">Login</a>
+                      </div>
+                  </form>
+                  
                     <div class="other-links">
                         <span style="font-size:large; font-weight: bold;">Or login with</span><a id="google-btn"><i class="fab fa-google"></i></a>
                     </div>

@@ -9,6 +9,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -52,7 +53,8 @@ public class EmailService {
 
     }
 
-    public void sendQuizNotificationEmail(String email, String teacher, String quizTitle) {
+
+    public void sendQuizNotificationEmail(List<String> emails, String teacher, String quizTitle) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
 
         // Email Subject
@@ -67,7 +69,11 @@ public class EmailService {
                 "Best regards,\n" +
                 "Your Learning Platform Team : Learnify";
 
-        mailMessage.setTo(email);
+        // Convert the list of emails to a comma-separated string
+        String[] emailArray = emails.toArray(new String[0]);
+        mailMessage.setTo(emailArray); // Send to multiple recipients
+
+        // Set the email body and send the message
         mailMessage.setText(emailBody);
         mailSender.send(mailMessage);
     }

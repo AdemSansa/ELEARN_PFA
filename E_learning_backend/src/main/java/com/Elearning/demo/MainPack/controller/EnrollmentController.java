@@ -6,6 +6,7 @@ import com.Elearning.demo.MainPack.Model.Course;
 import com.Elearning.demo.MainPack.Model.Enrollment;
 import com.Elearning.demo.MainPack.Model.User;
 import com.Elearning.demo.MainPack.Repository.CourseRepository;
+import com.Elearning.demo.MainPack.Repository.EnrollementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,8 @@ public class EnrollmentController {
     @Autowired
     private EnrollmentService enrollmentService;
     private CourseRepository courseRepository;
+    @Autowired
+    private EnrollementRepository enrollementRepository;
 
     @PostMapping("/enroll")
     public ResponseEntity<?> enrollUserInCourse(@RequestParam String userId, @RequestParam String courseId) {
@@ -73,6 +76,7 @@ public class EnrollmentController {
         System.out.println("Received userId: " + userId + ", courseId: " + courseId); // Debugging line
         try {
             int progress = enrollmentService.calculateProgress(userId, courseId);
+            System.out.println("Progress: " + progress); // Debugging line
             return ResponseEntity.ok(progress);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(null);
