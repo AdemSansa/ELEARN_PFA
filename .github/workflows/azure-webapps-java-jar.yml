@@ -48,7 +48,7 @@ jobs:
 
       - name: Build with Maven
         run: mvn clean install
-        working-directory: ./ELEARN_PFA/E_learning_backend 
+        working-directory: /home/runner/work/ELEARN_PFAELEARN_PFA/E_learning_backend 
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
